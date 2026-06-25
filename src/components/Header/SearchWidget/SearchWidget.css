@@ -1,0 +1,398 @@
+ .search-widget {
+  flex:none;
+  background-color: #292929;
+  padding: 40px 30px;        
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column; 
+  gap: 25px; 
+  align-self: flex-start;
+  max-width: 730px; 
+}
+
+.search-widget__section {
+  display: flex;
+  flex-direction: column; 
+  width: 100%;
+}
+
+.search-widget__label {
+  display: block;
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
+  font-size: 30px;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+/* Строка с инпутами (Откуда / Куда и Дата туда / Дата обратно) */
+.search-widget__row {
+  display: flex;
+  gap: 32px; 
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.search-widget__section:nth-child(2) .search-widget__row {
+  gap: 32px; /* Теперь зазоры в обеих строках строго одинаковые */
+}
+
+/* Обертка для каждого инпута, чтобы они делили строку поровну */
+.search-widget__input-wrapper {
+  position: relative;
+  display: flex;
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 4px;
+  height: 60px;
+  width: calc(50% - 12px); 
+  align-items: center;
+}
+
+.search-widget__input {
+  border: none;
+  outline: none;
+  padding: 14px 18px;   
+  font-size: 18px;
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background-color: transparent;
+  cursor: pointer;
+ 
+  
+}
+
+.search-widget__icon {
+  position: absolute;
+  right: 15px; /* Отступ от правого края инпута */
+  top: 50%;
+  transform: translateY(-50%); /* Идеальное центрирование по вертикали */
+  width: 24px;  /* Фиксированная ширина картинки */
+  height: 24px; /* Фиксированная высота картинки */
+  object-fit: contain;
+  pointer-events: none; /* Клик проходит сквозь иконку в поле ввода */
+  z-index: 3;
+  opacity: 0.4;
+}
+/* Кнопка смены направления (иконка-реверс между инпутами) */
+.search-widget__reverse-btn {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* Центрируем кнопку идеально по центру между городами */
+  z-index: 10; /* Выталкиваем кнопку поверх инпутов */
+  
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+.search-widget__reverse-btn:hover {
+  transform: rotate(180deg);
+  transform: translate(-50%, -50%) rotate(180deg); /* Сохраняем центрирование при повороте */
+ 
+}
+
+/* КНОПКА НАЙТИ БИЛЕТЫ (Сдвинута в правый угол формы, как на снимке) */
+.search-widget__submit-btn {
+  background-color: #ffa800;
+  color: #292929;
+  border: none;
+  padding: 14px 35px;
+  width: auto; /* Отменяем растягивание на всю ширину */
+  min-width: 250px; /* Задаем фиксированную аккуратную ширину кнопки */
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  margin-left: auto; /* Магия CSS: прижимает кнопку к правому краю формы */
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.search-widget__submit-btn:hover {
+  background-color: #ffbe3b;
+}
+
+.search-widget__submit-btn:active {
+  background-color: #e09400;
+  transform: scale(0.98);
+}
+
+.search-widget__input::placeholder {
+  color: #E5E5E5;
+  opacity: 1; 
+}
+
+.datepicker-container {
+  position: relative;
+  width: 100%;
+  height: 60px;
+}
+
+.react-datepicker-popper {
+  z-index: 100 !important;
+  position: absolute !important;
+  transform: none !important; /* Отключаем автоматический некорректный сдвиг библиотеки */
+  left: 0 !important;
+  top: 100% !important;
+  margin-top: 10px !important; /* Зазор для стрелочки */
+}
+
+.react-datepicker__input-container {
+  line-height: 60px;
+  height: 100%;
+  padding-left: 18px;
+}
+
+.react-datepicker {
+  font-family: "Roboto", sans-serif !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 5px !important;
+  background-color: #ffffff !important;
+}
+
+/* Верхняя панель (Месяц, стрелочки) */
+.react-datepicker__header {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #f2f2f2 !important;
+  border-top-left-radius: 5px !important;
+  border-top-right-radius: 5px !important;
+  padding-top: 12px !important;
+}
+
+/* Название месяца (Август) */
+.react-datepicker__current-month {
+  font-size: 18px !important;
+  font-weight: 500 !important;
+  color: #292929 !important;
+  text-transform: capitalize;
+}
+
+/* Дни недели (Пн, Вт...) */
+.react-datepicker__day-name {
+  color: #a0a0a0 !important;
+  font-size: 13px !important;
+  width: 32px !important;
+  line-height: 32px !important;
+}
+
+/* Сетка чисел */
+.react-datepicker__day {
+  color: #292929 !important;
+  font-size: 14px !important;
+  width: 32px !important;
+  line-height: 32px !important;
+  margin: 2px !important;
+  border-radius: 4px !important;
+}
+
+/* Выходные дни (Суббота и Воскресенье делаем жирными, как на макете) */
+.react-datepicker__day--weekend {
+  font-weight: 700 !important;
+}
+
+/* Дни, не относящиеся к текущему месяцу (светло-серые) */
+.react-datepicker__day--outside-month {
+  color: #e5e5e5 !important;
+  font-weight: 400 !important;
+}
+
+/* ВЫБРАННЫЙ ДЕНЬ (Оранжевая рамка как на макете для числа 30) */
+.react-datepicker__day--selected, 
+.react-datepicker__day--keyboard-selected {
+  background-color: #ffa800 !important;
+  color: #292929 !important;
+  border: 2px solid #ffa800 !important; /* Наша оранжевая рамка */
+  font-weight: 700 !important;
+}
+
+/* Эффект наведения на день */
+.react-datepicker__day:hover {
+  background-color: #f5f5f5 !important;
+}
+
+/* Плейсхолдер для инпута */
+.search-widget__input::placeholder {
+  color: #E5E5E5 !important;
+  opacity: 1;
+}
+
+/* Фикс ширины обертки для календаря, чтобы он не сжимался */
+.react-datepicker-wrapper {
+  width: 100%;
+   display: flex;
+}
+
+/* Фикс огромной стрелки поп-апа */
+.react-datepicker__triangle {
+   border: none !important;
+  background: transparent !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 30px !important;
+}
+
+.react-datepicker__triangle::before {
+  content: "" !important;
+  position: absolute !important;
+  border-width: 0 8px 8px 8px !important;
+  border-style: solid !important;
+  border-color: transparent transparent #ffffff transparent !important;
+  left: -8px !important;
+  top: -8px !important;
+  width: 0 !important;  /* Защита от глобального растягивания */
+  height: 0 !important;
+  padding: 0 !important;
+}
+.react-datepicker__triangle::after {
+  display: none !important; 
+}
+/* Дополнительный фикс для SVG-стрелок переключения месяцев (влево/вправо) внутри шапки */
+.react-datepicker__navigation-icon::before {
+  border-width: 2px 2px 0 0 !important;
+  width: 6px !important;
+  height: 6px !important;
+}
+.react-datepicker__navigation {
+  top: 14px !important;
+}
+.search-widget__input-wrapper {
+  position: relative;
+}
+
+/* Стили для контейнера выпадающего списка */
+.search-widget__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 250px;
+  overflow-y: auto;
+  margin: 4px 0 0 0;
+  padding: 0;
+  list-style: none;
+  background-color: #f4f2f5; /* серый фон как на макете */
+  border-radius: 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+/* Стили элементов списка */
+.search-widget__dropdown-item {
+  padding: 10px 15px;
+  font-family: sans-serif;
+  font-size: 18px;
+  color: #2e2e2e;
+  text-transform: uppercase; /* Города в верхнем регистре */
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+/* Эффект наведения */
+.search-widget__dropdown-item:hover {
+  background-color: #ffffff; 
+}
+
+.search-widget--horizontal {
+  display: grid;
+  grid-template-rows: auto auto auto; 
+  column-gap: 30px; 
+  row-gap: 20px;    
+  max-width: 1200px;
+  background-color: rgba(41, 41, 41, 0.8);
+  padding: 30px;        
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 111px;
+}
+
+
+.search-widget--horizontal .search-widget__section,
+.search-widget--horizontal .search-widget__row {
+  display: contents !important;
+}
+
+.search-widget--horizontal .search-widget__section:nth-child(1) .search-widget__label {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+  margin-bottom: 0;
+}
+
+.search-widget--horizontal .search-widget__section:nth-child(2) .search-widget__label {
+  grid-column: 3 / span 2;
+  grid-row: 1;
+  margin-bottom: 0;
+}
+
+
+.search-widget--horizontal .search-widget__section:nth-child(1) .search-widget__input-wrapper:nth-of-type(1) {
+  grid-column: 1; grid-row: 2;
+}
+
+.search-widget--horizontal .search-widget__section:nth-child(1) .search-widget__input-wrapper:nth-of-type(2) {
+  grid-column: 2; grid-row: 2;
+}
+
+.search-widget--horizontal .search-widget__section:nth-child(2) .search-widget__input-wrapper:nth-of-type(1) {
+  grid-column: 3; grid-row: 2;
+}
+
+.search-widget--horizontal .search-widget__section:nth-child(2) .search-widget__input-wrapper:nth-of-type(2) {
+  grid-column: 4; grid-row: 2;
+}
+
+/* Жестко заставляем обертки инпутов занять все 100% ширины своей Grid-ячейки */
+.search-widget--horizontal .search-widget__input-wrapper {
+  width: 100% !important;
+  flex: none !important; 
+  align-items: center;
+}
+
+
+.search-widget--horizontal .search-widget__reverse-btn {
+  grid-column: 2; 
+  grid-row: 2;
+  position: relative;
+  left: -15px;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+}
+
+.search-widget--horizontal .search-widget__reverse-btn:hover {
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.search-widget--horizontal .search-widget__submit-btn {
+  grid-column: 4;    
+  grid-row: 3;       
+  width: 100% !important; 
+  max-width: none !important; 
+  height: 50px;      
+  padding: 0;
+  display: block;
+  margin: 0;
+}

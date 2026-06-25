@@ -1,0 +1,19 @@
+.header-logo {
+  width: 100%;
+  padding: 5px 0;
+  background-color: #00000099;
+}
+
+.header-logo__link {
+  width: fit-content;
+  font-size: 36px;
+  font-weight: 900;
+  color: #E5E5E5;
+  transition: color 0.5s ease-in-out;
+}
+
+.header-logo__link:hover,
+.header-logo__link:focus,
+.header-logo__link:focus-visible {
+  color: var(--color-orange);
+}

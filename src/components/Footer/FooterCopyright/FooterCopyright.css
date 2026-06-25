@@ -1,0 +1,45 @@
+.footer-copyright {
+  padding: 25px 0 30px;
+}
+
+.copyright-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.copyright-logo__link {
+  width: fit-content;
+  font-size: 36px;
+  font-weight: 900;
+  color: #E5E5E5;
+  transition: color 0.5s ease-in-out;
+}
+
+.copyright-logo__link:hover,
+.copyright-logo__link:focus,
+.copyright-logo__link:focus-visible {
+  color: var(--color-orange);
+}
+
+.copyright-top-btn {
+  width: 40px;
+  height: 40px;
+  background-image: url("./icons/icon-outline.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.copyright-top-btn:hover,
+.copyright-top-btn:focus,
+.copyright-top-btn:focus-visible {
+  background-image: url("./icons/icon-filled.svg");
+}
+
+.copyright-info {
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--color-white);
+}

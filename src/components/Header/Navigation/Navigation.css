@@ -1,0 +1,26 @@
+.header-nav {
+  width: 100%;
+  padding: 25px 0;
+  background-color: #292929;
+}
+
+.header-nav__list {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 85px;
+}
+
+.header-nav__link {
+  font-size: 30px;
+  font-weight: 300;
+  color: var(--color-white);
+  transition: color, letter-spacing 0.5s ease-in-out;
+}
+
+.header-nav__link:hover,
+.header-nav__link:focus,
+.header-nav__link:focus-visible {
+  color: var(--color-orange);
+  letter-spacing: 1px;
+}

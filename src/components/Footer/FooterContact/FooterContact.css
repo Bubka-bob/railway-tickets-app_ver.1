@@ -1,0 +1,46 @@
+.footer-contact {
+  flex: 1;
+}
+
+.contact__title {
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--color-white);
+}
+
+.contact__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  margin-top: 35px;
+  max-width: 450px;
+}
+
+.contact__item {
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--color-white);
+}
+
+.contact__link {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 35px;
+  transition: color, letter-spacing 0.5s ease-in-out;
+}
+
+.contact__link:hover,
+.contact__link:focus,
+.contact__link:focus-visible,
+.contact__link:active {
+  color: var(--color-orange);
+  letter-spacing: 1px;
+}
+
+.contact__image {
+  width: 30px;
+  height: auto;
+}

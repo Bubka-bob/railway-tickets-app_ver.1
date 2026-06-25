@@ -1,0 +1,40 @@
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-wrapper {
+  margin-bottom: 130px;
+}
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper-pagination-bullet {
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  background-color: #C4C4C4;
+  transition: border-color, background-color 0.5s ease-in-out;
+}
+
+.swiper-pagination-bullet:hover,
+.swiper-pagination-bullet:focus,
+.swiper-pagination-bullet:focus-visible,
+.swiper-pagination-bullet:active {
+  border-color: var(--color-orange);
+  background-color: var(--color-yellow);
+}

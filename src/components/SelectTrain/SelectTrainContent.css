@@ -1,0 +1,138 @@
+.select-train-main {
+  display: grid;
+  grid-template-columns: 360px 1fr; /* Фиксированный сайдбар по Figma, остальное под поезда */
+  gap: 40px;
+  padding-top: 60px;
+  padding-bottom: 80px;
+  background-color: #f7f8f9; /* Светлый фон для контентной зоны (если по макету контрастно шапке) */
+  align-items: start;
+}
+
+/* Ограничитель ширины (если у вас еще нет глобального класса container) */
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   ЛЕВЫЙ САЙДБАР (ФИЛЬТРЫ)
+   ========================================================================== */
+.filters-sidebar {
+  background-color: #3e3c41; /* Темный глубокий цвет панелей из Figma */
+  color: #ffffff;
+  padding: 30px 25px;
+  border-radius: 4px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.filters-sidebar h3 {
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 15px;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   ПРАВАЯ СЕКЦИЯ (РЕЗУЛЬТАТЫ)
+   ========================================================================== */
+.trains-results-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Счетчик найденных элементов */
+.results-count {
+  font-size: 18px;
+  color: #939393;
+  margin-bottom: 10px;
+}
+
+.trains-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px; /* Отступы между карточками поездов */
+}
+
+/* ==========================================================================
+   КАРТОЧКА ПОЕЗДА (ВРЕМЕННАЯ ЗАГЛУШКА)
+   ========================================================================== */
+.train-card-placeholder {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  padding: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.train-card-placeholder:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.train-card-placeholder h4 {
+  font-size: 18px;
+  color: #292929;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.train-card-placeholder p {
+  font-size: 14px;
+  color: #666666;
+  margin: 5px 0;
+}
+
+/* Фирменная оранжевая кнопка выбора мест */
+.select-seats-btn {
+  background-color: #ffa800; /* Яркий оранжевый акцент из макетов ж/д касс */
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 28px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: background-color 0.2s ease;
+}
+
+.select-seats-btn:hover {
+  background-color: #ff9100; /* Чуть темнее при наведении */
+}
+
+.select-seats-btn:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   ВСПУВАЮЩИЕ СОСТОЯНИЯ (ЗАГРУЗКА / ОШИБКА / ПУСТО)
+   ========================================================================== */
+.loading-status, 
+.error-status, 
+.no-results {
+  text-align: center;
+  padding: 50px;
+  background: #ffffff;
+  border: 1px dashed #c4c4c4;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #292929;
+}
+
+.error-status {
+  color: #ff3b30;
+  border-color: #ff3b30;
+  background-color: #fffbfa;
+}

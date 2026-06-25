@@ -1,0 +1,125 @@
+.footer-subscribe {
+  flex: 1;
+}
+
+.subscribe__title {
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--color-white);
+}
+
+.subscribe__subtitle {
+  margin-top: 30px;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--color-white);
+}
+
+.subscribe__form-wrapper {
+  margin-top: 15px;
+}
+
+.subscribe__form-content {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 35px;
+  max-width: 650px;
+}
+
+.subscribe__input {
+  width: 100%;
+  padding: 15px;
+  font-size: 24px;
+  border: 2px solid transparent;
+  border-radius: 3px;
+  background-color: var(--color-white);
+  cursor: text;
+}
+
+.subscribe__input-error {
+  position: absolute;
+  display: none;
+  margin-top: 100px;
+  color: var(--color-orange);
+  text-align: left;
+  font-size: 18px;
+}
+
+.subscribe__button {
+  margin-left: auto;
+  padding: 15px;
+  border: 2px solid var(--color-white);
+  border-radius: 5px;
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--color-white);
+  text-transform: uppercase;
+  background-color: transparent;
+  transition: color, border-color, background-color 0.5s ease-in-out;
+}
+
+.subscribe__button:disabled {
+  color: var(--color-grey);
+  border-color: var(--color-grey);
+  cursor: not-allowed;
+}
+
+.subscribe__button:hover:not(:disabled),
+.subscribe__button:focus,
+.subscribe__button:focus-visible {
+  color: var(--color-black);
+  border-color: var(--color-yellow);
+  background-color: var(--color-yellow);
+}
+
+.subscribe__button:active:not(:disabled) {
+  color: var(--color-black);
+  border-color: var(--color-white);
+  background-color: var(--color-white);
+}
+
+.subscribe__input:focus {
+  border-color: var(--color-yellow);
+}
+
+.subscribe__input:invalid:not(:placeholder-shown) {
+  border-color: var(--color-grey);
+  color: var(--color-grey);
+}
+
+.subscribe__input:valid:not(:placeholder-shown) {
+  border-color: var(--color-orange);
+}
+
+.subscribe__input:focus::placeholder {
+  opacity: 0; 
+  transition: opacity 0.5s ease;
+}
+
+.subscribe__input:focus-visible {
+  outline: transparent !important;
+}
+
+.subscribe__social {
+  margin-top: 45px;
+}
+
+.subscribe__social-title {
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--color-white);
+}
+
+.subscribe__social-list {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 50px;
+}
+
+.subscribe__social-link:active .subscribe__social-image {
+  filter: brightness(0) saturate(100%) invert(69%) sepia(87%) saturate(2250%) hue-rotate(1deg) brightness(101%) contrast(106%);
+}

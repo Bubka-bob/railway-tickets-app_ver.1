@@ -1,0 +1,32 @@
+.main-about {
+  padding: 145px 0 90px;
+}
+
+.about__title {
+  margin-bottom: 30px;
+  font-size: 36px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.about__content {
+  position: relative;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.about__content::before {
+  content: '';
+  position: absolute;
+  height: 100%;
+  border-left: 9px solid var(--color-orange);
+}
+
+.about__paragraph {
+  margin-left: 30px;
+  padding: 10px 0;
+}
+
+.about__paragraph:last-of-type {
+  font-weight: 700;
+}

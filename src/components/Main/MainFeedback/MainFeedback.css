@@ -1,0 +1,16 @@
+.main-feedback {
+  width: 100%;
+  padding: 150px 0 120px;
+  background-color: var(--color-white);
+}
+
+.feedback__title {
+  text-align: start;
+  font-size: 36px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.feedback__swiper-container {
+  margin-top: 75px;
+}

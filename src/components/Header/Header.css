@@ -1,0 +1,30 @@
+.header {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: var(--color-yellow);
+  position: relative;
+}
+
+/* Контейнер для главной */
+.header-widget {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 16rem;
+}
+
+/* Контейнер для страницы выбора поездов */
+.header-widget-select-page {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+}
