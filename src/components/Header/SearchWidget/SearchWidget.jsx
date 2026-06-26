@@ -9,7 +9,7 @@ import './SearchWidget.css';
 import AppContext from '../../context/AppContext';
 
 // Импортируем готовый компонент SelectLocation
-import SelectLocation from '../../Select/SelectLocation';
+import SelectLocation from '../../SelectLocation/SelectLocation';
 
 import calendarIcon from '../../../assets/calendar.png';
 import reverseIcon from '../../../assets/reverse.png';

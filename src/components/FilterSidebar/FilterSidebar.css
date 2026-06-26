@@ -1,0 +1,85 @@
+.filters-sidebar {
+  background-color: #3e3c41; /* Темный глубокий цвет панелей из Figma */
+  color: #ffffff;
+  padding: 25px 20px;
+  border-radius: 4px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.filter-section {
+  border-bottom: 1px solid #4e4c52;
+  padding-bottom: 20px;
+}
+
+.filter-section:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.filter-section__title {
+  font-size: 16px;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #ffffff;
+}
+
+.filter-section__options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Стилизация чекбоксов */
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #e5e5e5;
+  user-select: none;
+}
+
+.filter-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #ffa800; /* Оранжевый акцент из Figma для активного состояния */
+  cursor: pointer;
+}
+
+.filter-checkbox:hover .filter-checkbox__text {
+  color: #ffffff;
+}
+
+/* Блок полей для цен */
+.filter-price-inputs {
+  display: flex;
+  gap: 15px;
+}
+
+.filter-price-inputs__field {
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  padding: 10px;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.filter-price-inputs__field:focus {
+  border-color: #ffa800;
+}
+
+/* Убираем стрелочки у инпута цены */
+.filter-price-inputs__field::-webkit-outer-spin-button,
+.filter-price-inputs__field::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

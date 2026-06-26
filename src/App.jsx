@@ -12,9 +12,11 @@ import SuccessPage from './pages/SuccessPage/SuccessPage';
 
 import AppContext from './components/context/AppContext';
 import RouteContext from './components/context/RouteContext'; 
+import OrderContext from './components/context/OrderContext';
 
 import { initialAppState } from './utils/initialAppState';
 import { initialRouteState } from './utils/initialRouteState';
+import { initialOrderState } from './utils/initialOrderState';
 
 export default function App() {
   const [appState, setAppState] = useState(initialAppState);

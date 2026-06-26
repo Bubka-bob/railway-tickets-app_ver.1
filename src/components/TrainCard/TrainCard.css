@@ -1,198 +1,267 @@
-/* Главная обертка карточки */
+:root {
+  --color-orange: #ffa800;
+  --color-white: #ffffff;
+  --color-grey: #939393;
+  --color-black: #292929;
+}
+
+.train-card__left {
+  max-width: 200px;
+  width: 100%;
+  /* Использование auto + stretch позволяет блоку гибко сжиматься 
+     до 220px в одну сторону и аккуратно растягиваться туда-обратно */
+  height: auto; 
+  align-self: stretch; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; /* Строго по центру под макет Figma */
+  padding: 30px 20px;
+  background-color: #E4E0E9; /* Фирменный цвет плашки */
+  box-sizing: border-box;
+}
+
+/* Белый круг с иконкой поезда внутри */
+.train-card__train-icon-wrapper {
+  width: 86px; 
+  height: 86px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+
+/* Сама иконка поезда внутри круга */
+.train-card__train-icon-img {
+  width: 86px;
+  height: 86px;
+  object-fit: contain;
+}
+
+/* Крупный жирный номер поезда (например, 116С) */
+.train-card__number {
+  margin: 0 0 12px 0;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #292929;
+  text-transform: uppercase;
+}
+
+/* Блок текстового описания маршрута под номером */
+.train-card__train-route-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+/* Строки городов следования */
+.train-card__route-city-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: #939393; /* Блеклый цвет текста городов как на макете */
+  line-height: 1.2;
+}
+
+.capitalize-text {
+  text-transform: capitalize;
+}
+
+/* Название фирменного поезда (например, «Волга») */
+.train-card__train-brand-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #292929; /* Название поезда темнее и жирнее */
+  margin-top: 6px;
+  text-align: center;
+}
+
+/* Главный контейнер центральной секции */
+.train-card__center {
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 35px; /* Точный отступ между строкой "Туда" и "Обратно" по Figma */
+  background-color: #ffffff;
+  max-width: 480px; /* Ограничиваем максимальную ширину по вашей заготовке */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Изолированная строка-сетка для каждого направления */
+.train-card__timeline-row {
+  display: grid;
+  /* Фиксируем левую и правую колонки времени, давая стрелке занять весь центр */
+  grid-template-columns: 140px 1fr 140px; 
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Направление ОБРАТНО: добавляет разделительную пунктирную линию сверху, если нужно по Figma */
+.train-card__timeline-row--return {
+  position: relative;
+}
+
+/* Блоки с временем, городом и вокзалом */
+.train-card__time-block {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Выравнивание правого блока времени по правому краю */
+.train-card__time-block--right {
+  align-items: flex-end;
+  text-align: right;
+}
+
+/* Крупное черное время (например, 00:41) */
+.train-card__time {
+  font-size: 24px;
+  font-weight: 700;
+  color: #292929;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+/* Название города под временем */
+.train-card__city-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #292929;
+  text-transform: capitalize;
+}
+
+/* Мелкий серый вокзал под городом */
+.train-card__station-name {
+  font-size: 12px;
+  color: #939393; /* Тот самый макетный серый цвет */
+  margin-top: 4px;
+  line-height: 1.3;
+}
+
+/* Контейнер оранжевой стрелочки по центру */
+.train-card__arrow-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 4px;
+}
+
+/* Длительность поездки над стрелочкой (например, 8 ч. 32 мин.) */
+.train-card__duration-badge {
+  font-size: 12px;
+  color: #c4c4c4; /* Светло-серый блеклый цвет из Figma */
+  margin-bottom: 2px;
+}
+
+/* Иконка стрелочки направления */
+.train-card__arrow-icon {
+  font-size: 18px;
+  color: #ffa800; /* Фирменный оранжевый акцент */
+  line-height: 1;
+}
+
+/* Автоматический разворот стрелки влево для обратного пути */
+.train-card__arrow-icon--left {
+  transform: rotate(180deg);
+  display: inline-block;
+}
 .train-card {
   display: grid;
-  grid-template-columns: 200px 1fr 300px;
+  /* 200px левая панель, 1fr центр, 280px правая колонка по вашей спецификации */
+  grid-template-columns: 200px 1fr 280px; 
   background-color: #ffffff;
   border: 1px solid #c4c4c4;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   margin-bottom: 25px;
-  min-height: 220px;
-}
-
-/* 1. Левая колонка (Поезд) */
-.train-card__left {
-  background-color: #e4e0e9;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.train-card__icon-badge {
-  width: 60px;
-  height: 60px;
-  background-color: #ffa800;
-  border-radius: 50%;
-  margin-bottom: 12px;
-}
-
-.train-card__number {
-  font-size: 16px;
-  color: #3e3c41;
-  margin: 0 0 8px 0;
-  font-weight: 700;
-}
-
-.train-card__route {
-  font-size: 13px;
-  color: #292929;
-  margin: 0;
-  text-transform: capitalize;
-}
-
-/* 2. Центральная колонка (Таймлайны времени) */
-.train-card__center {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 35px; /* Дистанция между верхним и нижним маршрутом */
-  padding: 30px 40px;
-  background-color: #ffffff;
-}
-
-/* Одинаковая независимая строка для каждого пути */
-.train-card__timeline-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   width: 100%;
+  box-sizing: border-box;
 }
 
-/* Блоки с временем и вокзалом */
-.train-card__time-block {
-  display: flex;
-  flex-direction: column;
-  width: 140px; /* Фиксируем ширину, чтобы стрелки центрировались ровно друг под другом */
-  flex-shrink: 0;
-}
-
-.train-card__time-block--right {
-  text-align: right;
-}
-
-.train-card__time {
-  font-size: 24px;
-  font-weight: 700;
-  color: #292929;
-  line-height: 1;
-}
-
-.train-card__station {
-  font-size: 13px;
-  color: #939393;
-  margin-top: 6px;
-}
-
-/* Контейнер стрелки и подписи часов в пути */
-.train-card__duration-arrow {
-  flex-grow: 1;
-  margin: 0 30px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.train-card__duration {
-  font-size: 13px;
-  color: #939393;
-  margin-bottom: 4px;
-}
-
-.train-card__line {
-  height: 2px;
-  background-color: #c4c4c4;
-  position: relative;
-  width: 100%;
-}
-
-/* Наконечник стрелки */
-.train-card__line::after {
-  content: '';
-  position: absolute;
-  top: -4px;
-  width: 8px;
-  height: 8px;
-  border-top: 2px solid #c4c4c4;
-  border-right: 2px solid #c4c4c4;
-}
-
-/* Стрелочка ТУДА (смотрит вправо) */
-.train-card__line--to::after {
-  right: 0;
-  transform: rotate(45deg);
-}
-
-/* Стрелочка ОБРАТНО (смотрит влево) */
-.train-card__line--from::after {
-  left: 0;
-  transform: rotate(-135deg);
-}
-
-/* 3. Правая колонка (Цены и Кнопка) */
+/* --- ОФОРМЛЕНИЕ ПРАВОЙ ЧАСТИ (ЦЕНЫ И КНОПКА) --- */
 .train-card__right {
   border-left: 1px solid #e5e5e5;
-  padding: 25px;
+  padding: 25px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-between; /* Прижимает цены к верху, а кнопку к низу */
   background-color: #ffffff;
+  box-sizing: border-box;
 }
 
+/* Контейнер списка мест */
 .train-card__seats-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 15px; /* Отступы между Сидячим, Плацкартом и Купе */
 }
 
+/* Каждая строчка класса вагона */
 .train-card__seat-row {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 90px 40px 1fr; /* Ровные колонки для текста, количества и цены */
   align-items: center;
   font-size: 14px;
   color: #292929;
+  cursor: pointer;
 }
 
 .train-card__seat-class {
-  width: 80px;
+  color: #292929;
+  font-weight: 500;
 }
 
+/* Оранжевая цифра количества мест из Figma */
 .train-card__seat-count {
   color: #ffa800;
-  font-weight: 500;
-  margin-right: auto;
-  margin-left: 10px;
+  font-weight: bold;
 }
 
 .train-card__seat-price {
+  text-align: right;
   color: #939393;
 }
 
+/* Крупная жирная сумма */
 .train-card__price-val {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: bold;
   color: #292929;
 }
 
+/* Блок под кнопку */
+.train-card__actions {
+  margin-top: 20px;
+  width: 100%;
+}
+
+/* Фирменная макетная кнопка */
 .train-card__btn {
   width: 100%;
   background-color: #ffa800;
   color: #ffffff;
   border: none;
-  border-radius: 4px;
   padding: 14px;
+  border-radius: 4px;
+  font-weight: bold;
   font-size: 14px;
-  font-weight: 700;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background-color 0.2s;
-  margin-top: 15px;
+  transition: background-color 0.2s ease;
 }
 
 .train-card__btn:hover {
   background-color: #ff9100;
+}
+
+.train-card__btn:active {
+  transform: scale(0.99);
 }
