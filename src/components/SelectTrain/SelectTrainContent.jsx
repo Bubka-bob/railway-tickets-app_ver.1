@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import useGetRoutes from "../../services/useGetRoutes";
 import TrainCard from "../../components/TrainCard/TrainCard";
 // import FilterSidebar from "../FilterSidebar/FilterSidebar";
+import LastTickets from "../../components/Sidebar/LastTickets/LastTickets"
 import AppContext from "../context/AppContext";
 import "./SelectTrainContent.css"; 
 
@@ -58,6 +59,7 @@ export default function SelectTrainContent() {
     <main className="select-train-main container">
       <aside className="filters-sidebar">
       {/* <FilterSidebar/> */}
+      <LastTickets/>
       </aside>
 
       <section className="trains-results-section">

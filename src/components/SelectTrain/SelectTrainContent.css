@@ -20,23 +20,6 @@
 /* ==========================================================================
    ЛЕВЫЙ САЙДБАР (ФИЛЬТРЫ)
    ========================================================================== */
-.filters-sidebar {
-  background-color: #3e3c41; /* Темный глубокий цвет панелей из Figma */
-  color: #ffffff;
-  padding: 30px 25px;
-  border-radius: 4px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.filters-sidebar h3 {
-  font-size: 20px;
-  font-weight: 500;
-  margin-top: 0;
-  margin-bottom: 25px;
-  border-bottom: 1px solid #e5e5e5;
-  padding-bottom: 15px;
-  color: #ffffff;
-}
 
 /* ==========================================================================
    ПРАВАЯ СЕКЦИЯ (РЕЗУЛЬТАТЫ)

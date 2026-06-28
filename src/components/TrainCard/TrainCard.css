@@ -188,11 +188,11 @@
 
 /* --- ОФОРМЛЕНИЕ ПРАВОЙ ЧАСТИ (ЦЕНЫ И КНОПКА) --- */
 .train-card__right {
-  border-left: 1px solid #e5e5e5;
-  padding: 25px 20px;
+  border-left: 1px solid #eaeaea;
+  padding: 35px 25px 20px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Прижимает цены к верху, а кнопку к низу */
+  justify-content: space-between;
   background-color: #ffffff;
   box-sizing: border-box;
 }
@@ -201,7 +201,7 @@
 .train-card__seats-list {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Отступы между Сидячим, Плацкартом и Купе */
+  gap: 18px; /* Отступы между Сидячим, Плацкартом и Купе */
 }
 
 /* Каждая строчка класса вагона */
@@ -216,7 +216,7 @@
 
 .train-card__seat-class {
   color: #292929;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 /* Оранжевая цифра количества мест из Figma */
@@ -235,6 +235,76 @@
   font-size: 16px;
   font-weight: bold;
   color: #292929;
+}
+
+.train-card__seat-row-container {
+  position: relative; /* Контекст для абсолютного позиционирования подсказки */
+  width: 100%;
+}
+
+/* --- ВСПЫВАЮЩЕЕ ОКНО ДЕТАЛИЗАЦИИ ПОЛОК (TOOLTIP) --- */
+.train__price-seat-up-down {
+  display: none; /* Скрыто по умолчанию */
+  position: absolute;
+  width: 260px; /* Фиксированная ширина окна подсказки под макет */
+  top: 36px;   /* Смещение вниз относительно строки */
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 15px 20px;
+  border-radius: 5px;
+  background-color: #F5F4F6; /* Серый фон подложки из Figma */
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+}
+
+/* СТРЕЛКА-ТРЕУГОЛЬНИК НАВЕРХУ ТУЛТИПА */
+.train__price-seat-up-down::before {
+  content: '';
+  position: absolute;
+  top: -16px;
+  left: calc(50% - 8px);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #F5F4F6;
+}
+
+/* ЭФФЕКТ НАВЕДЕНИЯ: Показываем тултип при наведении на контейнер строки */
+.train-card__seat-row-container:hover .train__price-seat-up-down {
+  display: block;
+}
+
+/* Строки внутри тултипа (верхние, нижние, боковые) */
+.train__price-seat-subrow {
+  display: grid;
+  grid-template-columns: 80px 30px 1fr; /* Пропорциональные колонки деталей */
+  align-items: center;
+  font-size: 14px;
+  color: #292929;
+  margin-bottom: 12px;
+}
+
+.train__price-seat-subrow:last-child {
+  margin-bottom: 0; /* Убираем отступ у последней строки полок */
+}
+
+.train__price-seat-subrow-type {
+  color: #292929;
+}
+
+/* Количество мест внутри тултипа */
+.train__price-seat-subrow-count {
+  color: #ffa800;
+  font-weight: 700;
+}
+
+/* Цена конкретной полки */
+.train__price-seat-subrow-sum {
+  text-align: right;
+  font-weight: 700;
+  font-size: 16px;
+  color: #000000;
 }
 
 /* Блок под кнопку */
@@ -264,4 +334,42 @@
 
 .train-card__btn:active {
   transform: scale(0.99);
+}
+
+/* Контейнер для нижних элементов управления правой колонки */
+.train-card__actions {
+  margin-top: 25px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🔴 СТИЛИ ДЛЯ ИНТЕГРИРОВАННЫХ ИКОНОК УДОБСТВ */
+.train-card__comfort-icons {
+  display: flex;
+  justify-content: flex-end; /* Прижимает ряд иконок к правому краю карточки по Figma */
+  gap: 12px;                /* Расстояние между квадратиками иконок */
+  margin-bottom: 15px;
+  padding-right: 5px;      /* Отступ от иконок до оранжевой кнопки снизу */
+}
+
+/* Квадратная обертка для каждой иконки по макету */
+.train-card__comfort-icon-item {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+
+/* Ограничиваем размеры изображений или SVG внутри компонента SVGicon */
+.train-card__comfort-icon-item img,
+.train-card__comfort-icon-item svg,
+.train-card__comfort-icon-item .icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  fill: #939393; 
+  color: #939393;
+  opacity: 0.7;    
 }

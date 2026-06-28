@@ -1,0 +1,154 @@
+/* Общий контейнер всего блока последних билетов */
+.order-last-tickets.last-tickets {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  margin-top: 30px; /* Отступ от блока фильтров сверху */
+}
+
+/* Заголовок секции «ПОСЛЕДНИЕ БИЛЕТЫ» */
+.last-tickets__title {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #000000;
+  margin: 0 0 20px 0;
+  letter-spacing: 0.5px;
+}
+
+/* Обертка для списка карточек */
+.last-tickets__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Идеальный макетный отступ между карточками */
+}
+
+/* Каждая отдельная карточка билета */
+.last-tickets__item.ticket-item {
+  background-color: #ffffff;
+  border: 1px solid #c4c4c4;
+  padding: 15px 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  min-height: 120px;
+}
+
+/* 1. Сетка для названий городов (левый и правый) */
+.ticket-item__city {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 4px;
+}
+
+.ticket-item__from_city {
+  font-size: 14px;
+  font-weight: bold;
+  color: #292929;
+  text-align: left;
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.ticket-item__to_city {
+  font-size: 14px;
+  font-weight: bold;
+  color: #292929;
+  text-align: right; /* Город прибытия прижимаем вправо */
+  margin: 0;
+  text-transform: capitalize;
+}
+
+/* 2. Сетка для названий вокзалов */
+.ticket-item__railway {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.ticket-item__from_railway,
+.ticket-item__to_railway {
+  font-size: 12px;
+  color: #939393; /* Тот самый блеклый серый цвет вокзалов из Figma */
+  line-height: 1.3;
+  margin: 0;
+}
+
+.ticket-item__to_railway {
+  text-align: right; /* Вокзал прибытия прижимаем вправо */
+}
+
+/* Принудительно дописываем слово "вокзал" на уровне CSS, если бэкенд отдает только имя */
+.ticket-item__from_railway::after,
+.ticket-item__to_railway::after {
+  content: ' вокзал';
+}
+
+/* 3. Блок иконок опций (Wi-Fi, кондиционер) в левом нижнем углу */
+.ticket-item__options {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto; /* Выталкивает блок в самый низ карточки */
+}
+
+.ticket-item__option {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Если в SVGicon передаются картинки, фиксируем их размер */
+.ticket-item__option img,
+.ticket-item__option svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0.3; /* Ослабляем цвет иконок до блекло-серого по макету */
+}
+
+/* 4. Блок стоимости «от Х ХХХ Р» в правом нижнем углу */
+.ticket-item__cost {
+  position: absolute;
+  right: 20px;
+  bottom: 12px;
+  font-size: 12px;
+  color: #939393; /* Слово "от" серое и мелкое */
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+}
+
+/* Крупная оранжевая сумма */
+.ticket-item__cost-value {
+  font-size: 24px; /* Крупный размер цены */
+  font-weight: bold;
+  color: #ffa800; /* Фирменный оранжевый цвет */
+  margin-left: 5px;
+  margin-right: 3px;
+}
+
+/* Знак рубля */
+.ticket-item__cost-currency {
+  font-size: 24px;
+  color: #939393; /* Серый знак валюты по макету */
+  font-weight: bold;
+}
+
+/* Стили для строки состояния загрузки */
+.last-tickets__status,
+.last-tickets__no-results {
+  font-size: 14px;
+  color: #939393;
+  text-align: center;
+  padding: 20px 0;
+}

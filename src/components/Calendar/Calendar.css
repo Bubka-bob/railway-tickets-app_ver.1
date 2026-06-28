@@ -1,0 +1,139 @@
+.datepicker-container {
+  position: relative;
+  width: 100%;
+  height: 60px;
+}
+
+/* КОНТЕЙНЕР ПОП-АПА */
+.react-datepicker-popper {
+  z-index: 100 !important;
+  position: absolute !important;
+  transform: none !important; /* Сброс встроенных сдвигов библиотеки */
+  left: 50% !important; /* Центрируем поп-ап относительно инпута */
+  transform: translateX(-50%) !important; 
+  top: 100% !important;
+  margin-top: 12px !important; /* Зазор для маленькой стрелочки сверху */
+}
+
+/* КАРТОЧКА КАЛЕНДАРЯ */
+.react-datepicker {
+  font-family: "Roboto", sans-serif !important;
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 5px !important;
+  background-color: #ffffff !important;
+  padding: 10px 15px !important;
+}
+
+/* ШАПКА ХЕДЕРА (Месяц и Стрелочки переключения) */
+.react-datepicker__header {
+  background-color: #ffffff !important;
+  /* Тонкая серая полоса под месяцем строго по макету */
+  border-bottom: 1px solid #e5e5e5 !important; 
+  padding-top: 14px !important;
+  padding-bottom: 12px !important;
+  border-radius: 0 !important;
+}
+
+/* Название месяца */
+.react-datepicker__current-month {
+  font-size: 24px !important; /* Крупный красивый шрифт */
+  font-weight: 400 !important;
+  color: #292929 !important;
+  text-transform: capitalize;
+}
+
+/* ЖЕСТКО ПО МАКЕТУ: Полностью убираем дни недели (пн, вт, ср...) */
+.react-datepicker__day-names {
+  display: none !important;
+}
+
+/* СЕТКА ЧИСЕЛ */
+.react-datepicker__month {
+  margin: 12px 0 0 0 !important; /* Отступ сверху от разделительной линии */
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important; 
+}
+
+.react-datepicker__week {
+  display: flex !important;
+  justify-content: space-between !important;
+}
+
+.react-datepicker__day {
+  color: #292929 !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  width: 34px !important;
+  line-height: 34px !important;
+  margin: 1px !important;
+  text-align: center !important;
+  border-radius: 4px !important;
+}
+
+/* Выходные дни (Суббота и Воскресенье — жирные по макету) */
+.react-datepicker__day--weekend {
+  font-weight: 700 !important;
+}
+
+/* Числа прошлых и будущих месяцев (Светло-серые) */
+.react-datepicker__day--outside-month {
+  color: #e5e5e5 !important;
+  font-weight: 400 !important;
+}
+
+/* ВЫБРАННЫЙ ДЕНЬ: Тонкая оранжевая обводка, белый фон */
+.react-datepicker__day--selected, 
+.react-datepicker__day--keyboard-selected {
+  background-color: rgba(255, 168, 0, 0.31);
+  color: #292929 !important; /* Текст остается темным */
+  border: 2px solid #ffa800 !important; /* Тонкая оранжевая обводка как для числа 30 */
+  font-weight: 400 !important;
+   border-radius: 4px !important;
+}
+
+/* Ховер при наведении мышки */
+.react-datepicker__day:hover {
+  background-color: #f5f5f5 !important;
+}
+
+/* СТРЕЛОЧКИ ПЕРЕКЛЮЧЕНИЯ МЕСЯЦЕВ (ВЛЕВО / ВПРАВО) */
+.react-datepicker__navigation {
+  top: 16px !important;
+  width: 24px !important;
+  height: 24px !important;
+}
+.react-datepicker__navigation--previous { left: 15px !important; }
+.react-datepicker__navigation--next { right: 15px !important; }
+
+.react-datepicker__navigation-icon::before {
+  border-color: #292929 !important; /* Темные минималистичные стрелочки */
+  border-width: 2px 2px 0 0 !important;
+  width: 7px !important;
+  height: 7px !important;
+}
+
+/* АККУРАТНАЯ МАЛЕНЬКАЯ БЕЛАЯ СТРЕЛОЧКА СВЕРХУ ПОП-АПА */
+.react-datepicker__triangle {
+  display: none !important; /* Отключаем стандартную */
+}
+
+.react-datepicker-popper::before {
+  content: "" !important;
+  position: absolute !important;
+  top: -5px !important; /* Выносим наверх за рамки календаря */
+  left: 50% !important;
+  transform: translateX(-50%) !important; /* Строго по центру */
+  width: 0 !important;
+  height: 0 !important;
+  border-style: solid !important;
+  border-width: 0 6px 6px 6px !important;
+  border-color: transparent transparent #ffffff transparent !important; /* Белый треугольник */
+  z-index: 101 !important;
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+  display: flex;
+}

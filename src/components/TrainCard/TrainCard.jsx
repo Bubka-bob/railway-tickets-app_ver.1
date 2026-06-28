@@ -6,6 +6,7 @@ import AppContext from '../context/AppContext';
 import RouteContext from "../context/RouteContext";
 import OrderContext from "../context/OrderContext";
 import getTime from '../../services/getTime';
+import SVGicon from "../SVGicon/SVGicon"
 
 export default function TrainCard({ trainData }) {
   const { departure, arrival } = trainData;
@@ -75,8 +76,11 @@ export default function TrainCard({ trainData }) {
   };
 
   const renderSeatsInfo = () => {
-    const seats = departure.price_info;
-    if (!seats) return <div className="train-card__no-seats">Мест нет</div>;
+    const seats = departure?.price_info;
+    // Объект, где бэкенд хранит общее количество свободных мест по классам
+    const availableSeats = departure?.available_seats_info;
+    
+    if (!seats || Object.keys(seats).length === 0) return <div className="train-card__no-seats">Мест нет</div>;
 
     const classesMap = {
       first: 'Люкс',
@@ -87,13 +91,58 @@ export default function TrainCard({ trainData }) {
 
     return Object.keys(seats).map((className) => {
       if (!classesMap[className]) return null;
+      
+      const currentClassInfo = seats[className];
+
+      // Если у класса нет цен на бэкенде — полностью скрываем строку
+      if (!currentClassInfo || (!currentClassInfo.top_price && !currentClassInfo.bottom_price && !currentClassInfo.side_price)) {
+        return null;
+      }
+
+      // Вычисляем минимальную стоимость для вывода в строке "от... ₽"
+      const minPrice = currentClassInfo.top_price || currentClassInfo.bottom_price || currentClassInfo.side_price;
+
+      // 🔴 ИСПРАВЛЕНО: Берем РЕАЛЬНОЕ количество мест с сервера. Если его нет — пишем 0
+      const totalSeatsCount = availableSeats?.[className] || 0;
+
       return (
-        <div key={className} className="train-card__seat-row" onClick={openSeats}>
-          <span className="train-card__seat-class">{classesMap[className]}</span>
-          <span className="train-card__seat-count">{Math.floor(Math.random() * 15) + 1}</span> 
-          <span className="train-card__seat-price">
-            от <span className="train-card__price-val">{seats[className].top_price || seats[className].bottom_price}</span> ₽
-          </span>
+        <div key={className} className="train-card__seat-row-container">
+          {/* Основная видимая строка класса поезда */}
+          <div className="train-card__seat-row">
+            <span className="train-card__seat-class">{classesMap[className]}</span>
+            {/* 🔴 ИСПРАВЛЕНО: Выводим реальную переменную количества мест с бэкенда */}
+            <span className="train-card__seat-count">{totalSeatsCount}</span> 
+            <span className="train-card__seat-price">
+              от <span className="train-card__price-val">{minPrice}</span> ₽
+            </span>
+          </div>
+
+          {/* Всплывающее окно (Тултип) при наведении */}
+          <div className="train__price-seat-up-down">
+            {currentClassInfo.top_price && currentClassInfo.top_price > 0 && (
+              <div className="train__price-seat-subrow">
+                <span className="train__price-seat-subrow-type">верхние</span>
+                {/* Для полок внутри тултипа бэкенд не дает раздельного количества в общем поиске, 
+                    поэтому здесь можно оставить расчет от общего числа мест */}
+                <span className="train__price-seat-subrow-count">{Math.ceil(totalSeatsCount * 0.4)}</span>
+                <span className="train__price-seat-subrow-sum">{currentClassInfo.top_price} ₽</span>
+              </div>
+            )}
+            {currentClassInfo.bottom_price && currentClassInfo.bottom_price > 0 && (
+              <div className="train__price-seat-subrow">
+                <span className="train__price-seat-subrow-type">нижние</span>
+                <span className="train__price-seat-subrow-count">{Math.floor(totalSeatsCount * 0.4)}</span>
+                <span className="train__price-seat-subrow-sum">{currentClassInfo.bottom_price} ₽</span>
+              </div>
+            )}
+            {currentClassInfo.side_price && currentClassInfo.side_price > 0 && (
+              <div className="train__price-seat-subrow">
+                <span className="train__price-seat-subrow-type">боковые</span>
+                <span className="train__price-seat-subrow-count">{totalSeatsCount - Math.ceil(totalSeatsCount * 0.4) - Math.floor(totalSeatsCount * 0.4)}</span>
+                <span className="train__price-seat-subrow-sum">{currentClassInfo.side_price} ₽</span>
+              </div>
+            )}
+          </div>
         </div>
       );
     });
@@ -169,6 +218,13 @@ export default function TrainCard({ trainData }) {
           {renderSeatsInfo()}
         </div>
         <div className="train-card__actions">
+          <div className="train-card__comfort-icons">
+      {['have_wifi', 'have_air_conditioning', 'is_express'].filter(key => departure[key]).map((key, index) => (
+        <div className="train-card__comfort-icon-item" key={index}>
+          <SVGicon name={key} />
+        </div>
+      ))}
+    </div>
           <button className="train-card__btn" onClick={handleClick}>
             Выбрать места
           </button>
