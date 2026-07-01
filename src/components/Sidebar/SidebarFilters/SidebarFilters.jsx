@@ -168,7 +168,7 @@ const handlePriceChangeCommitted = (event, values) => {
             step={50}
             className="custom-mui-slider"
             // valueLabelDisplay="auto"
-            valueLabelFormat={(value) => `${value}`}
+            // ValueLabelComponent={CustomValueLabelComponent}
 
             
           />

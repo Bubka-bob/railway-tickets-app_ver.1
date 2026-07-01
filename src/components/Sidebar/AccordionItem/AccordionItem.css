@@ -3,6 +3,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  border-bottom: 1px solid rgba(229, 222, 229, 0.15);
  
 }
 
@@ -19,25 +20,29 @@
 /* 🔴 ИСПРАВЛЕНО: Маленькая аккуратная кнопка рамки значка плюс/минус */
 .filter-accordion-unit__toggle-btn {
   width: 20px;
-  height: 24px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.3); /* Тонкая контурная рамочка вокруг знака по Figma */
   border-radius: 4px;
   transition: border-color 0.2s;
+  box-sizing: border-box;
 }
 
 .filter-accordion-unit__header:hover .filter-accordion-unit__toggle-btn {
-  border-color: #ffa800;
+  border-color: #ffa800 !important; /* Оранжевая рамка квадрата */
+}
+
+.filter-accordion-unit__header:hover .filter-accordion-unit__icon {
+ filter: invert(53%) sepia(87%) saturate(1915%) hue-rotate(15deg) brightness(103%) contrast(105%) !important;
 }
 
 /* 🔴 ИСПРАВЛЕНО: Ультракомпактные мини-иконки плюс и минус */
 .filter-accordion-unit__icon {
-  width: 10px;
-  height: 10px;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  filter: brightness(0) invert(1); /* Окрашивает черный плюс/минус в белый цвет под темный сайдбар */
+  filter: filter 0.2s ease; 
 }
 
 /* Логика скрытия и плавного раскрытия секции времени */
@@ -61,4 +66,5 @@
 .filter-accordion-unit__content-wrapper {
   overflow: hidden;
   width: 100%;
+  padding: 25px 30px;
 }
