@@ -1,23 +1,44 @@
-import React from "react";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
+import React, { useContext } from 'react';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import SelectSeat from '../../components/SelectSeat/SelectSeat';
+import AppContext from '../../components/context/AppContext';
 import OrderbgImage from "../../assets/header-order-image.png";
-import HeaderProgressBar from "../../components/Header/HeaderProgressBar/HeaderProgressBar";
-import SelectSeat from "../../components/SelectSeat/SelectSeat"
-
- 
-
+import LastTickets from "../../components/Sidebar/LastTickets/LastTickets"
+import "./SelectSeatsPage.css"
 export default function SelectSeatsPage() {
-  const OrdertBg = {
+  // Безопасно извлекаем глобальный контекст для проверки обратного пути
+  const context = useContext(AppContext);
+  const appState = context?.appState;
+
+  const headerBg = {
     backgroundImage: `url(${OrderbgImage})`,
-  }
+  };
 
   return (
-    <>
-      <Header style={OrdertBg} variant="select"/>
-       <HeaderProgressBar currentStep={1} />
-      <SelectSeat/> 
+    <div className="seats-page-global-wrapper">
+      {/* Шапка сайта с горизонтальным виджетом поиска */}
+      <Header style={headerBg} variant="select" />
+      
+      {/* ДВУХКОЛОНОЧНЫЙ МАКЕТ СТРАНИЦЫ ПО FIGMA */}
+      <div className="seats-page-grid container">
+        
+        {/* ЛЕВАЯ КОЛОНКА (САЙДБАР) */}
+        <aside className="seats-page-sidebar">
+          <div className="seats-sidebar-placeholder">
+            <p style={{ color: '#fff', textAlign: 'center', margin: 0 }}>Фильтры в разработке</p>
+          </div>
+          <LastTickets/>
+        </aside>
+
+        {/* ПРАВАЯ КОЛОНКА (РАБОЧАЯ ОБЛАСТЬ) */}
+        <section className="seats-page-main-zone">
+          <SelectSeat />
+        </section>
+
+      </div>
+
       <Footer />
-    </>
+    </div>
   );
 }

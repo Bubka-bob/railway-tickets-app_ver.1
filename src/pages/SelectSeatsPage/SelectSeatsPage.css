@@ -1,0 +1,89 @@
+/* Главный сеточный каркас страницы выбора мест */
+.seats-page-grid {
+  display: grid;
+  /* 360px под сайдбар фильтров по Figma, остальное под рабочую область поезда */
+  grid-template-columns: 360px 1fr; 
+  gap: 40px; /* Отступ между левым сайдбаром и правым контентом */
+  padding-top: 50px;
+  padding-bottom: 80px;
+  align-items: start;
+}
+
+/* Ограничитель ширины по центру экрана */
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+
+/* Стилизация левой панели-заглушки */
+.seats-page-sidebar {
+  width: 100%;
+}
+
+.seats-sidebar-placeholder {
+  background-color: #3e3c41; /* Тёмный глубокий цвет панелей из Figma */
+  padding: 30px 25px;
+  border-radius: 4px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  min-height: 400px;
+}
+
+/* Правая контентная зона */
+.seats-page-main-zone {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.seats-back-navigation {
+  width: 100%;
+  display: flex;
+  align-items: center; /* Выравнивает квадрат и кнопку строго по одной линии */
+  gap: 15px;           /* Отступ между оранжевым декором и кнопкой */
+  margin-bottom: 30px; /* Отступ до карточки поезда */
+}
+
+/* Независимый оранжевый квадрат как элемент декора */
+.seats-back-navigation__arrow-box {
+  width: 45px;
+  height: 45px;
+  background-color: #ffa800; /* Насыщенный оранжевый цвет */
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 5px; /* Аккуратное скругление углов */
+  flex-shrink: 0;
+  /* 🔴 УБРАЛИ вращение transform, стрелка теперь смотрит в исходную сторону ➔ */
+}
+
+/* Отдельная белая кнопка возврата */
+.seats-back-navigation__btn {
+  background-color: #ffffff;
+  border: 1px solid #c4c4c4; /* Светло-серая или темная рамка под макет */
+  border-radius: 5px;
+  padding: 0 25px;           /* Боковые отступы для текста */
+  height: 45px;              /* Высота идеально совпадает с высотой квадрата */
+  font-size: 15px;
+  font-weight: bold;
+  color: #292929;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: Arial, sans-serif;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Эффект наведения на кнопку */
+.seats-back-navigation__btn:hover {
+  border-color: #292929;
+  background-color: #f7f8f9;
+}
+
+.seats-back-navigation__btn:active {
+  transform: scale(0.98);
+}

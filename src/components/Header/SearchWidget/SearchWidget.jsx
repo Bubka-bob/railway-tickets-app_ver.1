@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { ru } from 'date-fns/locale/ru'; 
 import 'react-datepicker/dist/react-datepicker.css';
+import Calendar from "../../Calendar/Calendar";
+
+
 import './SearchWidget.css';
 
 // 1. Импортируем сам контекст (укажите правильный относительный путь к вашему файлу appContext)
@@ -150,6 +153,7 @@ setAppState((prevState) => ({
                 popperContainer={({ children }) => <div>{children}</div>} 
                 required
               />
+              {/* <Calendar/> */}
             </div>
             <img src={calendarIcon} alt="" className="search-widget__icon" />
           </div>
@@ -166,6 +170,7 @@ setAppState((prevState) => ({
                 popperContainer={({ children }) => <div>{children}</div>}
               />
             </div>
+            {/* <Calendar/> */}
             <img src={calendarIcon} alt="" className="search-widget__icon" />
           </div>
         </div>

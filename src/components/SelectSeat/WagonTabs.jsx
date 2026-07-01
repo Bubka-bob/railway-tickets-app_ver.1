@@ -1,0 +1,41 @@
+import React from 'react';
+
+export default function WagonTabs({ groupedWagons, activeTab, setActiveTab, setActiveWagonId }) {
+  const tabNames = {
+    fourth: "Сидячий",
+    third: "Плацкарт",
+    second: "Купе",
+    first: "Люкс"
+  };
+
+  return (
+    <div className="wagon-tabs-container">
+      <p className="wagon-tabs-label">Тип вагона</p>
+      <div className="wagon-tabs-row">
+        {Object.keys(groupedWagons).map(typeKey => {
+          if (groupedWagons[typeKey].length === 0) return null;
+
+          return (
+            <button
+              key={typeKey}
+              className={`wagon-tab-btn ${activeTab === typeKey ? 'is-active' : ''}`}
+              onClick={() => {
+                setActiveTab(typeKey);
+                // При переключении таба автоматически активируем самый первый вагон из списка нового типа
+                setActiveWagonId(groupedWagons[typeKey][0]?._id || null);
+              }}
+            >
+              <span className="wagon-tab-btn__icon">
+                {typeKey === 'first' && '⭐'}
+                {typeKey === 'second' && '🛏️'}
+                {typeKey === 'third' && '🪑'}
+                {typeKey === 'fourth' && '🧎'}
+              </span>
+              <span className="wagon-tab-btn__text">{tabNames[typeKey]}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

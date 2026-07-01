@@ -1,0 +1,64 @@
+/* --- СТИЛИ ДЛЯ ВЫДВИЖНОГО МАКЕТНОГО АККОРДЕОНА --- */
+.filter-accordion-unit {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+ 
+}
+
+.filter-accordion-unit__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  user-select: none;
+  padding: 25px 30px;
+}
+
+/* 🔴 ИСПРАВЛЕНО: Маленькая аккуратная кнопка рамки значка плюс/минус */
+.filter-accordion-unit__toggle-btn {
+  width: 20px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Тонкая контурная рамочка вокруг знака по Figma */
+  border-radius: 4px;
+  transition: border-color 0.2s;
+}
+
+.filter-accordion-unit__header:hover .filter-accordion-unit__toggle-btn {
+  border-color: #ffa800;
+}
+
+/* 🔴 ИСПРАВЛЕНО: Ультракомпактные мини-иконки плюс и минус */
+.filter-accordion-unit__icon {
+  width: 10px;
+  height: 10px;
+  object-fit: contain;
+  filter: brightness(0) invert(1); /* Окрашивает черный плюс/минус в белый цвет под темный сайдбар */
+}
+
+/* Логика скрытия и плавного раскрытия секции времени */
+.filter-accordion-unit__body {
+  display: grid;
+  transition: grid-template-rows 0.2s ease-out, opacity 0.2s ease-out;
+}
+
+.filter-accordion-unit__body.is-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 20px; /* Отступ появляется только когда открыто */
+}
+
+.filter-accordion-unit__body.is-closed {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.filter-accordion-unit__content-wrapper {
+  overflow: hidden;
+  width: 100%;
+}
