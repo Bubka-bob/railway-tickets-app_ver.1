@@ -17,6 +17,24 @@ import arrowFromIcon from '../../../assets/arrow-from.png';
 
 import './SidebarFilters.css';
 
+function CustomValueLabelComponent(props) {
+  const { children, open, value } = props;
+
+  return (
+    <span>
+      {/* Рендерим саму ручку ползунка */}
+      {children}
+      
+      {/* Если взаимодействие активно (open=true), показываем стоимость */}
+      {open && (
+        <span className="slider-thumb-value">
+          {(value)}
+        </span>
+      )}
+    </span>
+  );
+}
+
 export default function FilterSidebar({ absoluteMinPrice, absoluteMaxPrice }) {
   const { appState, setAppState } = useContext(AppContext);
 
@@ -35,6 +53,14 @@ export default function FilterSidebar({ absoluteMinPrice, absoluteMaxPrice }) {
       ...prev,
       price_from: values[0], // Минимальный бегунок
       price_to: values[1]    // Максимальный бегунок
+    }));
+  };
+
+const handlePriceChangeCommitted = (event, values) => {
+    setAppState((prev) => ({
+      ...prev,
+      price_from: values[0],
+      price_to: values[1]
     }));
   };
 
@@ -120,24 +146,39 @@ export default function FilterSidebar({ absoluteMinPrice, absoluteMaxPrice }) {
       {/* СЛОЙ 3: ДИНАМИЧЕСКИЙ СЛАЙДЕР СТОИМОСТИ С СЕРВЕРА */}
       <div className="filter-sidebar__section filter-sidebar__section--price">
         <h4 className="range-title-sidebar">Стоимость</h4>
-        <div className="range-text-hints"><span>от</span><span>до</span></div>
+        {/* Надписи "от" и "до" над ползунком по макету */}
+          <div className="range-text-hints">
+            <span>от</span>
+            <span>до</span>
+          </div>        
         <div className="mui-slider-wrapper">
           <Slider
             /* 🔴 ИСПРАВЛЕНО: Бегунки теперь ссылаются на динамические границы sliderMin и sliderMax */
-            value={[appState?.price_from || sliderMin, appState?.price_to || sliderMax]}
+            
+            // value={[appState?.price_from || sliderMin,
+            //    appState?.price_to || sliderMax]}
+            value={[
+              appState?.price_from ?? absoluteMinPrice, 
+              appState?.price_to ?? absoluteMaxPrice
+            ]}
             onChange={handlePriceChange}
+            onChangeCommitted={handlePriceChangeCommitted} 
             min={sliderMin}
             max={sliderMax}
             step={50}
             className="custom-mui-slider"
+            // valueLabelDisplay="auto"
+            valueLabelFormat={(value) => `${value}`}
+
+            
           />
+          <div className="range-numeric-outputs">
+          <span>{appState?.price_from ?? absoluteMinPrice} ₽</span>
+          <span>{appState?.price_to ?? absoluteMaxPrice} ₽</span>
         </div>
-        <div className="range-numeric-outputs">
-          {/* Динамический вывод числовых значений под бегунками */}
-          <span>{appState?.price_from || sliderMin} ₽</span>
-          <span>{appState?.price_to || sliderMax} ₽</span>
+          
         </div>
-      </div>
+       </div>
 
       {/* СЛОЙ 4: НАПРАВЛЕНИЕ ТУДА */}
       <div className="filter-sidebar__section-accordion">

@@ -11,13 +11,6 @@
   border-bottom: 1px solid rgba(229, 222, 229, 0.15);
 }
 
-/* .filter-sidebar__section-accordion {
-  padding: 15px 30px;
-  border-bottom: 1px solid rgba(229, 222, 229, 0.15);
-}
-.filter-sidebar__section-accordion.no-border {
-  border-bottom: none;
-} */
 
 /* Стилизация заголовков и инпутов дат */
 .filter-date-group {
@@ -76,55 +69,55 @@
 
 /* СТИЛИЗАЦИЯ MUI СЛАЙДЕРОВ ПО FIGMA */
 .range-title-sidebar {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 30px;
   margin: 0 0 15px 0;
+  
 }
 .range-text-hints {
   display: flex;
   justify-content: space-between;
-  font-size: 13px;
-  color: #939393;
+  font-size: 18px;
+  color:#E5E5E5; /* Белый цвет надписей "от" и "до" */
+  margin-bottom: 8px;
 }
 .mui-slider-wrapper {
   padding: 0 10px;
 }
 
 /* Окрашиваем ползунки в оранжевый */
-.custom-mui-slider {
-  color: #ffa800 !important; 
-  height: 4px !important;
+.custom-mui-slider .MuiSlider-track {
+  background-color: #ffa800 !important;
+  border: none !important;
+  height: 18px !important;
 }
 .custom-mui-slider .MuiSlider-thumb {
-  width: 14px !important;
-  height: 14px !important;
-  background-color: #ffffff !important;
-  border: 2px solid #ffa800 !important;
+  width: 20px !important;
+  height: 20px !important;
+  background-color: #ffffff !important; /* Чисто белый цвет внутри */
+  border: none !important;              /* Без контуров */
+  box-shadow: none !important;          /* Удаляем дефолтную синюю тень MUI */
+  transition: transform 0.1s ease;
 }
 .custom-mui-slider .MuiSlider-rail {
-  background-color: #3f3f3f !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.4) !important; /* Тонкая белая макетная рамка */
   opacity: 1 !important;
+  height: 18px !important;
+  border-radius: 8px !important;
 }
 
 .range-numeric-outputs, .time-slider-labels {
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
-  color: #939393;
+  font-size: 16px;
+  color: #ffffff;
   margin-top: 5px;
 }
 
-/* Внутренности аккордеона направлений */
-/* .accordion-title-with-icon {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  font-size: 18px;
-  font-weight: bold;
-} */
+
 .dir-arrow-img {
-  width: 16px;
-  height: 16px;
+  width: 32px;
+  height: 26px;
   object-fit: contain;
 }
 
@@ -138,3 +131,31 @@
   color: #ffa800;
   font-weight: bold;
 }
+
+/* .slider-thumb-value {
+  position: absolute;
+  top: -30px; 
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff; 
+  border-radius: 50%; 
+  padding: 4px 8px;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+  pointer-events: none; 
+  z-index: 1;
+} */
+
+.MuiSlider-valueLabel {
+  background-color: white !important;
+  border-radius: 50% !important;
+  padding: 4px 8px !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+  
+}
+
