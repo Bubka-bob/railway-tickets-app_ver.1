@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import WagonTabs from './WagonTabs';
 import WagonNumbers from './WagonNumbers';
-import WagonScheme from './WagonScheme';
+import WagonScheme from '../SelectSeat/WagonScheme/WagonScheme';
 import SeatsTrainHeader from './SeatsTrainHeader/SeatsTrainHeader';
 
 // 🔴 ИСПРАВЛЕНО: Принимаем routeData вместо trainData

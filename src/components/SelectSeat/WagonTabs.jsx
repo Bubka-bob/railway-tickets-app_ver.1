@@ -1,4 +1,8 @@
 import React from 'react';
+import luxuryIcon from '../../assets/luxury.png';
+import coupeIcon from '../../assets/coupe.png';
+import platscartIcon from '../../assets/platscart.png';
+import sedentaryIcon from '../../assets/sedentary.png';
 
 export default function WagonTabs({ groupedWagons, activeTab, setActiveTab, setActiveWagonId }) {
   const tabNames = {
@@ -6,6 +10,13 @@ export default function WagonTabs({ groupedWagons, activeTab, setActiveTab, setA
     third: "Плацкарт",
     second: "Купе",
     first: "Люкс"
+  };
+
+ const tabIcons = {
+    first: luxuryIcon,
+    second: coupeIcon,
+    third: platscartIcon,
+    fourth: sedentaryIcon
   };
 
   return (
@@ -26,10 +37,11 @@ export default function WagonTabs({ groupedWagons, activeTab, setActiveTab, setA
               }}
             >
               <span className="wagon-tab-btn__icon">
-                {typeKey === 'first' && '⭐'}
-                {typeKey === 'second' && '🛏️'}
-                {typeKey === 'third' && '🪑'}
-                {typeKey === 'fourth' && '🧎'}
+                <img 
+                  src={tabIcons[typeKey]} 
+                  alt={tabNames[typeKey]} 
+                  className="wagon-tab-btn__img" 
+                />
               </span>
               <span className="wagon-tab-btn__text">{tabNames[typeKey]}</span>
             </button>

@@ -5,7 +5,7 @@ import SelectSeat from '../../components/SelectSeat/SelectSeat';
 import AppContext from '../../components/context/AppContext';
 import OrderbgImage from "../../assets/header-order-image.png";
 import LastTickets from "../../components/Sidebar/LastTickets/LastTickets"
-import SidebaFilters from "../../components/Sidebar/SidebarFilters/SidebarFilters"
+import SidebarFilters from "../../components/Sidebar/SidebarFilters/SidebarFilters"
 import "./SelectSeatsPage.css"
 export default function SelectSeatsPage() {
   // Безопасно извлекаем глобальный контекст для проверки обратного пути

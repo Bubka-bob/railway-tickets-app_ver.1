@@ -164,7 +164,7 @@ import TrainCard from '../../components/TrainCard/TrainCard';
 import DirectionSeatsBlock from '../../components/SelectSeat/DirectionSeatsBlock';
 import WagonTabs from './WagonTabs';
 import WagonNumbers from './WagonNumbers';
-import WagonScheme from './WagonScheme';
+import WagonScheme from '../SelectSeat/WagonScheme/WagonScheme';
 import './SelectSeat.css';
 
 export default function SelectSeat() {

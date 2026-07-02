@@ -57,27 +57,19 @@ const convertToSeconds = (hours) => {
     return hourPart * 3600 + minutePart * 60;
 };
   const handleTimeChange = (direction, type, values) => {
-    // const minKey = direction === 'start' ? `${type}_time_min` : `return_${type}_time_min`;
-    // const maxKey = direction === 'start' ? `${type}_time_max` : `return_${type}_time_max`;
+    const minKey = direction === 'start' ? `${type}_time_min` : `return_${type}_time_min`;
+    const maxKey = direction === 'start' ? `${type}_time_max` : `return_${type}_time_max`;
   
     // setAppState((prev) => ({
     //   ...prev,
     //   [minKey]: values[0],
     //   [maxKey]: values[1]
     // }));
-const secondsFrom = convertToSeconds(values[0]);
+    const secondsFrom = convertToSeconds(values[0]);
     const secondsTo = convertToSeconds(values[1]);
 
-    
-    const minKey = direction === 'start'
-        ? `${type}_hour_from`
-        : `${type}_hour_from_return`;
-
-    const maxKey = direction === 'start'
-        ? `${type}_hour_to`
-        : `${type}_hour_to_return`;
-
-    ssetAppState((prev) => ({
+       
+    setAppState((prev) => ({
         ...prev,
         [minKey]: secondsFrom,
         [maxKey]: secondsTo
@@ -204,11 +196,11 @@ const secondsFrom = convertToSeconds(values[0]);
           <div className="time-slider-subblock">
             <h5>Время отбытия</h5>
             <Slider
-              value={[appState?.departure_hour_from || 0, appState?.departure_hour_to || 2400]}
+              value={[appState?.departure_hour_from || 0, appState?.departure_hour_to || 24*3600]}
               onChange={(e, v) => handleTimeChange('start', 'departure', v)}
               min={0}
-              max={2400}
-              step={30}
+              max={24*3600}
+              step={60*60}
               className="custom-mui-slider"
             />
             <div className="time-slider-labels">

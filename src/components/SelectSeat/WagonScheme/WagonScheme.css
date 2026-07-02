@@ -1,0 +1,86 @@
+.wagon-scheme-card {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+
+.wagon-scheme-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+/* 🔴 ИСПРАВЛЕНО: Задаем вагону фиксированную высоту по макету Нетологии */
+.wagon-map-layout {
+  display: flex;
+  align-items: center; /* Центрируем элементы по горизонтальной оси */
+  width: 100%;
+  background-color: #f7f8f9;
+  border-radius: 5px;
+  border: 1px solid #c4c4c4;
+  height: 155px; /* Идеальная высота для размещения купе и коридора */
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Левый тамбур (Голова) */
+.wagon-map-part--header {
+  position: relative;
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* 🔴 ИСПРАВЛЕНО: Белый номер вагона в черном квадратике на крыше (как на макете!) */
+.wagon-number-label-inside-blueprint {
+  position: absolute;
+  top: 12px;
+  left: 55px; /* Смещаем точно на макетную черную плашку крыши */
+  font-size: 12px;
+  font-weight: bold;
+  color: #ffffff; /* Номер белый */
+  background-color: #292929;
+  padding: 2px 6px;
+  border-radius: 3px;
+  z-index: 5;
+}
+
+/* 🔴 ИСПРАВЛЕНО: Центральная рабочая зона, куда вставляется SecondClass */
+.wagon-map-part--grid-center {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  background-color: #ffffff;
+  /* Убираем рамки отсюда, так как теперь обведен весь wagon-map-layout */
+  border-left: none;
+  border-right: none;
+  box-sizing: border-box;
+}
+
+/* Жестко фиксируем картинки тамбуров, чтобы они не сплющивались */
+.wagon-part-img {
+  display: block;
+  height: 100%;
+  width: auto;
+  object-fit: cover; /* Заставляет картинку заполнить всю высоту тамбура */
+}
+
+/* Правый тамбур (Хвост) */
+.wagon-map-part--footer {
+  height: 100%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Подпись внизу вагона про выбирающих людей */
+.wagon-blueprint-live-counter {
+  font-size: 13px;
+  color: #292929;
+  margin-top: 15px;
+  text-align: right;
+  font-weight: 500;
+}

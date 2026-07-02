@@ -1,0 +1,44 @@
+/* --- ВЕРХНИЕ БОЛЬШИЕ ТАБЫ (ТИП ВАГОНА) --- */
+.wagon-tabs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.wagon-tabs-label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #292929;
+}
+
+.wagon-tabs-row {
+  display: flex;
+  background-color: #f4f3f6;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.wagon-tab-btn {
+  flex: 1;
+  padding: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  color: #939393;
+  transition: all 0.2s ease;
+}
+
+.wagon-tab-btn:not(:last-child) {
+  border-right: 1px solid #e5e5e5;
+}
+
+/* Активный выбранный класс (темно-серый или оранжевый по макету) */
+.wagon-tab-btn.is-active {
+  background-color: #ffa800;
+  color: #ffffff;
+  font-weight: bold;
+}

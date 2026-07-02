@@ -37,7 +37,7 @@ export default function SelectTrainContent() {
     have_fourth_class: appState?.have_fourth_class ? 'true' : undefined,
     have_wifi: appState?.have_wifi ? 'true' : undefined,
     have_air_conditioning: appState?.have_air_conditioning ? 'true' : undefined,
-    have_express: appState?.have_express ? 'true' : undefined,
+    is_express: appState?.have_express ? 'true' : undefined,
     price_from: appState?.price_from || null,
     price_to: appState?.price_to || null,
     start_departure_hour_from: appState?.departure_hour_from,

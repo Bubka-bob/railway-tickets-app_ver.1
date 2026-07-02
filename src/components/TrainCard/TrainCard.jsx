@@ -234,7 +234,7 @@ const minPrice = className === 'first' || className === 'fourth'
         </div>
         <div className="train-card__actions">
           <div className="train-card__comfort-icons">
-      {['have_wifi', 'have_air_conditioning', 'have_express'].filter(key => departure[key]).map((key, index) => (
+      {['have_wifi', 'have_air_conditioning', 'is_express'].filter(key => departure[key]).map((key, index) => (
         <div className="train-card__comfort-icon-item" key={index}>
           <SVGicon name={key} />
         </div>
