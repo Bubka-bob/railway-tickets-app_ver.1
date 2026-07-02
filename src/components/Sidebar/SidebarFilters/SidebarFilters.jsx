@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Slider from '@mui/material/Slider';
 import Switch from '@mui/material/Switch';
 import AppContext from '../../context/AppContext';
@@ -17,29 +17,17 @@ import arrowFromIcon from '../../../assets/arrow-from.png';
 
 import './SidebarFilters.css';
 
-function CustomValueLabelComponent(props) {
-  const { children, open, value } = props;
 
-  return (
-    <span>
-      {/* Рендерим саму ручку ползунка */}
-      {children}
-      
-      {/* Если взаимодействие активно (open=true), показываем стоимость */}
-      {open && (
-        <span className="slider-thumb-value">
-          {(value)}
-        </span>
-      )}
-    </span>
-  );
-}
 
-export default function FilterSidebar({ absoluteMinPrice, absoluteMaxPrice }) {
+export default function SidebarFilters({ absoluteMinPrice, absoluteMaxPrice }) {
   const { appState, setAppState } = useContext(AppContext);
 
-  const sliderMin = (absoluteMinPrice === Infinity || !absoluteMinPrice) ? 0 : absoluteMinPrice;
-  const sliderMax = (absoluteMaxPrice === 0 || !absoluteMaxPrice) ? 10000 : absoluteMaxPrice;
+  const sliderMin = 0;
+  const sliderMax = absoluteMaxPrice ?? 10000;
+
+const currentPriceFrom = appState?.price_from ?? absoluteMinPrice;
+const currentPriceTo = appState?.price_to ?? absoluteMaxPrice;
+  
 
   const toggleCheckbox = (field) => {
     setAppState((prev) => ({
@@ -63,15 +51,39 @@ const handlePriceChangeCommitted = (event, values) => {
       price_to: values[1]
     }));
   };
-
+const convertToSeconds = (hours) => {
+    const hourPart = Math.floor(hours / 100);
+    const minutePart = hours % 100;
+    return hourPart * 3600 + minutePart * 60;
+};
   const handleTimeChange = (direction, type, values) => {
-    const minKey = direction === 'start' ? `${type}_time_min` : `return_${type}_time_min`;
-    const maxKey = direction === 'start' ? `${type}_time_max` : `return_${type}_time_max`;
-  setAppState((prev) => ({
-      ...prev,
-      [minKey]: values[0],
-      [maxKey]: values[1]
+    // const minKey = direction === 'start' ? `${type}_time_min` : `return_${type}_time_min`;
+    // const maxKey = direction === 'start' ? `${type}_time_max` : `return_${type}_time_max`;
+  
+    // setAppState((prev) => ({
+    //   ...prev,
+    //   [minKey]: values[0],
+    //   [maxKey]: values[1]
+    // }));
+const secondsFrom = convertToSeconds(values[0]);
+    const secondsTo = convertToSeconds(values[1]);
+
+    
+    const minKey = direction === 'start'
+        ? `${type}_hour_from`
+        : `${type}_hour_from_return`;
+
+    const maxKey = direction === 'start'
+        ? `${type}_hour_to`
+        : `${type}_hour_to_return`;
+
+    ssetAppState((prev) => ({
+        ...prev,
+        [minKey]: secondsFrom,
+        [maxKey]: secondsTo
     }));
+
+
   };
 
   // Вспомогательная функция для форматирования ползунков времени (1100 -> "11:00")
@@ -155,26 +167,25 @@ const handlePriceChangeCommitted = (event, values) => {
           <Slider
             /* 🔴 ИСПРАВЛЕНО: Бегунки теперь ссылаются на динамические границы sliderMin и sliderMax */
             
-            // value={[appState?.price_from || sliderMin,
-            //    appState?.price_to || sliderMax]}
-            value={[
-              appState?.price_from ?? absoluteMinPrice, 
-              appState?.price_to ?? absoluteMaxPrice
-            ]}
+            value={[appState?.price_from ?? sliderMin,
+               appState?.price_to ?? sliderMax]}
+            
             onChange={handlePriceChange}
             onChangeCommitted={handlePriceChangeCommitted} 
-            min={sliderMin}
+            min={0}
             max={sliderMax}
             step={50}
             className="custom-mui-slider"
             // valueLabelDisplay="auto"
             // ValueLabelComponent={CustomValueLabelComponent}
-
-            
-          />
-          <div className="range-numeric-outputs">
-          <span>{appState?.price_from ?? absoluteMinPrice} ₽</span>
-          <span>{appState?.price_to ?? absoluteMaxPrice} ₽</span>
+            // valueLabelFormat={(value) => `${value} ₽`}
+            // marks={marks}
+            />
+        <div className="range-numeric-outputs">
+          {/* <span>{ absoluteMinPrice ?? 0}</span>
+          <span>{ absoluteMaxPrice ?? 10000}</span> */}
+          <span>{appState?.price_from || sliderMin} ₽</span>
+          <span>{appState?.price_to || sliderMax} ₽</span>
         </div>
           
         </div>
@@ -193,16 +204,16 @@ const handlePriceChangeCommitted = (event, values) => {
           <div className="time-slider-subblock">
             <h5>Время отбытия</h5>
             <Slider
-              value={[appState?.start_time_min || 0, appState?.start_time_max || 2400]}
-              onChange={(e, v) => handleTimeChange('start', 'start', v)}
+              value={[appState?.departure_hour_from || 0, appState?.departure_hour_to || 2400]}
+              onChange={(e, v) => handleTimeChange('start', 'departure', v)}
               min={0}
               max={2400}
-              step={100}
+              step={30}
               className="custom-mui-slider"
             />
             <div className="time-slider-labels">
               <span>0:00</span>
-              <span className="active-time-val">{formatTime(appState?.start_time_min || 0)}</span>
+              <span className="active-time-val">{formatTime(appState?.departure_hour_from || 0)}</span>
               <span>24:00</span>
             </div>
           </div>

@@ -159,3 +159,20 @@
   transform: translateX(-50%);
 }
 
+/* .MuiSlider-mark {
+    visibility: hidden;
+}
+
+
+.MuiSlider-markActive {
+    visibility: visible;
+}
+
+.MuiSlider-markLabel {
+    transition: opacity 0.2s ease-in-out;
+    opacity: 0;
+}
+
+.MuiSlider-markLabel.Mui-focusVisible {
+    opacity: 1;
+}  */

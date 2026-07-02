@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import useGetRoutes from '../../services/useGetRoutes';
 import TrainCard from '../../components/TrainCard/TrainCard';
-import FilterSidebar from '../Sidebar/SidebarFilters/SidebarFilters';
+import SidebarFilters from '../Sidebar/SidebarFilters/SidebarFilters';
 import AppContext from '../context/AppContext';
 import './SelectTrainContent.css';
 import LastTickets from "../Sidebar/LastTickets/LastTickets"
@@ -40,15 +40,23 @@ export default function SelectTrainContent() {
     have_express: appState?.have_express ? 'true' : undefined,
     price_from: appState?.price_from || null,
     price_to: appState?.price_to || null,
+    start_departure_hour_from: appState?.departure_hour_from,
+    start_departure_hour_to : appState?.departure_hour_to,
+    start_arrival_hour_from: appState?.arrival_hour_from,
+    start_arrival_hour_to: appState?.arrival_hour_to,
+    end_departure_hour_from: appState?.departure_hour_from_return,
+    end_departure_hour_to: appState?.departure_hour_to_return,
+    end_arrival_hour_from: appState?.arrival_hour_from_return,
+    end_arrival_hour_to: appState?.arrival_hour_to_return,
     limit: 10
   };
 
   // Данные с сервера
-  const { result, isLoading, error } = useGetRoutes(queryParams);
+  const { result, isLoading, error } = useGetRoutes(queryParams, [appState]);
 
   // Вычисляемые диапазоны цен
-  let absoluteMinPrice = Infinity;
-  let absoluteMaxPrice = 0;
+  let absoluteMinPrice = null;
+  let absoluteMaxPrice = null;
 
   if (result?.items && Array.isArray(result.items)) {
     result.items.forEach((item) => {
@@ -78,12 +86,11 @@ export default function SelectTrainContent() {
   return (
     <main className="select-train-main container">
       <aside className="filters-sidebar">
-        <FilterSidebar
-          appState={setAppState}
+        <SidebarFilters
+         appState={setAppState}
           setAppState={setAppState}
           absoluteMinPrice={absoluteMinPrice === Infinity ? 0 : absoluteMinPrice}
-          absoluteMaxPrice={absoluteMaxPrice}
-        />
+          absoluteMaxPrice={absoluteMaxPrice}  />
         <LastTickets/>
       </aside>
 
