@@ -36,13 +36,12 @@
   gap: 15px;
 }
 
-/* Неактивные вагоны по макету — черные */
 .wagon-number-nav-btn {
   background: transparent;
   border: none;
   font-size: 18px;
   font-weight: bold;
-  color: #292929; /* Изменено: базовый цвет теперь черный */
+  color: #292929;
   cursor: pointer;
   padding: 0 4px;
   transition: opacity 0.2s ease;
@@ -52,9 +51,8 @@
   opacity: 0.7;
 }
 
-/* Активный выбранный вагон становится белым */
 .wagon-number-nav-btn.is-selected {
-  color: #ffffff !important; /* Гарантируем белый цвет для активного вагона */
+  color: #ffffff !important;
   cursor: default;
 }
 
@@ -66,7 +64,7 @@
 }
 
 /* ==========================================================================
-   НИЖНИЙ БЛОК ХАРАКТЕРИСТИК (GRID КАРКАС)
+   НИЖНИЙ БЛОК ХАРАКТЕРИСТИК (ОБНОВЛЕННАЯ СЕТКА)
    ========================================================================== */
 .wagon-details-row {
   display: flex;
@@ -99,53 +97,93 @@
   margin-top: 4px;
 }
 
-/* Сетка параметров (Разделение на 3 четкие колонки) */
+/* Двухколоночный каркас: таблица цен (занимает всё место) + правый сайдбар (240px) */
 .wagon-stats-grid {
   flex: 1;
   display: grid;
-  grid-template-columns: 1fr 1fr 240px;
+  grid-template-columns: 1fr 240px; 
   padding: 25px 40px;
   align-items: start;
+  gap: 40px;
 }
 
-/* Каждая отдельная колонка внутри Grid */
-.wagon-grid-column {
+/* ==========================================================================
+   ТАБЛИЦА МЕСТ И СТОИМОСТИ (КАК НА МАКЕТЕ)
+   ========================================================================== */
+.wagon-prices-table-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  width: 100%;
 }
 
-.wagon-stat-item__label {
+/* Шапка таблицы */
+.wagon-table-header {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.header-label-gray {
   font-size: 16px;
   color: #928f94;
 }
 
-.sub-label-gray {
+/* Общая цифра доступных мест рядом со словом "Места" */
+.header-total-qty {
   color: #292929;
   font-weight: bold;
-  margin-left: 5px;
+  margin-left: 8px;
 }
 
-.wagon-stat-item__value.highlight-black {
-  color: #292929;
-  font-size: 20px;
-  font-weight: bold;
+/* ➔ Выравнивание слова "Стоимость" строго над столбцом цен */
+.spec-cost-pos {
+  margin-left: 230px; 
 }
 
-.price-value {
+/* Контейнер для рядов данных */
+.wagon-table-body-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Ряд таблицы (Категория - Кол-во - Цена) */
+.wagon-price-row-item {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
   color: #292929;
-  font-size: 26px;
+}
+
+/* Колонка: "Верхние", "Нижние", "Люкс" */
+.wagon-seat-type-label {
+  font-weight: normal;
+  color: #292929;
+  width: 140px; /* Фиксированная ширина выравнивает столбцы */
+}
+
+/* Колонка: цифра количества конкретных мест */
+.wagon-seat-qty {
   font-weight: bold;
+  color: #292929;
+  width: 130px;
+}
+
+/* Колонка: Стоимость билета */
+.wagon-seat-price {
+  font-weight: bold;
+  font-size: 24px;
+  color: #292929;
 }
 
 .currency-rub {
   color: #928f94;
   font-weight: normal;
   font-size: 20px;
+  margin-left: 4px;
 }
 
 /* ==========================================================================
-   ПРАВАЯ КОЛОНКА: ВЕРТИКАЛЬНЫЙ СТЕК ДЛЯ ОБСЛУЖИВАНИЯ И ТЕКСТА
+   ПРАВАЯ КОЛОНКА (ОБСЛУЖИВАНИЕ + ПЛАШКА)
    ========================================================================== */
 .wagon-right-sidebar {
   display: flex;
@@ -153,7 +191,7 @@
   gap: 20px;
 }
 
-/* Серая плашка про 11 человек */
+/* Серая плашка про людей */
 .wagon-viewers-alert {
   background-color: #f1f1f3;
   padding: 12px 15px;

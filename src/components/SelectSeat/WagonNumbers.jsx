@@ -1,7 +1,6 @@
-
 import React from 'react';
 import './WagonNumbers.css';
-import WagonServices from "./WagonServices/WagonServices"
+import WagonServices from "./WagonServices/WagonServices";
 
 export default function WagonNumbers({ wagonsList = [], activeWagonId, setActiveWagonId }) {
   const currentWagon = wagonsList.find(w => String(w?.coach?._id) === String(activeWagonId)) || wagonsList[0];
@@ -10,7 +9,16 @@ export default function WagonNumbers({ wagonsList = [], activeWagonId, setActive
 
   const coach = currentWagon?.coach;
   const seats = currentWagon?.seats || [];
-  const availableSeatsCount = seats.filter(s => s?.available).length;
+  const classType = coach?.class_type; // Получаем тип вагона ('first', 'second', 'third', 'fourth')
+
+  // Считаем общее количество доступных мест
+  const availableSeats = seats.filter(s => s?.available);
+  const totalAvailableCount = availableSeats.length;
+
+  // Распределяем места по категориям на основе индексов API Netology
+  const topSeats = availableSeats.filter(s => s.index <= 36 && s.index % 2 === 0);
+  const bottomSeats = availableSeats.filter(s => s.index <= 36 && s.index % 2 !== 0);
+  const sideSeats = availableSeats.filter(s => s.index >= 37);
 
   const formatWagonName = (name, index) => {
     if (!name) return String(index + 1).padStart(2, '0');
@@ -49,7 +57,7 @@ export default function WagonNumbers({ wagonsList = [], activeWagonId, setActive
         </span>
       </div>
 
-      {/* НИЖНЯЯ ПЛАНКА: Детализация по колонкам Grid */}
+      {/* НИЖНЯЯ ПЛАНКА: Детализация */}
       <div className="wagon-details-row">
         {/* Огромная цифра номера вагона слева */}
         <div className="current-wagon-badge">
@@ -62,32 +70,74 @@ export default function WagonNumbers({ wagonsList = [], activeWagonId, setActive
         {/* ОСНОВНАЯ СЕТКА GRID */}
         <div className="wagon-stats-grid">
           
-          {/* КОЛОНКА 1: Места */}
-          <div className="wagon-grid-column">
-            <span className="wagon-stat-item__label">Места</span>
-            <span className="wagon-stat-item__value highlight-black">{availableSeatsCount}</span>
+          {/* ТАБЛИЦА МЕСТ И ЦЕН ПО МАКЕТУ */}
+          <div className="wagon-prices-table-container">
+            <div className="wagon-table-header">
+              <span className="header-label-gray">Места <span className="header-total-qty">{totalAvailableCount}</span></span>
+              <span className="header-label-gray spec-cost-pos">Стоимость</span>
+            </div>
+            
+            <div className="wagon-table-body-rows">
+              {/* УСЛОВИЕ ДЛЯ ЛЮКСА И СИДЯЧЕГО (Вывод в одну строку) */}
+              {(classType === 'first' || classType === 'fourth') && (
+                <div className="wagon-price-row-item">
+                  <span className="wagon-seat-type-label">
+                    {classType === 'first' ? 'Люкс' : 'Сидячие'}
+                  </span>
+                  <span className="wagon-seat-qty">{totalAvailableCount}</span>
+                  <span className="wagon-seat-price">
+                    {/* ➔ ИСПРАВЛЕНО: Если coach.price пустой, проверяем top_price, затем bottom_price */}
+                    {(coach?.price || coach?.top_price || coach?.bottom_price || 0).toLocaleString('ru-RU')}{' '}
+                    <span className="currency-rub">₽</span>
+                  </span>
+                </div>
+              )}
+
+              {/* УСЛОВИЕ ДЛЯ КУПЕ И ПЛАЦКАРТА (Вывод списком) */}
+              {(classType === 'second' || classType === 'third') && (
+                <>
+                  {/* Верхние места */}
+                  <div className="wagon-price-row-item">
+                    <span className="wagon-seat-type-label">Верхние</span>
+                    <span className="wagon-seat-qty">{topSeats.length}</span>
+                    <span className="wagon-seat-price">
+                      {(coach?.top_price || coach?.price || 0).toLocaleString('ru-RU')} <span className="currency-rub">₽</span>
+                    </span>
+                  </div>
+                  
+                  {/* Нижние места */}
+                  <div className="wagon-price-row-item">
+                    <span className="wagon-seat-type-label">Нижние</span>
+                    <span className="wagon-seat-qty">{bottomSeats.length}</span>
+                    <span className="wagon-seat-price">
+                      {(coach?.bottom_price || coach?.price || 0).toLocaleString('ru-RU')} <span className="currency-rub">₽</span>
+                    </span>
+                  </div>
+
+                  {/* Боковые места (Только если это плацкарт) */}
+                  {classType === 'third' && sideSeats.length > 0 && (
+                    <div className="wagon-price-row-item">
+                      <span className="wagon-seat-type-label">Боковые</span>
+                      <span className="wagon-seat-qty">{sideSeats.length}</span>
+                      <span className="wagon-seat-price">
+                        {(coach?.side_price || coach?.price || 0).toLocaleString('ru-RU')} <span className="currency-rub">₽</span>
+                      </span>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
           </div>
 
-          {/* КОЛОНКА 2: Стоимость */}
-          <div className="wagon-grid-column">
-            <span className="wagon-stat-item__label">Стоимость</span>
-            <span className="wagon-stat-item__value price-value">
-              {(coach?.price || 0).toLocaleString('ru-RU')} <span className="currency-rub">₽</span>
-            </span>
+          {/* КОЛОНКА 3: Правый сайдбар с услугами и количеством людей */}
+          <div className="wagon-grid-column wagon-right-sidebar">
+            <WagonServices coach={coach} />
+            <div className="wagon-viewers-alert">
+              <span className="wagon-viewers-alert__text">
+                11 человек выбирают места в этом поезде
+              </span>
+            </div>
           </div>
-
-          {/* КОЛОНКА 3: Правый сайдбар */}
-        <div className="wagon-grid-column wagon-right-sidebar">
-
-          {/* Вставляем наш новый интерактивный компонент */}
-          <WagonServices coach={coach} />
-
-        <div className="wagon-viewers-alert">
-          <span className="wagon-viewers-alert__text">
-         11 человек выбирают места в этом поезде
-        </span>
-  </div>
-</div>
 
         </div>
       </div>
