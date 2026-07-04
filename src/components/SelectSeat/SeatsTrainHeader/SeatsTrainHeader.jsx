@@ -44,7 +44,6 @@ export default function SeatsTrainHeader({ routeStateData, isReturn = false }) {
         <div className="seats-train-header__left-info">
           <h3 className="seats-train-header__number">{trainName}</h3>
           <div className="seats-train-header__route">
-            <span className="route-city-line route-city-line--main">Адлер ➔</span>
             <span className="route-city-line capitalize-text">{fromCity} ➔</span>
             <span className="route-city-line capitalize-text">{toCity}</span>
           </div>

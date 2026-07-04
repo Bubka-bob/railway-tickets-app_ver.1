@@ -2,7 +2,7 @@ import React from 'react';
 // Импортируйте ваши готовые иконки начала и конца вагона из Figma
 import wagonHeaderIcon from '../../../assets/wagon-header.png'; 
 import wagonFooterIcon from '../../../assets/wagon-footer.png';
-import SecondClass from "../WagonScheme/SecondClass"
+import SecondClass from "../WagonScheme/SecondClass/SecondClass"
 import "./WagonScheme.css"
 
 // 🔴 ИСПРАВЛЕНО: Принимаем в пропсы объект текущего активного вагона (wagon) вместо wagons

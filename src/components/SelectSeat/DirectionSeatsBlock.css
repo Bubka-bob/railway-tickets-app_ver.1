@@ -1,0 +1,96 @@
+
+/* ==========================================================================
+   СЛОЙ 3: КОЛИЧЕСТВО БИЛЕТОВ (Счетчики с рамками)
+   ========================================================================== */
+.seats-layer-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #292929;
+  margin: 0 0 20px 0;
+}
+
+.tickets-qty-layer {
+  margin-bottom: 35px;
+}
+
+.tickets-qty-grid {
+  display: flex;
+  gap: 20px;
+}
+
+/* Базовая карточка выбора количества */
+.qty-card {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid #928f94;
+  border-radius: 5px;
+  padding: 15px 20px;
+  transition: all 0.2s ease;
+}
+
+/* Активное поле ввода по макету приобретает оранжевую рамку */
+/* .qty-card--active,
+.qty-card:focus-within {
+  border-color: #ffa800;
+  box-shadow: 0 0 0 1px #ffa800;
+} */
+.qty-card--active {
+  border-color: #ffa800;
+  box-shadow: 0 0 0 1px #ffa800;
+} 
+
+.qty-card__input-zone {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  color: #292929;
+}
+
+.qty-card__input-zone span {
+  font-weight: 400;
+}
+
+.qty-card__input-zone input {
+  width: 50px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  padding: 5px 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #292929;
+  text-align: center;
+  outline: none;
+}
+
+.qty-card__input-zone input:focus {
+  border-color: #ffa800;
+}
+
+/* Скрываем стандартные стрелочки инпута number для чистоты дизайна */
+.qty-card__input-zone input::-webkit-outer-spin-button,
+.qty-card__input-zone input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.qty-card__input-zone input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* ==========================================================================
+   СЛОЙ 5 И 6: СЕТКА ВАГОНОВ И ЧЕРТЕЖ
+   ========================================================================== */
+/* Отступы для списков номеров вагонов, чтобы визуально отделить от табов */
+.wagon-numbers-container {
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+/* Контейнер чертежа вагона */
+.wagon-scheme-container {
+  background: #f5f5f5;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  padding: 25px;
+  overflow-x: auto; /* Чтобы длинные вагоны скроллились на экранах */
+}
