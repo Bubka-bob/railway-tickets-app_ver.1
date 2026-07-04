@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import WagonTabs from './WagonTabs';
-import WagonNumbers from './WagonNumbers';
-import WagonScheme from '../SelectSeat/WagonScheme/WagonScheme';
-import SeatsTrainHeader from './SeatsTrainHeader/SeatsTrainHeader';
+import WagonTabs from '../WagonTabs/WagonTabs';
+import WagonNumbers from '../WagonNumbers';
+import WagonScheme from '../WagonScheme/WagonScheme';
+import SeatsTrainHeader from '../SeatsTrainHeader/SeatsTrainHeader';
 import "./DirectionSeatsBlock.css";
 
 export default function DirectionSeatsBlock({ wagons = [], routeData, directionType, isReturn = false }) {

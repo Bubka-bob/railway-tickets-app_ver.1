@@ -1,8 +1,8 @@
 import React from 'react';
-import luxuryIcon from '../../assets/luxury.svg';
-import coupeIcon from '../../assets/coupe.svg';
-import platscartIcon from '../../assets/platscart.svg';
-import sedentaryIcon from '../../assets/sedentary.svg';
+import luxuryIcon from '../../../assets/luxury.svg';
+import coupeIcon from '../../../assets/coupe.svg';
+import platscartIcon from '../../../assets/platscart.svg';
+import sedentaryIcon from '../../../assets/sedentary.svg';
 import "./WagonTabs.css"
 
 export default function WagonTabs({ groupedWagons, activeTab, setActiveTab, setActiveWagonId }) {
