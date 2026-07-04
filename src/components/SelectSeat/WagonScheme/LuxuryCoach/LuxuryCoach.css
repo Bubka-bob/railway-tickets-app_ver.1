@@ -1,0 +1,95 @@
+.luxury-coach-body-inner {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr); /* 8 купе Люкса */
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  }
+
+/* Один вертикальный блок: Купе + Коридор под ним */
+.luxury-section-block {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-right: 2px solid #928f94; /* Вертикальные перегородки купе, уходящие в коридор */
+}
+
+/* Убираем последнюю перегородку перед правым тамбуром */
+.luxury-section-block:last-child {
+  border-right: none;
+}
+
+/* Комната купе (верхняя часть) */
+.luxury-compartment-room {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 8px 10px 0 10px;
+  height: 94px;
+  box-sizing: border-box;
+  /* Линия стены купе с дверным проемом по центру */
+  background: 
+    linear-gradient(to right, #928f94 30%, transparent 30%, transparent 70%, #928f94 70%) 
+    bottom no-repeat;
+  background-size: 100% 2px;
+}
+
+/* Пространство между местами в купе */
+.luxury-room-window-space {
+  flex: 1;
+}
+
+/* Сектор коридора под купе */
+.luxury-corridor-sector {
+  height: 40px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  border-bottom: 2px solid #928f94; 
+}
+
+/* ==========================================================================
+   КНОПКИ-МЕСТА (СИДЕНЬЯ СВ С ЦИФРАМИ ВНУТРИ)
+   ========================================================================== */
+.luxury-seat {
+  width: 26px;
+  height: 52px;
+  /* ➔ ИСПРАВЛЕНО: Свободные места теперь светлые, как на макете */
+  background-color: #f4f3f6; /* Светло-серый/белый цвет подложки */
+  border: 1px solid #c4c4c4; /* Тонкая аккуратная рамка вокруг сиденья */
+  border-radius: 2px;
+  color: #292929; /* ➔ ИСПРАВЛЕНО: Черный контрастный цвет цифр */
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  
+  display: flex;
+  align-items: flex-end; 
+  justify-content: center;
+  padding: 0 0 6px 0; 
+  box-sizing: border-box;
+  transition: all 0.15s ease;
+}
+
+/* Эффект наведения (hover) на свободное место */
+.luxury-seat:hover:not(.luxury-seat--disabled) {
+  background-color: #292929; /* Сиденье становится темным при наведении */
+  border-color: #292929;
+  color: #ffffff; /* Цифра внутри становится белой */
+}
+
+/* Занятое место (available === false) — блекло-серое с серым текстом */
+.luxury-seat--disabled {
+  background-color: #e5e5e5;
+  border-color: #e5e5e5;
+  color: #928f94; 
+  cursor: not-allowed;
+}
+
+/* Выбранное пользователем место — фирменный оранжевый */
+.luxury-seat--selected {
+  background-color: #ffa800;
+  border-color: #ffa800;
+  color: #ffffff; /* Цифра становится белой */
+}

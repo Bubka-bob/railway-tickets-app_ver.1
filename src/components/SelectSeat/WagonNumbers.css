@@ -15,7 +15,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #ffe0a3;
+  background-color: #FFD98F;
   padding: 12px 25px;
   border-radius: 4px 4px 0 0;
 }
@@ -75,7 +75,7 @@
 
 /* Желтый квадрат "22 вагон" слева */
 .current-wagon-badge {
-  background-color: #ffda93;
+  background-color: #FFD98F;
   display: flex;
   flex-direction: column;
   align-items: center;
