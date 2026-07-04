@@ -1,0 +1,187 @@
+.wagon-info-panel {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  position: relative;
+  width: 100%;
+}
+
+/* ==========================================================================
+   ВЕРХНЯЯ ЛИНЕЙКА (Вагоны 20 21 22 25)
+   ========================================================================== */
+.wagon-numbers-top-row {
+  display: flex;
+  justify-content: space-between; /* ➔ Главный фикс: расталкивает элементы по краям */
+  align-items: center;
+  background-color: #ffe0a3; /* Светло-желтый фон полосы */
+  padding: 10px 20px;
+  border-radius: 4px 4px 0 0;
+}
+
+.wagon-selector-box {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.wagon-header-info-text {
+  font-size: 14px;
+  color: #292929; /* Делаем текст приглушенным серым, чтобы не спорил с номерами */
+  font-weight: 400;
+  margin-left: auto; /* Жесткое выравнивание вправо на всякий случай */
+}
+
+.wagon-selector-label {
+  font-size: 16px;
+  color: #292929;
+}
+
+.wagon-numbers-list {
+  display: flex;
+  gap: 15px;
+}
+
+/* Кнопки номеров вагонов сверху */
+.wagon-number-nav-btn {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: #292929; /* Неактивные номера на бежевом фоне по макету белые */
+  cursor: pointer;
+  padding: 0 4px;
+  transition: all 0.2s ease;
+}
+
+.wagon-number-nav-btn:hover {
+  color: #292929;
+}
+
+/* Активный выбранный номер становится темно-серым/черным */
+.wagon-number-nav-btn.is-selected {
+  color:  #ffffff;
+  cursor: default;
+}
+
+/* ==========================================================================
+   НИЖНИЙ БЛОК ХАРАКТЕРИСТИК
+   ========================================================================== */
+.wagon-details-row {
+  display: flex;
+  border: 1px solid #e5e5e5;
+  border-top: none;
+  background-color: #ffffff;
+  min-height: 140px;
+}
+
+/* Огромная плашка "22 вагон" слева */
+.current-wagon-badge {
+  background-color: #ffda93; /* Более насыщенный желто-золотой блок под цифру */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 130px;
+  text-align: center;
+}
+
+.current-wagon-badge__num {
+  font-size: 48px;
+  font-weight: bold;
+  color: #292929;
+  line-height: 1;
+}
+
+.current-wagon-badge__text {
+  font-size: 16px;
+  color: #292929;
+  margin-top: 4px;
+}
+
+/* Главная сетка с параметрами */
+.wagon-stats-grid {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  padding: 30px 40px;
+  gap: 70px; /* Свободный отступ между колонками Места / Стоимость / Услуги */
+}
+
+.wagon-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wagon-stat-item__label {
+  font-size: 16px;
+  color: #928f94; /* Приглушенный серый для названий полей */
+}
+
+.sub-label-gray {
+  color: #292929;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+/* Значения параметров */
+.wagon-stat-item__value {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.wagon-stat-item__value.highlight-black {
+  color: #292929;
+  font-size: 20px;
+}
+
+.price-value {
+  color: #292929;
+  font-size: 26px;
+}
+
+.currency-rub {
+  color: #928f94;
+  font-weight: normal;
+  font-size: 20px;
+}
+
+/* Сетка иконок сервиса */
+.wagon-services-icons {
+  display: flex;
+  gap: 8px;
+}
+
+.service-icon-box {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  font-size: 16px;
+}
+
+/* Подсветка активных сервисов */
+.service-icon-box.is-active {
+  border-color: #ffa800;
+  background-color: #ffe0a3; /* Легкий оранжевый фон для включенных услуг */
+}
+
+/* Розовое/серое окошко справа "11 человек выбирают..." */
+.wagon-viewers-alert {
+  position: absolute;
+  right: 35px;
+  top: 55%;
+  transform: translateY(-50%);
+  background-color: #f1f1f3;
+  padding: 12px 18px;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #292929;
+  max-width: 180px;
+  line-height: 1.3;
+}

@@ -34,7 +34,7 @@ export default function WagonTabs({ groupedWagons, activeTab, setActiveTab, setA
               onClick={() => {
                 setActiveTab(typeKey);
                 // При переключении таба автоматически активируем самый первый вагон из списка нового типа
-                setActiveWagonId(groupedWagons[typeKey][0]?._id || null);
+                setActiveWagonId(groupedWagons[typeKey][0]?.coach?._id || null);
               }}
             >
               <span className="wagon-tab-btn__icon">
