@@ -1,0 +1,137 @@
+.wagon-services-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wagon-services-icons {
+  display: flex;
+  gap: 8px;
+}
+
+/* Базовый каркас интерактивной кнопки */
+.service-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background-color: #ffffff;
+  transition: all 0.15s ease;
+  outline: none;
+  padding: 0;
+}
+
+/* ➔ СТИЛИЗАЦИЯ ТВОЕГО КОМПОНЕНТА SVGICON ВНУТРИ КНОПКИ */
+.service-btn .icon {
+  width: 22px;  /* Задаем фиксированный размер иконки из спрайта */
+  height: 22px;
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   СОСТОЯНИЕ 2: НЕ ВЫБРАНЫ (Белая кнопка с темным контуром)
+   -------------------------------------------------------------------------- */
+.service-btn--unselected {
+  border: 1px solid #292929;
+  color: #292929; /* Цвет иконки внутри через currentColor становится черным */
+}
+
+/* --------------------------------------------------------------------------
+   СОСТОЯНИЕ 4: ПРИ НАВЕДЕНИИ (Оранжевый фон с черной рамкой)
+   -------------------------------------------------------------------------- */
+.service-btn--unselected:hover {
+  background-color: #ffa800;
+  border: 1px solid #292929;
+  color: #292929;
+}
+
+/* --------------------------------------------------------------------------
+   СОСТОЯНИЕ 1: ВЫБРАНЫ (Оранжевая кнопка, белая иконка, без рамок)
+   -------------------------------------------------------------------------- */
+.service-btn--selected {
+  background-color: #ffa800;
+  border: none;
+  color: #ffffff; /* Цвет иконки становится белым */
+}
+
+/* --------------------------------------------------------------------------
+   СОСТОЯНИЕ 3: ВКЛЮЧЕНЫ В СТОИМОСТЬ (Неактивный блекло-бежевый фон)
+   -------------------------------------------------------------------------- */
+.service-btn--included {
+  background-color: #ffe0a3; /* Фирменный бежевый фон из макета */
+  border: none;
+  color: #292929;
+  opacity: 0.6; /* Приглушаем яркость по макету */
+  cursor: not-allowed;
+}
+
+.service-btn__icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-btn {
+  position: relative; /* Необходим для позиционирования подсказки относительно кнопки */
+}
+
+/* ==========================================================================
+   CSS ТУЛТИПЫ ДЛЯ ПОДСКАЗОК ПО МАКЕТУ FIGMA
+   ========================================================================== */
+
+/* Сам блок подсказки (использует контент из data-tooltip) */
+.service-btn::after {
+  content: attr(data-tooltip); /* Берет текст из HTML-атрибута */
+  position: absolute;
+  bottom: calc(100% + 10px); /* Появляется строго над кнопкой с отступом */
+  left: 50%;
+  transform: translateX(-50%) scale(0.9); /* Центрируем и слегка сжимаем для анимации */
+  
+  /* Стили плашки из Figma */
+  background-color: #ffffff;
+  color: #292929;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  white-space: nowrap; /* Запрещаем перенос строк */
+  padding: 7px 12px;
+  border-radius: 5px;
+  
+  /* Эффект тени и скрытие по умолчанию */
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e5e5e5;
+  opacity: 0;
+  pointer-events: none; /* Чтобы мышка не цеплялась за скрытый тултип */
+  transition: all 0.15s ease-in-out;
+  z-index: 10;
+}
+
+/* Маленький треугольник-стрелочка снизу подсказки */
+.service-btn::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.9);
+  
+  /* Рисуем стрелочку с помощью border */
+  border-width: 6px 6px 0 6px;
+  border-style: solid;
+  border-color: #ffffff transparent transparent transparent;
+  
+  /* Скрытие по умолчанию */
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.15s ease-in-out;
+  z-index: 11;
+}
+
+/* Эффект тени для стрелочки, чтобы она сливалась с плашкой */
+.service-btn:hover::before,
+.service-btn:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) scale(1); /* Плавное появление с легким увеличением */
+}
