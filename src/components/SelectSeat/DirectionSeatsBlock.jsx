@@ -97,7 +97,7 @@ export default function DirectionSeatsBlock({ wagons = [], routeData, directionT
             onClick={() => setActiveCard('baby')}
           >
             <div className="qty-card__input-zone">
-              <span>Без места — </span>
+              <span>Детсикх "без места" — </span>
               <input 
                 type="number" 
                 value={babyCount} 
