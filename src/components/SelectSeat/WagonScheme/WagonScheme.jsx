@@ -9,8 +9,9 @@ import LuxuryCoach from "../WagonScheme/LuxuryCoach/LuxuryCoach"; // ➔ ДОБ�
 
 import "./WagonScheme.css";
 
-export default function WagonScheme({ wagon, classType, selectedSeats = [], onSeatToggle }) {
+export default function WagonScheme({ wagon, classType, directionType, activeTicketType, maxLimits }) {
   if (!wagon) return <div className="wagon-loading-placeholder">Загрузка схемы вагона...</div>;
+
 
   const currentCoach = wagon.coach;
   const seatsList = wagon.seats || [];
@@ -38,10 +39,11 @@ export default function WagonScheme({ wagon, classType, selectedSeats = [], onSe
         <div className="wagon-map-part wagon-map-part--grid-center">
           {classType === 'second' && (
             <SecondClass 
-              seats={seatsList} 
+              seatsData={seatsList} 
               coachId={coachId} 
-              selectedSeats={selectedSeats} 
-              onSeatToggle={onSeatToggle} 
+              directionType={directionType}
+              activeTicketType={activeTicketType}
+              maxLimits={maxLimits}
             />
           )}
 
@@ -49,8 +51,9 @@ export default function WagonScheme({ wagon, classType, selectedSeats = [], onSe
             <LuxuryCoach 
               seatsData={seatsList} 
               coachId={coachId} 
-              selectedSeats={selectedSeats} 
-              onSeatToggle={onSeatToggle} 
+              directionType={directionType}
+              activeTicketType={activeTicketType}
+              maxLimits={maxLimits}
             />
           )}
         </div>

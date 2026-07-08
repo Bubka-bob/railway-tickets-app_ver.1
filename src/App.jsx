@@ -21,13 +21,13 @@ import { initialOrderState } from './utils/initialOrderState';
 export default function App() {
   const [appState, setAppState] = useState(initialAppState);
   const [routeState, setRouteState] = useState(initialRouteState);
-  
+  const [orderState, setOrderState] = useState(initialOrderState);
 // const basename = import.meta.env.BASE_URL || '/';
   return (
     <Router >
       <AppContext.Provider value={{ appState, setAppState }}>
         <RouteContext.Provider value={{ routeState, setRouteState }}>
-          
+          <OrderContext.Provider value={{ orderState, setOrderState }}>
           {/* Исправлено: Все теги <Route> обязательно оборачиваем в <Routes> */}
           <Routes>
             {/* Основной роут главной страницы */}
@@ -53,7 +53,7 @@ export default function App() {
             {/* Перенаправление на главную при вводе несуществующего адреса */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
-          
+          </OrderContext.Provider>
         </RouteContext.Provider>
       </AppContext.Provider>
     </Router>

@@ -113,6 +113,8 @@ export default function DirectionSeatsBlock({ wagons = [], routeData, directionT
           wagon={currentWagon} 
           classType={activeTab} 
           directionType={directionType} 
+          activeTicketType={activeCard} // Твой локальный стейт активной карточки ('adult'/'child'/'baby')
+          maxLimits={{ adult: adultCount, child: childCount, baby: babyCount }} // Твои локальные счетчики
         />
       )}
     </div>
