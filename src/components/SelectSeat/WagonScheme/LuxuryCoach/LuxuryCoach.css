@@ -89,7 +89,8 @@
 
 /* Выбранное пользователем место — фирменный оранжевый */
 .luxury-seat--selected {
-  background-color: #ffa800;
+  background-color: #ffffff;
   border-color: #ffa800;
-  color: #ffffff; /* Цифра становится белой */
+  border: 2px solid #ffa800;
+   /* Цифра становится белой */
 }

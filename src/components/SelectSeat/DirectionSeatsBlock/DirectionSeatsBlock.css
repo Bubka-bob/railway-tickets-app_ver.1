@@ -77,3 +77,28 @@
   -moz-appearance: textfield;
 }
 
+/* Контейнер итоговой суммы заказа */
+.seats-total-price-summary-bar {
+  display: flex;
+  justify-content: flex-end; /* Прижимает текст строго вправо */
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+  padding-right: 25px; /* Выравнивание по правому краю чертежа вагона */
+  box-sizing: border-box;
+}
+
+/* Крупная золотистая стоимость билетов из макета Figma */
+.total-price-summary-bar__value {
+  font-family: 'Roboto', sans-serif;
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffa800; /* Цвет макета */
+}
+
+.total-currency-rub {
+  color: #928f94;
+  font-size: 22px;
+  font-weight: normal;
+  margin-left: 5px;
+}
