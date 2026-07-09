@@ -12,7 +12,6 @@ import "./WagonScheme.css";
 export default function WagonScheme({ wagon, classType, directionType, activeTicketType, maxLimits }) {
   if (!wagon) return <div className="wagon-loading-placeholder">Загрузка схемы вагона...</div>;
 
-
   const currentCoach = wagon.coach;
   const seatsList = wagon.seats || [];
   const coachId = currentCoach?._id;
@@ -37,6 +36,8 @@ export default function WagonScheme({ wagon, classType, directionType, activeTic
 
         {/* Центральная часть вагона — Сетка интерактивных мест кресел */}
         <div className="wagon-map-part wagon-map-part--grid-center">
+          
+          {/* ✅ Купе (SecondClass) — спускаем пропсы ниже */}
           {classType === 'second' && (
             <SecondClass 
               seatsData={seatsList} 
@@ -47,6 +48,7 @@ export default function WagonScheme({ wagon, classType, directionType, activeTic
             />
           )}
 
+          {/* ✅ Люкс (LuxuryCoach) — спускаем пропсы ниже */}
           {classType === 'first' && (
             <LuxuryCoach 
               seatsData={seatsList} 

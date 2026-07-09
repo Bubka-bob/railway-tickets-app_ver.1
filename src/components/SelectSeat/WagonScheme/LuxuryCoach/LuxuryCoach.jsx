@@ -8,16 +8,19 @@ export default function LuxuryCoach({ seatsData = [], coachId, directionType, ac
   const { orderState, setOrderState } = useContext(OrderContext);
 
   const dir = directionType || 'departure';
-  const currentLeg = orderState?.legs?.[dir] || { routeDirectionId: null, seats: [] };
-  const selectedSeatsList = (currentLeg.seats || []).filter(s => s && s.seatNumber !== null);
+  
+  // Извлекаем массив выбранных мест направления из глобальной памяти
+  const currentLegSeats = orderState?.legs?.[dir]?.seats || [];
+  const selectedSeatsList = currentLegSeats.filter(s => s && s.seatNumber !== null && s.seatNumber !== undefined);
 
+  // Индексируем доступные на сервере места
   const availableSeatsMap = seatsData.reduce((acc, seat) => {
     acc[seat.index] = seat.available;
     return acc;
   }, {});
 
-  // ➔ 2. ТЕПЕРЬ ФУНКЦИЯ ВЫГЛЯДИТ ВОТ ТАК:
-   const handleSeatClick = (number) => {
+  // Вызываем изолированную функцию клика по месту в одну строчку
+  const handleSeatClick = (number) => {
     setOrderState(prev => 
       handleSeatSelection(prev, dir, number, coachId, activeTicketType, maxLimits)
     );
@@ -25,13 +28,16 @@ export default function LuxuryCoach({ seatsData = [], coachId, directionType, ac
 
   const renderSeatButton = (number) => {
     const isAvailable = availableSeatsMap[number] ?? false;
+    
+    // Ищем, выбрано ли сиденье в текущем orderState вагона по его coachId и номеру
     const seatObject = selectedSeatsList.find(
-      s => String(s.coachId) === String(coachId) && s.seatNumber === number
+      s => String(s.coachId) === String(coachId) && Number(s.seatNumber) === Number(number)
     );
     const isSelected = !!seatObject;
 
     let className = 'luxury-seat';
     if (!isAvailable) className += ' luxury-seat--disabled';
+    
     if (isSelected) {
       className += ' luxury-seat--selected';
       if (seatObject.includeChildrenSeat) className += ' luxury-seat--baby';
@@ -39,18 +45,19 @@ export default function LuxuryCoach({ seatsData = [], coachId, directionType, ac
     }
 
     return (
-      <button 
-      key={number} 
-      type="button" 
-      className={className} 
-      disabled={!isAvailable} 
-      onClick={() => handleSeatClick(number)}>
+      <button
+        key={number}
+        type="button"
+        className={className}
+        disabled={!isAvailable}
+        onClick={() => handleSeatClick(number)}
+      >
         {number}
       </button>
     );
   };
 
-  // ... Твой цикл генерации 8 купе Люкса
+  // Цикл генерации 8 купе Люкса по макету Figma
   const compartments = [];
   for (let i = 0; i < 8; i++) {
     const leftSeat = i * 2 + 1;

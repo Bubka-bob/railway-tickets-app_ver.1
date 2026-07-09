@@ -4,8 +4,9 @@ import Footer from '../../components/Footer/Footer';
 import SelectSeat from '../../components/SelectSeat/SelectSeat';
 import AppContext from '../../components/context/AppContext';
 import OrderbgImage from "../../assets/header-order-image.png";
-import LastTickets from "../../components/Sidebar/LastTickets/LastTickets"
-import SidebarFilters from "../../components/Sidebar/SidebarFilters/SidebarFilters"
+import LastTickets from "../../components/Sidebar/LastTickets/LastTickets";
+import SidebarFilters from "../../components/Sidebar/SidebarFilters/SidebarFilters";
+import HeaderProgressBar from "../../components/Header/HeaderProgressBar/HeaderProgressBar";
 import "./SelectSeatsPage.css"
 export default function SelectSeatsPage() {
   // Безопасно извлекаем глобальный контекст для проверки обратного пути
@@ -20,7 +21,7 @@ export default function SelectSeatsPage() {
     <div className="seats-page-global-wrapper">
       {/* Шапка сайта с горизонтальным виджетом поиска */}
       <Header style={headerBg} variant="select" />
-      
+      <HeaderProgressBar currentStep={1} />
       {/* ДВУХКОЛОНОЧНЫЙ МАКЕТ СТРАНИЦЫ ПО FIGMA */}
       <div className="seats-page-grid container">
         
