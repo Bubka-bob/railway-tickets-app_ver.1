@@ -4,7 +4,7 @@ import OrderContext from "../../../../components/context/OrderContext";
 import { handleSeatSelection } from "../../../../utils/seatSelectionHelper"; 
 import "./LuxuryCoach.css";
 
-export default function LuxuryCoach({ seatsData = [], coachId, directionType, activeTicketType, maxLimits }) {
+export default function LuxuryCoach({ seatsData = [], coachId, directionType, activeTicketType, maxLimits,coachData }) {
   const { orderState, setOrderState } = useContext(OrderContext);
 
   const dir = directionType || 'departure';
@@ -22,7 +22,7 @@ export default function LuxuryCoach({ seatsData = [], coachId, directionType, ac
   // Вызываем изолированную функцию клика по месту в одну строчку
   const handleSeatClick = (number) => {
     setOrderState(prev => 
-      handleSeatSelection(prev, dir, number, coachId, activeTicketType, maxLimits)
+      handleSeatSelection(prev, dir, number, coachId, activeTicketType, maxLimits, coachData)
     );
   };
 

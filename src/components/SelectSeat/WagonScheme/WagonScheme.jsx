@@ -45,6 +45,7 @@ export default function WagonScheme({ wagon, classType, directionType, activeTic
               directionType={directionType}
               activeTicketType={activeTicketType}
               maxLimits={maxLimits}
+              coachData={currentCoach}
             />
           )}
 
@@ -56,6 +57,7 @@ export default function WagonScheme({ wagon, classType, directionType, activeTic
               directionType={directionType}
               activeTicketType={activeTicketType}
               maxLimits={maxLimits}
+              coachData={currentCoach}
             />
           )}
         </div>
