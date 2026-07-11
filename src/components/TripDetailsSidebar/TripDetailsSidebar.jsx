@@ -30,6 +30,35 @@ export default function TripDetailsSidebar() {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
+  const formatServerDate = (dateStr) => {
+    if (!dateStr) return '';
+    if (dateStr.includes('.')) return dateStr;
+    const parts = dateStr.split('-');
+    if (parts.length === 3) return `${parts[2]}.${parts[1]}.${parts[0]}`; // Из YYYY-MM-DD в ДД.ММ.ГГГГ
+    return dateStr;
+  };
+
+  
+  const searchDateStart = routeState?.searchParams?.date_start || sessionStorage.getItem('search_date_start');
+
+  
+  const depFromDate = formatServerDate(
+    trainData?.departure_date_start || 
+    trainData?.departure_date || 
+    searchDateStart || 
+    "30.08.2018" // Fallback строго по макету Figma
+  );
+
+  const depToDate = formatServerDate(
+    trainData?.departure_date_start_arrival || 
+    trainData?.departure_to_date || 
+    trainData?.arrival_date || 
+    "31.08.2018" // Fallback строго по макету Figma
+  );
+
+  const arrFromDate = formatServerDate(trainData?.arrival_date_end || "09.09.2018");
+  const arrToDate = formatServerDate(trainData?.arrival_date_end_arrival || "10.09.2018");
+
   return (
     <div className="trip-details-sidebar-card">
       <h3 className="sidebar-main-title">Детали поездки</h3>
@@ -42,7 +71,7 @@ export default function TripDetailsSidebar() {
               <span className="sidebar-dir-tag sidebar-dir-tag--dep">➔</span>
               <span className="sidebar-dir-name">Туда</span>
               {/* Если на бэкенде есть дата, можно вывести её, иначе пока оставляем пустой или статичной */}
-              <span className="sidebar-dir-date-top">30.08.2018</span>
+              <span className="sidebar-dir-date-top">{depFromDate}</span>
             </div>
           }
           defaultOpen={false}
@@ -51,13 +80,13 @@ export default function TripDetailsSidebar() {
             {/* Строка: Номер поезда */}
             <div className="sidebar-info-line">
               <span className="sidebar-info-label">№ Поезда</span>
-              <span className="sidebar-info-value font-bold">{trainData.departure_train_name}</span>
+              <span className="sidebar-info-value">{trainData.departure_train_name}</span>
             </div>
 
             {/* Строка: Название городов маршрута */}
             <div className="sidebar-info-line text-align-right">
               <span className="sidebar-info-label">Название</span>
-              <span className="sidebar-info-value font-medium font-size-13 line-height-14">
+              <span className="sidebar-info-value">
                 {capitalize(trainData.departure_from_city_name)}<br />
                 {capitalize(trainData.departure_to_city_name)}
               </span>
@@ -69,7 +98,7 @@ export default function TripDetailsSidebar() {
               {/* Станция Отправления */}
               <div className="timeline-station-node text-left">
                 <span className="timeline-node-time">{trainData.departure_from_datetime}</span>
-                <span className="timeline-node-date">30.08.2018</span>
+                <span className="timeline-node-date">{depFromDate}</span>
                 <span className="timeline-node-city">{capitalize(trainData.departure_from_city_name)}</span>
                 <span className="timeline-node-station">{trainData.departure_from_railway_station_name} вокзал</span>
               </div>
@@ -83,7 +112,7 @@ export default function TripDetailsSidebar() {
               {/* Станция Прибытия */}
               <div className="timeline-station-node text-right">
                 <span className="timeline-node-time">{trainData.departure_to_datetime}</span>
-                <span className="timeline-node-date">31.08.2018</span>
+                <span className="timeline-node-date">{depToDate}</span>
                 <span className="timeline-node-city">{capitalize(trainData.departure_to_city_name)}</span>
                 <span className="timeline-node-station">{trainData.departure_to_railway_station_name} вокзал</span>
               </div>
@@ -100,7 +129,7 @@ export default function TripDetailsSidebar() {
             <div className="sidebar-acc-header-content">
               <span className="sidebar-dir-tag sidebar-dir-tag--arr">←</span>
               <span className="sidebar-dir-name">Обратно</span>
-              <span className="sidebar-dir-date-top">09.09.2018</span>
+              <span className="sidebar-dir-date-top">{arrFromDate}</span>
             </div>
           }
           defaultOpen={false}
@@ -108,9 +137,42 @@ export default function TripDetailsSidebar() {
           <div className="sidebar-acc-body-inner">
             <div className="sidebar-info-line">
               <span className="sidebar-info-label">№ Поезда</span>
-              <span className="sidebar-info-value font-bold">{trainData.arrival_train_name}</span>
+              <span className="sidebar-info-value">{trainData.arrival_train_name}</span>
             </div>
-            {/* Отрендерится аналогично верхней структуре для обратного пути */}
+            {/* Строка: Название городов маршрута */}
+            <div className="sidebar-info-line text-align-right">
+              <span className="sidebar-info-label">Название</span>
+              <span className="sidebar-info-value">
+                {capitalize(trainData.arrival_from_city_name)}<br />
+                {capitalize(trainData.arrival_to_city_name)}
+              </span>
+            </div>
+
+            {/* Сетка расписания станций, дат и времени строго по структуре твоего объекта */}
+            <div className="sidebar-timeline-visual-grid">
+              
+              {/* Станция Отправления */}
+              <div className="timeline-station-node text-left">
+                <span className="timeline-node-time">{trainData.arrival_from_datetime}</span>
+                <span className="timeline-node-date">{arrFromDate}</span>
+                <span className="timeline-node-city">{capitalize(trainData.arrival_from_city_name)}</span>
+                <span className="timeline-node-station">{trainData.arrival_from_railway_station_name} вокзал</span>
+              </div>
+
+              {/* Время в пути посередине */}
+              <div className="timeline-duration-center">
+                <span className="timeline-duration-digits">{trainData.arrival_duration}</span>
+                <span className="timeline-duration-arrow">➔</span>
+              </div>
+
+              {/* Станция Прибытия */}
+              <div className="timeline-station-node text-right">
+                <span className="timeline-node-time">{trainData.arrival_to_datetime}</span>
+                <span className="timeline-node-date">{arrToDate}</span>
+                <span className="timeline-node-city">{capitalize(trainData.arrival_to_city_name)}</span>
+                <span className="timeline-node-station">{trainData.arrival_to_railway_station_name} вокзал</span>
+              </div>
+            </div>  
           </div>
         </AccordionItem>
       )}

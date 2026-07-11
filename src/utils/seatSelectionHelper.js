@@ -2,7 +2,7 @@ export const handleSeatSelection = (prevOrderState, directionType, number, coach
   const dir = directionType || 'departure';
   const legData = prevOrderState?.legs?.[dir] || { routeDirectionId: null, seats: [] };
   
-  // Очищаем массив от дефолтных пустых элементов Нетологии { seatNumber: null }
+  // Безопасно очищаем массив от дефолтных пустых элементов Нетологии { seatNumber: null }
   const currentSeats = (legData.seats || []).filter(
     s => s && s.seatNumber !== null && s.seatNumber !== undefined
   );
@@ -14,11 +14,14 @@ export const handleSeatSelection = (prevOrderState, directionType, number, coach
   let updatedSeats;
 
   if (isAlreadySelected) {
+    // Если место уже выбрано — снимаем выбор
     updatedSeats = currentSeats.filter(
       s => !(String(s.coachId) === String(coachId) && Number(s.seatNumber) === Number(number))
     );
   } else {
     const allowedLimit = Number(maxLimits?.[activeTicketType] || 0);
+
+    // Считаем выбранные места текущей категории
     const currentTypeCount = currentSeats.filter(s => {
       if (activeTicketType === 'adult') return s.passengerInfo?.isAdult === true;
       if (activeTicketType === 'child') return s.isChild === true && s.includeChildrenSeat === false;
@@ -36,9 +39,27 @@ export const handleSeatSelection = (prevOrderState, directionType, number, coach
       return prevOrderState;
     }
 
+    // 💰 ВЫЧИСЛЯЕМ И ФИКСИРУЕМ ЦЕНУ МЕСТА СТРОГО В МОМЕНТ КЛИКА
+    let singleSeatPrice = 0;
+    if (coachData) {
+      if (activeTicketType === 'baby') {
+        singleSeatPrice = 0; // Младенцы всегда бесплатно
+      } else if (coachData.class_type === 'first' || coachData.class_type === 'fourth') {
+        singleSeatPrice = Number(coachData.price || coachData.top_price || coachData.bottom_price || 0);
+      } else {
+        const isTop = Number(number) % 2 === 0 && Number(number) <= 36;
+        singleSeatPrice = Number((isTop ? coachData.top_price : coachData.bottom_price) || coachData.price || 0);
+      }
+      
+      if (activeTicketType === 'child') {
+        singleSeatPrice = singleSeatPrice / 2; // Детская скидка 50%
+      }
+    }
+
     const newSeat = {
       coachId,
       seatNumber: Number(number),
+      price: singleSeatPrice, // 🔥 Сиденье намертво запомнило цену своего вагона!
       isChild: activeTicketType === 'child' || activeTicketType === 'baby',
       includeChildrenSeat: activeTicketType === 'baby',
       passengerInfo: { 
@@ -50,36 +71,9 @@ export const handleSeatSelection = (prevOrderState, directionType, number, coach
     updatedSeats = [...currentSeats, newSeat];
   }
 
-  // ==========================================================================
-  // 💰 РАСЧЁТ ЦЕН ПРЯМО В МОМЕНТ КЛИКА ДЛЯ ПЕРЕДАЧИ ЧЕРЕЗ КОНТЕКСТ
-  // ==========================================================================
-  const adultsPriceTotal = updatedSeats.reduce((sum, seat) => {
-    if (!coachData || seat.isChild || seat.includeChildrenSeat) return sum;
-    let price = coachData.class_type === 'first' || coachData.class_type === 'fourth' 
-      ? (coachData.price || 0) 
-      : (Number(seat.seatNumber) % 2 === 0 ? coachData.top_price : coachData.bottom_price) || coachData.price || 0;
-    return sum + Number(price);
-  }, 0);
-
-  const childrenPriceTotal = updatedSeats.reduce((sum, seat) => {
-    if (!coachData || !seat.isChild || seat.includeChildrenSeat) return sum;
-    let price = coachData.class_type === 'first' || coachData.class_type === 'fourth' 
-      ? (coachData.price || 0) 
-      : (Number(seat.seatNumber) % 2 === 0 ? coachData.top_price : coachData.bottom_price) || coachData.price || 0;
-    return sum + (Number(price) / 2);
-  }, 0);
-
-  const totalOrderPrice = adultsPriceTotal + childrenPriceTotal;
-
-  // Возвращаем обновленный глобальный стейт, где цены уже намертво сохранены в контексте!
+  // Просто возвращаем обновленный массив мест в леге, не ломая общую математику
   return {
     ...prevOrderState,
-    totalPrice: totalOrderPrice,
-    totalPriceSummary: {
-      adults: adultsPriceTotal,
-      children: childrenPriceTotal,
-      grandTotal: totalOrderPrice
-    },
     legs: {
       ...prevOrderState.legs,
       [dir]: { ...legData, seats: updatedSeats }

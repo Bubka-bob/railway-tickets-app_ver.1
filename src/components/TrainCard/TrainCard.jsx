@@ -32,6 +32,16 @@ export default function TrainCard({ trainData }) {
 
     const directions = { departure, arrival };
     
+    const formatDateToIso = (timestamp) => {
+      if (!timestamp) return null;
+      const date = new Date(timestamp * 1000);
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const dd = String(date.getDate()).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}`;
+    };
+
+    
     for (let key in directions) {
       let currentItem = directions[key];
       
@@ -49,6 +59,14 @@ export default function TrainCard({ trainData }) {
       
       newRouteState[key + "_duration"] = getDurationString(currentItem.duration);
       
+      if (key === 'departure') {
+              newRouteState["departure_date_start"] = formatDateToIso(currentItem.from.datetime); // Дата отбытия туда
+              newRouteState["departure_date_start_arrival"] = formatDateToIso(currentItem.to.datetime); // Дата прибытия туда
+            } else if (key === 'arrival') {
+              newRouteState["arrival_date_end"] = formatDateToIso(currentItem.from.datetime); // Дата отбытия обратно
+              newRouteState["arrival_date_end_arrival"] = formatDateToIso(currentItem.to.datetime); // Дата прибытия обратно
+            }
+
       if (newOrderState && newOrderState[key]) {
         newOrderState[key].route_direction_id = currentItem._id;
       }
