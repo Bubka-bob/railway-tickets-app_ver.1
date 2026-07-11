@@ -98,7 +98,8 @@ export default function TrainCard({ trainData }) {
     const seats = departure?.price_info;
     // Объект, где бэкенд хранит общее количество свободных мест по классам
     const availableSeats = departure?.available_seats_info;
-    
+   
+
     if (!seats || Object.keys(seats).length === 0) return <div className="train-card__no-seats">Мест нет</div>;
 
     const classesMap = {
@@ -116,19 +117,8 @@ export default function TrainCard({ trainData }) {
       // Если у класса нет цен на бэкенде — полностью скрываем строку
       if (!currentClassInfo) return null;
 
-      // 🔴 ИСПРАВЛЕНО: Для люкса минимальная цена берется из .price, для остальных — из полок
-      // const minPrice = className === 'first' 
-      //   ? currentClassInfo.price 
-      //   : (currentClassInfo.top_price || currentClassInfo.bottom_price || currentClassInfo.side_price);
-// const minPrice = (() => {
-//   if (className === 'first') return currentClassInfo.price;
-//   return Math.min(
-//     currentClassInfo.top_price || Infinity,
-//     currentClassInfo.bottom_price || Infinity,
-//     currentClassInfo.side_price || Infinity
-//   );
-// })();
-const minPrice = className === 'first' || className === 'fourth'
+     
+const minPrice = className === 'first' 
       ? currentClassInfo.price
       : Math.min(
           currentClassInfo.top_price || Infinity,
@@ -150,7 +140,7 @@ const minPrice = className === 'first' || className === 'fourth'
             </span>
           </div>
 
-         {(className === 'second' || className === 'third') && (
+         {(className === 'second' || className === 'third' || className === 'fourth') && (
           <div className="train__price-seat-up-down">
             {currentClassInfo.top_price && (
               <div className="train__price-seat-subrow">
