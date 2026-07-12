@@ -1,4 +1,12 @@
 
+
+/* Фикс для встроенной карточки поезда на экране мест, чтобы она не ломала края */
+.seats-embedded-train-card-container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+}
 /* ==========================================================================
    СЛОЙ 3: КОЛИЧЕСТВО БИЛЕТОВ (Счетчики с рамками)
    ========================================================================== */
@@ -11,11 +19,15 @@
 
 .tickets-qty-layer {
   margin-bottom: 35px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .tickets-qty-grid {
   display: flex;
   gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Базовая карточка выбора количества */

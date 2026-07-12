@@ -2,7 +2,7 @@
 .seats-page-grid {
   display: grid;
   /* 360px под сайдбар фильтров по Figma, остальное под рабочую область поезда */
-  grid-template-columns: 360px 1fr; 
+  grid-template-columns: 280px 1fr; 
   gap: 40px; /* Отступ между левым сайдбаром и правым контентом */
   padding-top: 50px;
   padding-bottom: 80px;
@@ -19,18 +19,7 @@
   box-sizing: border-box;
 }
 
-/* Стилизация левой панели-заглушки */
-.seats-page-sidebar {
-  width: 100%;
-}
 
-.seats-sidebar-placeholder {
-  background-color: #3e3c41; /* Тёмный глубокий цвет панелей из Figma */
-  padding: 30px 25px;
-  border-radius: 4px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  min-height: 400px;
-}
 
 /* Правая контентная зона */
 .seats-page-main-zone {

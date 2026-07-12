@@ -10,6 +10,16 @@
   /* 🔴 ИСПРАВЛЕНО: Тень dropshadow #00000040 с прозрачностью 25% */
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
 }
+.seats-direction-card-block {
+  width: 100%;       /* Блок должен занимать ровно столько, сколько ему выделил grid (1fr) */
+  max-width: 100%;   
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  
+  /* 🛠️ КРИТИЧЕСКИЙ ФИКС: Намертво запрещаем внутренним блокам (поезду, билетам) раздувать контейнер вправо */
+  min-width: 0;      
+}
 
 /* Специфический отступ для нижнего обратного блока */
 .seats-direction-card-block--return {

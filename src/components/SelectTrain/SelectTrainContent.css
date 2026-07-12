@@ -1,7 +1,7 @@
 .select-train-main {
   display: grid;
-  grid-template-columns: 360px 1fr; /* Фиксированный сайдбар по Figma, остальное под поезда */
-  gap: 40px;
+  grid-template-columns: 280px 1fr; /* Фиксированный сайдбар по Figma, остальное под поезда */
+  gap: 30px;
   padding-top: 60px;
   padding-bottom: 80px;
   background-color: #f7f8f9; /* Светлый фон для контентной зоны (если по макету контрастно шапке) */
@@ -28,6 +28,8 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+   box-sizing: border-box;
+   flex: 1;
 }
 
 /* Счетчик найденных элементов */
