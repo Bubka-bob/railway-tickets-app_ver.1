@@ -40,7 +40,18 @@ export default function TripDetailsSidebar() {
     if (!dateStr) return '';
     return dateStr.includes('.') ? dateStr : dateStr.split('-').reverse().join('.');
   };
+  const formatDuration = (duration) => {
+  // Регулярное выражение ищет числа и игнорирует текст между ними.
+  const [hours, minutes] = duration.match(/\d+/g);
   
+  if (!hours || !minutes) return ''; // Защита от undefined
+
+  // Дописываем ноль слева к минутам, если их меньше 10
+  const formattedMinutes = String(minutes).padStart(2, '0');
+
+  return `${hours}:${formattedMinutes}`;
+};
+
   const depFromDate = formatServerDate(trainData?.departure_date_start || "30.08.2018");
   const depToDate = formatServerDate(trainData?.departure_date_start_arrival || "31.08.2018");
   const arrFromDate = formatServerDate(trainData?.arrival_date_end || "09.09.2018");
@@ -86,9 +97,7 @@ export default function TripDetailsSidebar() {
 
               <div className="timeline-duration-center">
                 <span className="timeline-duration-digits">
-                   {trainData.departure_duration 
-                  ? trainData.departure_duration.replace(/[\sчмин.]/g, '').replace('.', ':') 
-                  : '84:26'}
+                    {trainData?.departure_duration && formatDuration(trainData.departure_duration)}
                 </span>
                 <span className="timeline-duration-arrow">➔</span>
               </div>
@@ -140,7 +149,7 @@ export default function TripDetailsSidebar() {
 
               <div className="timeline-duration-center">
                 <span className="timeline-duration-digits">
-                  {trainData.arrival_duration ? trainData.arrival_duration.replace(/[\sчмин]/g, '') : '9:42'}
+                  {trainData?.arrival_duration && formatDuration(trainData.arrival_duration)}
                 </span>
                 <span className="timeline-duration-arrow back">➔</span>
               </div>
