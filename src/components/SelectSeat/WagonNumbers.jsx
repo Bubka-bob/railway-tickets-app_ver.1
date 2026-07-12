@@ -2,9 +2,9 @@ import React from 'react';
 import './WagonNumbers.css';
 import WagonServices from "./WagonServices/WagonServices";
 
-export default function WagonNumbers({ wagonsList = [], activeWagonId, setActiveWagonId }) {
-  const currentWagon = wagonsList.find(w => String(w?.coach?._id) === String(activeWagonId)) || wagonsList[0];
 
+export default function WagonNumbers({ wagonsList = [], activeWagonId, setActiveWagonId, onToggleService, currentDirection, activeClassType, localServices }) {
+  const currentWagon = wagonsList.find(w => String(w?.coach?._id) === String(activeWagonId)) || wagonsList[0];
   if (!currentWagon) return null;
 
   const coach = currentWagon?.coach;
@@ -86,7 +86,6 @@ export default function WagonNumbers({ wagonsList = [], activeWagonId, setActive
                   </span>
                   <span className="wagon-seat-qty">{totalAvailableCount}</span>
                   <span className="wagon-seat-price">
-                    {/* ➔ ИСПРАВЛЕНО: Если coach.price пустой, проверяем top_price, затем bottom_price */}
                     {(coach?.price || coach?.top_price || coach?.bottom_price || 0).toLocaleString('ru-RU')}{' '}
                     <span className="currency-rub">₽</span>
                   </span>
@@ -131,7 +130,14 @@ export default function WagonNumbers({ wagonsList = [], activeWagonId, setActive
 
           {/* КОЛОНКА 3: Правый сайдбар с услугами и количеством людей */}
           <div className="wagon-grid-column wagon-right-sidebar">
-            <WagonServices coach={coach} />
+            {/* ✅ ИСПРАВЛЕНО: Прокидываем пропсы сквозного стейта услуг дальше */}
+            <WagonServices 
+             coach={coach} 
+              onToggleService={onToggleService}
+              currentDirection={currentDirection} 
+              activeClassType={activeClassType}
+              localServices={localServices}  />
+         
             <div className="wagon-viewers-alert">
               <span className="wagon-viewers-alert__text">
                 11 человек выбирают места в этом поезде

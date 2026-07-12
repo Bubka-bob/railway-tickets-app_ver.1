@@ -86,6 +86,7 @@
 
 .sidebar-info-value {
   color: #ffffff;
+
 }
 
 .font-bold { font-weight: bold; font-size: 16px; }
@@ -111,6 +112,7 @@
 .timeline-station-node {
   display: flex;
   flex-direction: column;
+  
 }
 
 .timeline-node-time {

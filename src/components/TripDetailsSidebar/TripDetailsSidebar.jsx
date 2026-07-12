@@ -1,69 +1,48 @@
 import React, { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import RouteContext from '../../components/context/RouteContext'; // Проверь пути к своим контекстам
 import OrderContext from '../../components/context/OrderContext';
 import AccordionItem from '../../components/Sidebar/AccordionItem/AccordionItem'; // Твой компонент аккордеона
 import './TripDetailsSidebar.css';
 
 export default function TripDetailsSidebar() {
+  const location = useLocation();
+  const passedServices = location.state?.selectedServices || {}; 
+  
   const { routeState } = useContext(RouteContext);
   const { orderState } = useContext(OrderContext);
 
-  // 🚂 БЕРЁМ ДАННЫЕ ПОЕЗДА: Извлекаем плоский объект из routeState или из savedTrainData
   const trainData = routeState?.departure_train_name ? routeState : orderState?.savedTrainData;
-
-  // 👤 БЕРЁМ МАССИВЫ МЕСТ НАПРЯМУЮ ИЗ КОНТЕКСТА ДЛЯ ОБОИХ НАПРАВЛЕНИЙ
   const departureSeats = orderState?.legs?.departure?.seats?.filter(s => s && s.seatNumber !== null) || [];
   const arrivalSeats = orderState?.legs?.arrival?.seats?.filter(s => s && s.seatNumber !== null) || [];
 
-  // Считаем общее количество билетов в заказе по категориям (показываем максимум из двух направлений)
-  const depAdults = departureSeats.filter(s => s.passengerInfo?.isAdult === true).length;
-  const arrAdults = arrivalSeats.filter(s => s.passengerInfo?.isAdult === true).length;
-  const adultsQty = Math.max(depAdults, arrAdults);
+  const adultsQty = Math.max(
+    departureSeats.filter(s => s.passengerInfo?.isAdult === true).length,
+    arrivalSeats.filter(s => s.isChild === false).length
+  );
+  const childrenQty = Math.max(
+    departureSeats.filter(s => s.isChild === true && !s.includeChildrenSeat).length,
+    arrivalSeats.filter(s => s.isChild === true && !s.includeChildrenSeat).length
+  );
 
-  const depChildren = departureSeats.filter(s => s.isChild === true && !s.includeChildrenSeat).length;
-  const arrChildren = arrivalSeats.filter(s => s.isChild === true && !s.includeChildrenSeat).length;
-  const childrenQty = Math.max(depChildren, arrChildren);
+  const servicesCost = Object.values(passedServices)
+    .flatMap(Object.values) // Делаем плоский массив [price1, price2...]
+    .reduce((sum, p) => sum + Number(p), 0);
 
-  // ==========================================================================
-  // 💰 ЧИСТЫЙ REACT: СУММИРОВАНИЕ ЦЕН И ТУДА, И ОБРАТНО ИЗ ВСЕХ ВАГОНОВ
-  // ==========================================================================
+   const adultsCost = [...departureSeats, ...arrivalSeats].filter(s => s.passengerInfo?.isAdult === true).reduce((sum, s) => sum + Number(s.price || 0), 0);
+  const childrenCost = [...departureSeats, ...arrivalSeats].filter(s => s.isChild === true && !s.includeChildrenSeat).reduce((sum, s) => sum + Number(s.price || 0), 0);
+
+  const grandTotal = adultsCost + childrenCost + servicesCost;
+
+  const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
+  const formatServerDate = (dateStr) => dateStr.includes('.') ? dateStr : dateStr.split('-').reverse().join('.');
   
-  // Складываем честные цены взрослых билетов из обоих направлений
-  const adultsCost = [...departureSeats, ...arrivalSeats]
-    .filter(s => s.passengerInfo?.isAdult === true)
-    .reduce((sum, s) => sum + Number(s.price || 0), 0);
-
-  // Складываем честные цены детских билетов из обоих направлений
-  const childrenCost = [...departureSeats, ...arrivalSeats]
-    .filter(s => s.isChild === true && !s.includeChildrenSeat)
-    .reduce((sum, s) => sum + Number(s.price || 0), 0);
-
-  // Итоговый чек — это сквозная сумма за абсолютно все выбранные места в приложении!
-  const grandTotal = adultsCost + childrenCost;
-
-  // Хелпер для перевода первой буквы города в верхний регистр (например, "москва" -> "Москва")
-  const capitalize = (str) => {
-    if (!str) return '';
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  };
-
-  // Хелпер красивого отображения даты из формата YYYY-MM-DD в ДД.ММ.ГГГГ
-  const formatServerDate = (dateStr) => {
-    if (!dateStr) return '';
-    if (dateStr.includes('.')) return dateStr;
-    const parts = dateStr.split('-');
-    if (parts.length === 3) {
-      return `${parts[2]}.${parts[1]}.${parts[0]}`; // Пересобираем в ДД.ММ.ГГГГ
-    }
-    return dateStr;
-  };
-
-  // Автономное извлечение серверных дат из твоего плоского объекта
   const depFromDate = formatServerDate(trainData?.departure_date_start || "30.08.2018");
   const depToDate = formatServerDate(trainData?.departure_date_start_arrival || "31.08.2018");
-  
   const arrFromDate = formatServerDate(trainData?.arrival_date_end || "09.09.2018");
   const arrToDate = formatServerDate(trainData?.arrival_date_end_arrival || "10.09.2018");
+
+  const getServiceLabel = (id) => ({ linens: 'Постельное белье', wifi: 'Wi-Fi' }[id] || id);
 
   return (
     <div className="trip-details-sidebar-card">
@@ -84,19 +63,19 @@ export default function TripDetailsSidebar() {
           <div className="sidebar-acc-body-inner">
             <div className="sidebar-info-line">
               <span className="sidebar-info-label">№ Поезда</span>
-              <span className="sidebar-info-value font-bold">{trainData.departure_train_name}</span>
+              <span className="sidebar-info-value">{trainData.departure_train_name}</span>
             </div>
 
-            <div className="sidebar-info-line text-align-right">
+            <div className="sidebar-info-line">
               <span className="sidebar-info-label">Название</span>
-              <span className="sidebar-info-value font-medium font-size-13 line-height-14">
+              <span className="sidebar-info-value">
                 {capitalize(trainData.departure_from_city_name)}<br />
                 {capitalize(trainData.departure_to_city_name)}
               </span>
             </div>
 
             <div className="sidebar-timeline-visual-grid">
-              <div className="timeline-station-node text-left">
+              <div className="timeline-station-node">
                 <span className="timeline-node-time">{trainData.departure_from_datetime}</span>
                 <span className="timeline-node-date">{depFromDate}</span>
                 <span className="timeline-node-city">{capitalize(trainData.departure_from_city_name)}</span>
@@ -108,7 +87,7 @@ export default function TripDetailsSidebar() {
                 <span className="timeline-duration-arrow">➔</span>
               </div>
 
-              <div className="timeline-station-node text-right">
+              <div className="timeline-station-node">
                 <span className="timeline-node-time">{trainData.departure_to_datetime}</span>
                 <span className="timeline-node-date">{depToDate}</span>
                 <span className="timeline-node-city">{capitalize(trainData.departure_to_city_name)}</span>
@@ -134,19 +113,19 @@ export default function TripDetailsSidebar() {
           <div className="sidebar-acc-body-inner">
             <div className="sidebar-info-line">
               <span className="sidebar-info-label">№ Поезда</span>
-              <span className="sidebar-info-value font-bold">{trainData.arrival_train_name}</span>
+              <span className="sidebar-info-value">{trainData.arrival_train_name}</span>
             </div>
             
-            <div className="sidebar-info-line text-align-right">
+            <div className="sidebar-info-line">
               <span className="sidebar-info-label">Название</span>
-              <span className="sidebar-info-value font-medium font-size-13 line-height-14">
+              <span className="sidebar-info-value">
                 {capitalize(trainData.arrival_from_city_name)}<br />
                 {capitalize(trainData.arrival_to_city_name)}
               </span>
             </div>
 
             <div className="sidebar-timeline-visual-grid">
-              <div className="timeline-station-node text-left">
+              <div className="timeline-station-node">
                 <span className="timeline-node-time">{trainData.arrival_from_datetime}</span>
                 <span className="timeline-node-date">{arrFromDate}</span>
                 <span className="timeline-node-city">{capitalize(trainData.arrival_from_city_name)}</span>
@@ -158,7 +137,7 @@ export default function TripDetailsSidebar() {
                 <span className="timeline-duration-arrow">←</span>
               </div>
 
-              <div className="timeline-station-node text-right">
+              <div className="timeline-station-node">
                 <span className="timeline-node-time">{trainData.arrival_to_datetime}</span>
                 <span className="timeline-node-date">{arrToDate}</span>
                 <span className="timeline-node-city">{capitalize(trainData.arrival_to_city_name)}</span>
@@ -197,7 +176,27 @@ export default function TripDetailsSidebar() {
               </span>
             </div>
           )}
-          
+          {/* ⚙️ СПИСОК ВЫБРАННЫХ УСЛУГ */}
+          {Object.keys(passedServices).map(wagonKey => {
+            const wagonServices = passedServices[wagonKey];
+            if (!wagonServices || Object.keys(wagonServices).length === 0) return null;
+
+            // Разбираем вагон
+            const isArrival = wagonKey.startsWith('arrival');
+            const directionLabel = isArrival ? 'Обратно:' : 'Туда:';
+
+            return (
+              <React.Fragment key={wagonKey}>
+                <div class="sidebar-service-group-label">{directionLabel}</div>
+                {Object.entries(wagonServices).map(([serviceId, price]) => (
+                  <div key={`${wagonKey}_${serviceId}`} class="sidebar-passenger-row service-row">
+                    <span class="sidebar-service-label">{getServiceLabel(serviceId)}</span>
+                    <span class="sidebar-service-cost">{price.toLocaleString()} ₽</span>
+                  </div>
+                ))}
+              </React.Fragment>
+            );
+          })}
           {adultsQty === 0 && childrenQty === 0 && (
             <div className="sidebar-passenger-row label-empty">Пассажиры не выбраны</div>
           )}
