@@ -111,18 +111,37 @@ export default function PassengersPage() {
     });
   };
 
-  // 🛠️ ЛОГИКА 3: ВАЛИДАЦИЯ КНОПКИ ДАЛЕЕ
-  // Проверяем, что во ВСЕХ существующих анкетах заполнены обязательные поля
   const isFormValid = departureSeats.length > 0 && departureSeats.every(seat => {
     const info = seat?.passengerInfo;
-    return (
+    
+    // 1. Проверяем базовое заполнение текстовых полей
+    const hasBaseFields = (
       info?.lastName?.trim() && 
       info?.firstName?.trim() && 
       info?.birthday?.trim() && 
       info?.documentData?.trim()
     );
-  });
+    if (!hasBaseFields) return false;
 
+    // 2. Валидируем данные в зависимости от выбранного типа документа
+    const docType = info.documentType || (seat.isChild ? 'certificate' : 'passport');
+    const docData = String(info.documentData).trim();
+
+    if (docType === 'certificate') {
+      // Римские цифры (I-X) - 2 русские буквы - 6 цифр (Пример: VIII-ЫП-123456)
+      const certRegex = /^[IVXLCDM]{1,7}-[А-ЯЁ]{2}-[0-9]{6}$/;
+      return certRegex.test(docData);
+    } 
+    
+    if (docType === 'passport') {
+      // Номер паспорта должен состоять строго из 6 цифр
+      const passportNoRegex = /^[0-9]{6}$/;
+      return passportNoRegex.test(docData);
+    }
+
+    return true;
+  });
+  
   const handleNextStepSubmit = (e) => {
     e.preventDefault();
     if (isFormValid) {

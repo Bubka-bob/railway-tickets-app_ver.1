@@ -11,7 +11,7 @@ export default function PassengerCardItem({
 }) {
   // 🛠️ ЛОКАЛЬНЫЙ СТЕЙТ: Сворачивание и разворачивание полностью независимо на каждой карточке!
   const [isOpen, setIsOpen] = useState(true);
-
+  const [docError, setDocError] = useState('');
   const info = seatData?.passengerInfo || {};
   const defaultAgeType = seatData?.isChild ? 'child' : 'adult';
 
@@ -29,10 +29,58 @@ export default function PassengerCardItem({
     onDataChange('documentType', selectedDoc);
   };
 
+   // 🛠️ ДОБАВЛЕНО: Функция валидации свидетельства и паспорта
+  const validateDocument = (value) => {
+    const cleanValue = (value || '').trim();
+
+    if (docType === 'certificate') {
+      // Регулярное выражение бэкенда Нетологии: римские цифры - 2 русские буквы - 6 цифр
+      const certRegex = /^[IVXLCDM]{1,7}-[А-ЯЁ]{2}-[0-9]{6}$/;
+      
+      if (cleanValue && !certRegex.test(cleanValue)) {
+        setDocError('Номер свидетельства о рождении указан некорректно\nПример: VIII-ЫП-123456');
+        return false;
+      }
+    } else if (docType === 'passport') {
+      // Простая подстраховка для паспорта: номер должен состоять ровно из 6 цифр
+      const passportNoRegex = /^[0-9]{6}$/;
+      if (cleanValue && !passportNoRegex.test(cleanValue)) {
+        setDocError('Номер паспорта должен состоять из 6 цифр');
+        return false;
+      }
+    }
+    
+    setDocError(''); // Если всё правильно — стираем ошибку
+    return true;
+  };
+
+  const isLastNameOk = !!info.lastName?.trim();
+  const isFirstNameOk = !!info.firstName?.trim();
+  const isBirthdayOk = !!info.birthday?.trim();
+  const isDocDataOk = !!info.documentData?.trim();
+
+  // Документ валиден, если он заполнен и регулярное выражение не выдает ошибку
+  let isDocValid = false;
+  if (docType === 'certificate') {
+    isDocValid = /^[IVXLCDM]{1,7}-[А-ЯЁ]{2}-[0-9]{6}$/.test(String(info.documentData).trim());
+  } else {
+    isDocValid = /^[0-9]{6}$/.test(String(info.documentData).trim());
+  }
+
+  // Карточка успешна только когда ВСЕ обязательные поля в порядке и нет ошибок маски
+  const isCurrentCardSuccess = isLastNameOk && isFirstNameOk && isBirthdayOk && isDocDataOk && isDocValid && !docError;
+
+
   const handleNextClickAction = () => {
-    setIsOpen(false); // 1. Сворачиваем текущую анкету на минус
+    // Перед тем как свернуть карточку, проверяем валидность документа
+    const isValid = validateDocument(info.documentData);
+    
+    // Если данные некорректны — блокируем сворачивание и переход, оставляя плашку на экране
+    if (!isValid) return; 
+
+    setIsOpen(false); 
     if (onNextPassenger) {
-      onNextPassenger(); // 2. Даем команду родителю развернуть следующую анкету
+      onNextPassenger(); 
     }
   };
 
@@ -127,16 +175,49 @@ export default function PassengerCardItem({
             ) : (
               <div className="passenger-input-field-group" style={{ width: '320px' }}>
                 <label className="passenger-field-label">Номер</label>
-                <input type="text" className="passenger-text-input" value={info.documentData || ''} onChange={(e) => onDataChange('documentData', e.target.value)} placeholder="12 символов" required />
-              </div>
+                 <input 
+                    type="text" 
+                    className="passenger-text-input" 
+                    value={info.documentData || ''} 
+                     onChange={(e) => {
+                    const val = e.target.value;
+                    onDataChange('documentData', val); // 1. Записываем в глобальный контекст
+                    validateDocument(val);             // 2. Мгновенно проверяем маску для вывода плашки
+                  }} 
+                  onBlur={(e) => validateDocument(e.target.value)} 
+                  placeholder="VIII-ЫП-123456" 
+                  required 
+                  />
+                  </div>
             )}
           </div>
-
+ {/* ==========================================================================
+             🔥 ДОБАВЛЕНО: ЛОСОСЕВАЯ ПЛАШКА ОШИБКИ ВАЛИДАЦИИ ИЗ МАКЕТА КАРТИНКИ
+             ========================================================================== */}
+          {docError && (
+            <div className="passenger-document-error-banner-alert">
+              <div className="error-banner-cross-circle">×</div>
+              <div className="error-banner-text-message">
+                {docError.split('\n').map((line, i) => <div key={i}>{line}</div>)}
+              </div>
+            </div>
+          )}
           {/* ==========================================================================
              🔥 КНОПКА ИЗ МАКЕТА: ОТОБРАЖАЕТСЯ ЕСЛИ ЭТО НЕ ПОСЛЕДНИЙ ВЫБРАННЫЙ БИЛЕТ
              ========================================================================== */}
-          {isOpen && !isLastPassenger && (
-            <div className="passenger-next-action-row-footer">
+           {isOpen && (
+            <div className={`passenger-card-footer-action-zone ${isCurrentCardSuccess ? 'footer-theme--success' : ''}`}>
+              
+              {/* Если карточка полностью валидна — выводим макетную зеленую галочку «Готово» */}
+              {isCurrentCardSuccess ? (
+                <div className="success-banner-ready-indicator">
+                  <div className="success-banner-check-circle">✓</div>
+                  <span className="success-banner-ready-text">Готово</span>
+                </div>
+              ) : (
+                <div className="success-banner-empty-stub" /> /* Заглушка для сохранения флекс-выравнивания вправо */
+              )}
+
               <button 
                 type="button" 
                 className="passenger-inline-next-btn"

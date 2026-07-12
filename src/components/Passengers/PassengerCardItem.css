@@ -214,3 +214,111 @@
   background-color: #f4f4f4;
   border-color: #000000;
 }
+
+.passenger-document-error-banner-alert {
+  background-color: #ffb4a2; /* Точный нежный лососево-розовый цвет со скрина */
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid #e5e5e5;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Белый круглый значок крестика слева */
+.error-banner-cross-circle {
+  width: 24px;
+  height: 24px;
+  background-color: #ffffff;
+  color: #ffb4a2; /* Цвет крестика внутри совпадает с фоном плашки */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+/* Двухстрочный текст сообщения об ошибке */
+.error-banner-text-message {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #292929; /* Глубокий темный цвет текста */
+  font-weight: 400;
+}
+
+/* Выделение примера жирным шрифтом (Пример: VIII-ЫП-123456) */
+.error-banner-text-message div:last-child {
+  font-weight: 500;
+}
+
+/* Переключаемый класс успешного подвала */
+.passenger-card-footer-action-zone.footer-theme--success {
+  background-color: #b2f2bb !important; /* Приятный нежно-зелёный макетный фон */
+  border-top: 1px solid #94d82d;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Контейнер индикатора «Готово» слева */
+.success-banner-ready-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+}
+
+/* Белый круглый значок галочки */
+.success-banner-check-circle {
+  width: 22px;
+  height: 22px;
+  background-color: #ffffff;
+  color: #b2f2bb; /* Галочка внутри подстраивается под цвет фона */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+/* Белая макетная надпись «Готово» */
+.success-banner-ready-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  color: #ffffff; /* Строго белый цвет текста по макету */
+  font-weight: bold;
+}
+
+/* Заглушка слева для выравнивания кнопки вправо во флексах */
+.success-banner-empty-stub {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
+
+/* Корректируем кнопку «Следующий пассажир» внутри зелёного подвала */
+.footer-theme--success .passenger-inline-next-btn {
+  background-color: transparent !important; /* Делаем кнопку прозрачной на зеленом фоне */
+  border-color: #292929 !important;
+  color: #292929 !important;
+}
+.footer-theme--success .passenger-inline-next-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.passenger-card-footer-action-zone {
+  display: flex !important;
+  justify-content: space-between !important; /* Намертво расталкивает элементы по противоположным краям */
+  align-items: center !important;
+  padding: 20px 30px 24px 30px;
+  border-top: 1px solid #c4c4c4;
+  background-color: #ffffff;
+  width: 100%;
+  box-sizing: border-box;
+}
