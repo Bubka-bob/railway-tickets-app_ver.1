@@ -20,6 +20,7 @@ export default function PassengersPage() {
   // 🛠️ ЛОГИКА 1: Удаление карточки пассажира на крестик (×)
   const handleRemovePassenger = (index) => {
     if (!setOrderState) return;
+    
     setOrderState(prev => {
       const depSeats = [...(prev?.legs?.departure?.seats || [])];
       const arrSeats = [...(prev?.legs?.arrival?.seats || [])];

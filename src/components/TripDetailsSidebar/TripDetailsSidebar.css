@@ -1,5 +1,5 @@
 .trip-details-sidebar-card {
-  width: 360px;
+  width: 280px;
   background-color: #3e3c41;
   color: #ffffff;
   font-family: 'Roboto', sans-serif;
@@ -84,7 +84,7 @@
 
 /* Тело аккордеона */
 .sidebar-acc-body-inner {
-  padding: 20px 24px;
+  
   display: flex;
   flex-direction: column;
   gap: 16px;

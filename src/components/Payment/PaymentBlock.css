@@ -1,0 +1,215 @@
+
+.seats-page-grid.container {
+  display: grid !important;
+  grid-template-columns: 290px 1fr !important; 
+  gap: 40px !important; 
+  padding-top: 50px;
+  padding-bottom: 80px;
+  align-items: start !important;
+  width: 100% !important;
+  max-width: 1200px;
+  box-sizing: border-box;
+}
+
+.seats-page-sidebar {
+  width: 290px !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box;
+}
+
+.payment-page-main-zone {
+  grid-column: 2 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* 🔥 ИСПРАВЛЕНО: Единая белая сплошная карточка формы без разрывов */
+.payment-section-white-card-single {
+  background-color: #ffffff;
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.payment-single-block-section {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Крупные макетные заголовочные строки секций */
+.payment-single-block-title {
+  font-size: 24px;
+  font-weight: 500;
+  color: #292929;
+  padding: 35px 40px 10px 40px; /* Отступы заголовков секций */
+  margin: 0;
+}
+
+.payment-card-body-content-inner {
+  padding: 20px 40px 30px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+/* Сплошная жирная линия, разделяющая Персональные данные и Оплату */
+.payment-main-blocks-divider-line {
+  width: 100%;
+  height: 1px;
+  background-color: #e5e5e5;
+  margin: 10px 0;
+}
+
+/* Трёхколоночная сетка ФИО */
+.payment-form-grid-three-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+}
+
+.payment-input-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.width-340 { width: 340px; }
+
+.payment-field-label {
+  font-size: 13px;
+  color: #928f94;
+}
+
+.payment-text-input {
+  padding: 12px 14px;
+  border: 1px solid #928f94;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #292929;
+  outline: none;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  width: 100%;
+}
+.payment-text-input:focus {
+  border-color: #ffa800;
+}
+
+/* ==========================================================================
+   🎨 ЧЕКБОКСЫ И ВАРИАНТЫ ОПЛАТЫ
+   ========================================================================== */
+.payment-method-row-selector-line {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.payment-custom-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 14px;
+}
+
+.payment-native-radio-hidden {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.payment-custom-checkbox-visual {
+  width: 28px;
+  height: 28px;
+  border: 1px solid #928f94;
+  border-radius: 6px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.payment-native-radio-hidden:checked + .payment-custom-checkbox-visual {
+  border-color: #ffa800;
+}
+
+.visual-check-mark {
+  color: #ffa800;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.payment-method-label-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: #928f94;
+}
+.payment-method-label-text.is-selected-main {
+  color: #292929;
+}
+
+.payment-online-sub-variants-grid {
+  display: flex;
+  gap: 50px;
+  padding-left: 42px;
+  margin-top: 5px;
+}
+.is-faded-disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.online-sub-tab-item {
+  font-size: 16px;
+  color: #292929;
+  cursor: pointer;
+}
+.online-sub-tab-item.is-active-bold {
+  font-weight: bold;
+}
+
+.payment-card-internal-divider-line {
+  width: 100%;
+  height: 1px;
+  background-color: #e5e5e5;
+  margin: 15px 0 20px 0;
+}
+
+/* КНОПКА ОТПРАВКИ ИЗ МАКЕТА */
+.payment-page-submit-bottom-row {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 40px 35px 40px; /* Отступы для кнопки в самом низу формы */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.payment-main-orange-submit-btn {
+  background-color: #ffa800;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  padding: 16px 45px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.payment-main-orange-submit-btn:hover {
+  background-color: #ff9100;
+}
+
+.payment-main-orange-submit-btn.is-btn-disabled {
+  background-color: #5b555e !important;
+  color: #928f94 !important;
+  cursor: not-allowed !important;
+}
