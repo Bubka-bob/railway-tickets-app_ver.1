@@ -122,19 +122,71 @@
 }
 
 .passenger-checkbox-row-line {
-  margin-top: 4px;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  width: 100%;
 }
 .passenger-custom-checkbox-label {
-  display: flex;
+ display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  color: #292929;
   cursor: pointer;
+  user-select: none;
+  font-family: 'Roboto', sans-serif;
+  gap: 14px; 
 }
 .passenger-native-checkbox {
   width: 16px;
   height: 16px;
+}
+
+.passenger-native-checkbox-hidden {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+/* 🎨 РИСУЕМ КРАСИВЫЙ КВАДРАТ ИЗ МАКЕТА С КАРТИНКИ */
+.passenger-custom-checkbox-visual {
+  width: 28px;  /* Крупный комфортный размер по ТЗ */
+  height: 28px; /* Крупный комфортный размер по ТЗ */
+  border: 1px solid #928f94; /* Тонкая серая рамка со скрина */
+  border-radius: 5px; /* Аккуратное закругление углов */
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  transition: all 0.15s ease-in-out;
+}
+
+/* Эффект наведения мышки на чекбокс */
+.passenger-custom-checkbox-label:hover .passenger-custom-checkbox-visual {
+  border-color: #ffa800;
+  box-shadow: 0 0 4px rgba(255, 168, 0, 0.2);
+}
+
+/* Изменение рамки, когда галочка активна */
+.passenger-native-checkbox-hidden:checked + .passenger-custom-checkbox-visual {
+  border-color: #ffa800; /* Рамка становится фирменной оранжевой */
+}
+
+/* Стилизация символа галочки внутри кастомного квадрата */
+.visual-check-mark {
+  color: #ffa800; /* Насыщенный оранжевый цвет галочки */
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+  display: block;
+}
+
+/* Текст «ограниченная подвижность» строго по картинке */
+.checkbox-text-label-label {
+  font-size: 16px;
+  color: #292929; /* Спокойный глубокий темный цвет текста */
+  font-weight: 400;
+  letter-spacing: 0.3px;
 }
 
 .passenger-card-internal-divider {

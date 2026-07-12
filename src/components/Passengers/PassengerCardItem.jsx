@@ -145,8 +145,14 @@ export default function PassengerCardItem({
 
           <div className="passenger-checkbox-row-line">
             <label className="passenger-custom-checkbox-label">
-              <input type="checkbox" className="passenger-native-checkbox" checked={!!info.isLimitedMobility} onChange={(e) => onDataChange('isLimitedMobility', e.target.checked)} />
-              <span>ограниченная подвижность</span>
+              <input type="checkbox"
+               className="passenger-native-checkbox hidden"
+                checked={!!info.isLimitedMobility} 
+                onChange={(e) => onDataChange('isLimitedMobility', e.target.checked)} />
+              <span className="passenger-custom-checkbox-visual">
+              {info.isLimitedMobility && <span className="visual-check-mark">✓</span>}
+            </span>
+            <span className="checkbox-text-label-label">ограниченная подвижность</span>
             </label>
           </div>
 
