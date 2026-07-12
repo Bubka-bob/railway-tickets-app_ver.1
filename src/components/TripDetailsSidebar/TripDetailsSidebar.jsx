@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import RouteContext from '../../components/context/RouteContext'; // Проверь пути к своим контекстам
 import OrderContext from '../../components/context/OrderContext';
 import AccordionItem from '../../components/Sidebar/AccordionItem/AccordionItem'; // Твой компонент аккордеона
+import PassIcon from "../../assets/Passengers.svg";
 import './TripDetailsSidebar.css';
 
 export default function TripDetailsSidebar() {
@@ -26,23 +27,24 @@ export default function TripDetailsSidebar() {
   );
 
   const servicesCost = Object.values(passedServices)
-    .flatMap(Object.values) // Делаем плоский массив [price1, price2...]
+    .flatMap(Object.values) 
     .reduce((sum, p) => sum + Number(p), 0);
 
-   const adultsCost = [...departureSeats, ...arrivalSeats].filter(s => s.passengerInfo?.isAdult === true).reduce((sum, s) => sum + Number(s.price || 0), 0);
+  const adultsCost = [...departureSeats, ...arrivalSeats].filter(s => s.passengerInfo?.isAdult === true).reduce((sum, s) => sum + Number(s.price || 0), 0);
   const childrenCost = [...departureSeats, ...arrivalSeats].filter(s => s.isChild === true && !s.includeChildrenSeat).reduce((sum, s) => sum + Number(s.price || 0), 0);
 
   const grandTotal = adultsCost + childrenCost + servicesCost;
 
   const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1) : '';
-  const formatServerDate = (dateStr) => dateStr.includes('.') ? dateStr : dateStr.split('-').reverse().join('.');
+  const formatServerDate = (dateStr) => {
+    if (!dateStr) return '';
+    return dateStr.includes('.') ? dateStr : dateStr.split('-').reverse().join('.');
+  };
   
   const depFromDate = formatServerDate(trainData?.departure_date_start || "30.08.2018");
   const depToDate = formatServerDate(trainData?.departure_date_start_arrival || "31.08.2018");
   const arrFromDate = formatServerDate(trainData?.arrival_date_end || "09.09.2018");
   const arrToDate = formatServerDate(trainData?.arrival_date_end_arrival || "10.09.2018");
-
-  const getServiceLabel = (id) => ({ linens: 'Постельное белье', wifi: 'Wi-Fi' }[id] || id);
 
   return (
     <div className="trip-details-sidebar-card">
@@ -58,40 +60,44 @@ export default function TripDetailsSidebar() {
               <span className="sidebar-dir-date-top">{depFromDate}</span>
             </div>
           }
-          defaultOpen={false}
+          defaultOpen={true}
         >
           <div className="sidebar-acc-body-inner">
             <div className="sidebar-info-line">
               <span className="sidebar-info-label">№ Поезда</span>
-              <span className="sidebar-info-value">{trainData.departure_train_name}</span>
+              <span className="sidebar-info-value font-bold">{trainData.departure_train_name}</span>
             </div>
 
             <div className="sidebar-info-line">
               <span className="sidebar-info-label">Название</span>
-              <span className="sidebar-info-value">
+              <span className="sidebar-info-value font-medium font-size-13 text-align-right line-height-14">
                 {capitalize(trainData.departure_from_city_name)}<br />
                 {capitalize(trainData.departure_to_city_name)}
               </span>
             </div>
 
             <div className="sidebar-timeline-visual-grid">
-              <div className="timeline-station-node">
+              <div className="timeline-station-node text-left">
                 <span className="timeline-node-time">{trainData.departure_from_datetime}</span>
                 <span className="timeline-node-date">{depFromDate}</span>
                 <span className="timeline-node-city">{capitalize(trainData.departure_from_city_name)}</span>
-                <span className="sidebar-node-station">{trainData.departure_from_railway_station_name} вокзал</span>
+                <span className="timeline-node-station">{trainData.departure_from_railway_station_name} вокзал</span>
               </div>
 
               <div className="timeline-duration-center">
-                <span className="timeline-duration-digits">{trainData.departure_duration}</span>
+                <span className="timeline-duration-digits">
+                   {trainData.departure_duration 
+                  ? trainData.departure_duration.replace(/[\sчмин.]/g, '').replace('.', ':') 
+                  : '84:26'}
+                </span>
                 <span className="timeline-duration-arrow">➔</span>
               </div>
 
-              <div className="timeline-station-node">
+              <div className="timeline-station-node text-right">
                 <span className="timeline-node-time">{trainData.departure_to_datetime}</span>
                 <span className="timeline-node-date">{depToDate}</span>
                 <span className="timeline-node-city">{capitalize(trainData.departure_to_city_name)}</span>
-                <span className="sidebar-node-station">{trainData.departure_to_railway_station_name} вокзал</span>
+                <span className="timeline-node-station">{trainData.departure_to_railway_station_name} вокзал</span>
               </div>
             </div>
           </div>
@@ -103,45 +109,47 @@ export default function TripDetailsSidebar() {
         <AccordionItem 
           title={
             <div className="sidebar-acc-header-content">
-              <span className="sidebar-dir-tag sidebar-dir-tag--arr">←</span>
+              <span className="sidebar-dir-tag sidebar-dir-tag--arr">➔</span>
               <span className="sidebar-dir-name">Обратно</span>
               <span className="sidebar-dir-date-top">{arrFromDate}</span>
             </div>
           }
-          defaultOpen={false}
+          defaultOpen={true}
         >
           <div className="sidebar-acc-body-inner">
             <div className="sidebar-info-line">
               <span className="sidebar-info-label">№ Поезда</span>
-              <span className="sidebar-info-value">{trainData.arrival_train_name}</span>
+              <span className="sidebar-info-value font-bold">{trainData.arrival_train_name}</span>
             </div>
             
             <div className="sidebar-info-line">
               <span className="sidebar-info-label">Название</span>
-              <span className="sidebar-info-value">
+              <span className="sidebar-info-value font-medium font-size-13 text-align-right line-height-14">
                 {capitalize(trainData.arrival_from_city_name)}<br />
                 {capitalize(trainData.arrival_to_city_name)}
               </span>
             </div>
 
             <div className="sidebar-timeline-visual-grid">
-              <div className="timeline-station-node">
+              <div className="timeline-station-node text-left">
                 <span className="timeline-node-time">{trainData.arrival_from_datetime}</span>
                 <span className="timeline-node-date">{arrFromDate}</span>
                 <span className="timeline-node-city">{capitalize(trainData.arrival_from_city_name)}</span>
-                <span className="sidebar-node-station">{trainData.arrival_from_railway_station_name} вокзал</span>
+                <span className="timeline-node-station">{trainData.arrival_from_railway_station_name} вокзал</span>
               </div>
 
               <div className="timeline-duration-center">
-                <span className="timeline-duration-digits">{trainData.arrival_duration}</span>
-                <span className="timeline-duration-arrow">←</span>
+                <span className="timeline-duration-digits">
+                  {trainData.arrival_duration ? trainData.arrival_duration.replace(/[\sчмин]/g, '') : '9:42'}
+                </span>
+                <span className="timeline-duration-arrow back">➔</span>
               </div>
 
-              <div className="timeline-station-node">
+              <div className="timeline-station-node text-right">
                 <span className="timeline-node-time">{trainData.arrival_to_datetime}</span>
                 <span className="timeline-node-date">{arrToDate}</span>
                 <span className="timeline-node-city">{capitalize(trainData.arrival_to_city_name)}</span>
-                <span className="sidebar-node-station">{trainData.arrival_to_railway_station_name} вокзал</span>
+                <span className="timeline-node-station">{trainData.arrival_to_railway_station_name} вокзал</span>
               </div>
             </div>
           </div>
@@ -152,11 +160,13 @@ export default function TripDetailsSidebar() {
       <AccordionItem 
         title={
           <div className="sidebar-acc-header-content">
-            <span className="sidebar-dir-tag sidebar-dir-tag--pass">👤</span>
+            <span className="sidebar-dir-tag sidebar-dir-tag--pass">
+               <img src={PassIcon} alt="Пассажиры" className="sidebar-pass-img-icon" />
+            </span>
             <span className="sidebar-dir-name">Пассажиры</span>
           </div>
         }
-        defaultOpen={false}
+        defaultOpen={true}
       >
         <div className="sidebar-acc-body-inner sidebar-passengers-body">
           {adultsQty > 0 && (
@@ -176,27 +186,16 @@ export default function TripDetailsSidebar() {
               </span>
             </div>
           )}
-          {/* ⚙️ СПИСОК ВЫБРАННЫХ УСЛУГ */}
-          {Object.keys(passedServices).map(wagonKey => {
-            const wagonServices = passedServices[wagonKey];
-            if (!wagonServices || Object.keys(wagonServices).length === 0) return null;
 
-            // Разбираем вагон
-            const isArrival = wagonKey.startsWith('arrival');
-            const directionLabel = isArrival ? 'Обратно:' : 'Туда:';
-
-            return (
-              <React.Fragment key={wagonKey}>
-                <div class="sidebar-service-group-label">{directionLabel}</div>
-                {Object.entries(wagonServices).map(([serviceId, price]) => (
-                  <div key={`${wagonKey}_${serviceId}`} class="sidebar-passenger-row service-row">
-                    <span class="sidebar-service-label">{getServiceLabel(serviceId)}</span>
-                    <span class="sidebar-service-cost">{price.toLocaleString()} ₽</span>
-                  </div>
-                ))}
-              </React.Fragment>
-            );
-          })}
+          {servicesCost > 0 && (
+            <div className="sidebar-passenger-row sidebar-services-row-item">
+              <span className="passenger-type-text">Доп. услуги</span>
+              <span className="passenger-type-cost">
+                {servicesCost.toLocaleString('ru-RU')} <span className="cost-currency">₽</span>
+              </span>
+            </div>
+          )}
+          
           {adultsQty === 0 && childrenQty === 0 && (
             <div className="sidebar-passenger-row label-empty">Пассажиры не выбраны</div>
           )}

@@ -1,74 +1,97 @@
 .trip-details-sidebar-card {
-  width: 100%;
-  background-color: #3e3c41; /* Тёмно-серый макетный фон ФПК */
+  width: 360px;
+  background-color: #3e3c41;
   color: #ffffff;
   font-family: 'Roboto', sans-serif;
   box-sizing: border-box;
-  border-radius: 4px;
 }
 
-/* Главный заголовок */
+/* Главный заголовок "ДЕТАЛИ ПОЕЗДКИ" */
 .sidebar-main-title {
   font-size: 20px;
   font-weight: bold;
+  text-transform: uppercase;
   padding: 22px 24px;
   margin: 0;
-  border-bottom: 2px solid #ffffff; /* Белая линия под заголовком */
-  text-transform: uppercase;
+  border-bottom: 1px solid #e5e5e5;
+  color: #ffffff;
   letter-spacing: 0.5px;
 }
 
-/* ==========================================================================
-   СТИЛИ ХЕДЕРОВ ВНУТРИ ТВОИХ АККОРДЕОНОВ (ACCORDIONITEM)
-   ========================================================================== */
+/* Шапки аккордеонов */
 .sidebar-acc-header-content {
   display: flex;
   align-items: center;
-  gap: 12px;
   width: 100%;
+  gap: 14px;
 }
 
-/* Квадратный оранжевый маркер перед текстом */
+/* ПРЯМОУГОЛЬНЫЕ ОРАНЖЕВЫЕ ПЛАШКИ ТУДА / ОБРАТНО ИЗ МАКЕТА */
 .sidebar-dir-tag {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
-  background-color: #ffa800; /* Фирменный оранжевый */
-  border-radius: 4px;
+  width: 32px;  /* Размер строго по сетке твоего скриншота */
+  height: 26px; /* Размер строго по сетке твоего скриншота */
+  background-color: #ffa800;
+  border-radius: 4px; /* Легкое закругление углов прямоугольника */
   font-size: 14px;
-  font-weight: bold;
-  color: #ffffff;
+  font-weight: 900;
+  color: #292929; /* Черная стрелочка внутри */
+}
+
+
+/* Оранжевая иконка пассажира без фона */
+.sidebar-dir-tag--pass {
+  background-color: transparent;
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.sidebar-dir-tag--pass .icon,
+.sidebar-dir-tag--pass svg {
+  width: 25px !important;
+  height: 25px !important;
+  display: block;
+   fill: #ffa800 !important;
+}
+
+.sidebar-dir-tag--arr{
+   transform: scaleX(-1);
+}
+
+/* 🔥 ГЛАВНЫЙ СЕЛЕКТОР ДЛЯ СПРАЙТОВ: 
+   В Shadow DOM цвет спрайта меняется строго через заливку тега use! */
+.sidebar-dir-tag--pass svg use {
+  fill: #ffa800 !important;
+  color: #ffa800 !important;  /* Намертво красим иконку в оранжевый цвет */
 }
 
 .sidebar-dir-name {
   font-size: 18px;
   font-weight: bold;
-}
-
-/* Дата в правой части хедера аккордеона */
-.sidebar-dir-date-top {
-  font-size: 14px;
   color: #ffffff;
-  margin-left: auto;
-  margin-right: 15px; /* Зазор перед иконкой сворачивания аккордеона */
 }
 
-/* ==========================================================================
-   ВНУТРЕННЕЕ ТЕЛО ОТКРЫТОГО АККОРДЕОНА
-   ========================================================================== */
+.sidebar-dir-date-top {
+  font-size: 18px;
+  color: #928f94;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+/* Тело аккордеона */
 .sidebar-acc-body-inner {
   padding: 20px 24px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  border-bottom: 1px solid #4e4c53;
   background-color: #3e3c41;
-  box-sizing: border-box;
+  border-bottom: 1px solid #e5e5e5; /* Четкие сплошные разделительные линии во всю ширину */
 }
 
-/* Двухколоночные текстовые строки (№ Поезда, Название) */
 .sidebar-info-line {
   display: flex;
   justify-content: space-between;
@@ -76,27 +99,20 @@
   font-size: 14px;
 }
 
-.text-align-right {
-  text-align: right;
-}
-
 .sidebar-info-label {
-  color: #928f94; /* Серый цвет подписей */
+  color: #928f94;
 }
 
 .sidebar-info-value {
   color: #ffffff;
-
 }
-
 .font-bold { font-weight: bold; font-size: 16px; }
 .font-medium { font-weight: 500; }
 .font-size-13 { font-size: 13px; }
+.text-align-right { text-align: right; }
 .line-height-14 { line-height: 1.4; }
 
-/* ==========================================================================
-   ТРЕХКОЛОНОЧНЫЙ ТАЙМЛАЙН СТАНЦИЙ И РАСПИСАНИЯ
-   ========================================================================== */
+/* ТАЙМЛАЙН СТАНЦИЙ ПО ВЕРТИКАЛИ */
 .sidebar-timeline-visual-grid {
   display: flex;
   justify-content: space-between;
@@ -105,40 +121,40 @@
   width: 100%;
 }
 
-/* Левая и правая станции */
 .sidebar-timeline-visual-grid .text-left { text-align: left; width: 40%; }
 .sidebar-timeline-visual-grid .text-right { text-align: right; width: 40%; }
 
 .timeline-station-node {
   display: flex;
   flex-direction: column;
-  
 }
 
+/* По макету: Время большое, дата сразу под ним */
 .timeline-node-time {
   font-size: 18px;
   font-weight: bold;
   color: #ffffff;
 }
-
 .timeline-node-date {
   font-size: 12px;
   color: #928f94;
-  margin-bottom: 8px;
+  margin-bottom: 8px; /* Отступ перед городом */
 }
 
+/* Город белый, вокзал серый под ним */
 .timeline-node-city {
   font-size: 14px;
   font-weight: bold;
   color: #ffffff;
 }
-
+.sidebar-node-station,
 .timeline-node-station {
   font-size: 12px;
   color: #928f94;
+  margin-top: 2px;
 }
 
-/* Центральная часть: время в пути и оранжевая стрелка */
+/* Длительность по центру */
 .timeline-duration-center {
   display: flex;
   flex-direction: column;
@@ -147,24 +163,23 @@
   width: 20%;
   margin-top: 5px;
 }
-
 .timeline-duration-digits {
   font-size: 13px;
   color: #928f94;
 }
-
 .timeline-duration-arrow {
   color: #ffa800;
   font-size: 16px;
 }
 
-/* ==========================================================================
-   СЕКЦИЯ ПАССАЖИРОВ (РАЗДЕЛЬНЫЕ СТРОКИ И СУММЫ СВЕРХУ)
-   ========================================================================== */
+.back{
+  transform: scaleX(-1);
+}
+
+/* Секция пассажиров */
 .sidebar-passengers-body {
   gap: 12px;
 }
-
 .sidebar-passenger-row {
   display: flex;
   justify-content: space-between;
@@ -172,52 +187,49 @@
   font-size: 16px;
   width: 100%;
 }
-
 .passenger-type-text {
   color: #ffffff;
 }
-
 .passenger-type-cost {
   font-weight: bold;
   font-size: 18px;
   color: #ffffff;
 }
-
 .cost-currency {
   color: #928f94;
   font-weight: normal;
 }
+.sidebar-services-row-item {
+  padding-top: 10px;
+  border-top: 1px dashed #4e4c53;
+}
+.label-empty {
+  color: #928f94;
+  font-style: italic;
+}
 
-/* ==========================================================================
-   ЧЁРНЫЙ ФУТЕР С ОБЩИМ ИТОГОМ ЗАКАЗА
-   ========================================================================== */
+/* ФУТЕР ИТОГА */
 .sidebar-total-checkout-footer {
-  background-color: #292929; /* Сплошной чёрный цвет по макету */
+  
   padding: 25px 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-radius: 0 0 4px 4px;
-  border-top: 1px solid #4e4c53;
-  box-sizing: border-box;
+  border-top: 1px solid #E5E5E5;
 }
-
 .sidebar-total-label {
   font-size: 18px;
   font-weight: bold;
   text-transform: uppercase;
   color: #ffffff;
 }
-
 .sidebar-total-sum-value {
-  font-size: 32px; /* Крупная золотая цифра итога */
+  font-size: 32px;
   font-weight: bold;
-  color: #ffa800;
+  color: #ffa800; /* Золотой крупный итог */
 }
-
 .sidebar-total-currency {
   font-size: 20px;
   color: #ffffff;
-  font-weight: normal;
   margin-left: 4px;
 }
