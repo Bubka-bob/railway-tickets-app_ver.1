@@ -1,0 +1,232 @@
+.seats-page-grid.container {
+  display: grid !important;
+  /* 290px под левый сайдбар, остальное под обзор заказа */
+  grid-template-columns: 290px 1fr !important; 
+  gap: 40px !important; 
+  padding-top: 50px;
+  padding-bottom: 80px;
+  align-items: start !important;
+  width: 100% !important;
+  max-width: 1200px;
+  box-sizing: border-box;
+}
+
+
+
+/* ПРАВАЯ КОЛОНКА (КОМПОНЕНТ ПОДТВЕРЖДЕНИЯ) */
+.verification-page-main-zone {
+  grid-column: 2 !important; /* Жестко удерживаем во 2-й колонке */
+  width: 100% !important;
+  min-width: 0 !important; /* Блокируем распирание карточек вправо */
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.verification-blocks-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+}
+
+/* ==========================================================================
+   🏠 СТИЛИЗАЦИЯ КАРТОЧЕК С СЕРЫМИ ШАПКАМИ ИЗ МАКЕТА FIGMA
+   ========================================================================== */
+.verification-section-white-card {
+  background-color: #ffffff;
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* Тень по ТЗ Нетологии */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Серые шапки блоков "Поезд", "Пассажиры", "Способ оплаты" */
+.verification-card-header-title {
+  background-color: #f9f9f9;
+  padding: 18px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #292929;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.verification-card-body-content {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Обёртка для встроенной карточки TrainCard, чтобы сохранить внутренние паддинги */
+.verification-card-embedded-train-wrapper {
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   👤 СЕКЦИЯ ПАССАЖИРОВ (АВАТАРЫ, СПИСОК И ИТОГОВАЯ ЦЕНА СБОКУ)
+   ========================================================================== */
+.row-layout-passengers {
+  align-items: stretch; /* Растягиваем колонку итога на всю высоту */
+}
+
+.verification-passengers-left-list-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Строка одного пассажира внутри списка */
+.verification-passenger-row-item-card {
+  display: flex;
+  gap: 24px;
+  padding: 24px 30px;
+  border-bottom: 1px solid #e5e5e5;
+  align-items: flex-start;
+  box-sizing: border-box;
+}
+.verification-passengers-left-list-container .verification-passenger-row-item-card:last-child {
+  border-bottom: none; /* Убираем черту у последнего пассажира */
+}
+
+/* Круглый оранжевый аватар пассажира */
+.v-passenger-avatar-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 70px;
+  flex-shrink: 0;
+}
+.v-avatar-circle {
+  width: 40px;
+  height: 40px;
+  background-color: #ffa800; /* Фирменный оранжевый круг */
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  user-select: none;
+}
+.v-passenger-type-label-tag {
+  font-size: 12px;
+  color: #928f94;
+}
+
+/* ФИО и Паспортные данные */
+.v-passenger-info-text-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.v-passenger-full-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #292929;
+  margin: 0 0 2px 0;
+  letter-spacing: 0.3px;
+}
+.v-passenger-meta-line {
+  font-size: 14px;
+  color: #928f94; /* Спокойный серый цвет для подписей документов */
+}
+
+/* Правый блок Итогового чека внутри пассажиров */
+.width-240-border-left {
+  width: 240px;
+  border-left: 1px solid #e5e5e5; /* Вертикальный разделитель */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  background-color: #ffffff;
+}
+.v-checkout-total-summary-box-box {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.v-total-summary-label { font-size: 16px; color: #292929; }
+.v-total-summary-digits-value { font-size: 24px; font-weight: bold; color: #292929; }
+.v-currency-rub-gray { font-weight: normal; color: #928f94; }
+
+/* ==========================================================================
+   💳 СЕКЦИЯ СПОСОБА ОПЛАТЫ
+   ========================================================================== */
+.row-layout-payment {
+  align-items: center;
+  padding: 24px 30px;
+  justify-content: space-between;
+}
+.verification-payment-left-value-text {
+  font-size: 16px;
+  color: #292929;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   🧡 СТИЛИЗАЦИЯ БЕЛЫХ КНОПОК «ИЗМЕНИТЬ» И ОРАНЖЕВОЙ «ПОДТВЕРДИТЬ»
+   ========================================================================== */
+.verification-right-action-column-btn-zone {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  box-sizing: border-box;
+}
+
+/* Белая аккуратная кнопка с темной рамкой по макету */
+.verification-inline-edit-btn {
+  background-color: #ffffff;
+  border: 1px solid #292929;
+  border-radius: 4px;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #292929;
+  cursor: pointer;
+  font-family: 'Roboto', sans-serif;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.verification-inline-edit-btn:hover {
+  background-color: #f4f4f4;
+  border-color: #000000;
+}
+.margin-top-20 { margin-top: 20px; }
+
+/* Нижний ряд с кнопкой подтверждения */
+.verification-page-submit-bottom-row-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+  width: 100%;
+}
+
+/* Большая оранжевая кнопка «Подтвердить» */
+.verification-main-orange-submit-btn-btn {
+  background-color: #ffa800;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  padding: 16px 55px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.15s ease;
+}
+.verification-main-orange-submit-btn-btn:hover {
+  background-color: #ff9100;
+}
+.verification-main-orange-submit-btn-btn:active {
+  transform: scale(0.98);
+}

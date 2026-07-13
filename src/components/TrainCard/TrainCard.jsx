@@ -11,7 +11,6 @@ import SVGicon from "../SVGicon/SVGicon"
 export default function TrainCard({ trainData }) {
   const { departure, arrival } = trainData || {};
   const navigate = useNavigate();
-
   const { appState, setAppState } = useContext(AppContext);
   const { routeState, setRouteState } = useContext(RouteContext);
   const { orderState, setOrderState } = useContext(OrderContext);
@@ -248,11 +247,26 @@ const minPrice = className === 'first'
         </div>
       ))}
     </div>
-          <button className="train-card__btn" onClick={handleClick}>
+    {/* {isVerificationMode ? (
+          
+          <div className="verification-card-btn-holder" style={{ marginTop: 'auto', width: '100%' }}>
+            <button 
+              type="button" 
+              className="verification-inline-edit-btn" 
+              style={{ width: '100%', boxSizing: 'border-box' }}
+              onClick={() => navigate('/order/seats')} 
+            >
+              Изменить
+            </button>
+          </div>
+        ) : ( */}
+          <button 
+          className="train-card__btn" onClick={handleClick}>
             Выбрать места
           </button>
+           {/* )} */}
         </div>
-      </div>
+        </div>
     </div>
   );
 }
