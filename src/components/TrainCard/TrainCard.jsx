@@ -322,15 +322,13 @@ const minPrice = className === 'first'
       {/* 3. БЛОК СТОИМОСТИ */}
       <div className="train-card__right">
         <div className="train-card__seats-list">
-          {renderSeatsInfo()}
+          {renderSeatsInfo(departureData || departure)}
         </div>
         <div className="train-card__actions">
           <div className="train-card__comfort-icons">
-       {['have_wifi', 'have_air_conditioning', 'is_express']
-              .filter(key => (departureData?.[key] || departure?.[key]))
-              .map((key, index) => (
-                <div className="train-card__comfort-icon-item" key={index}>
-                  <SVGicon name={key} />
+      {['have_wifi', 'have_air_conditioning', 'is_express'].filter(key => departure[key]).map((key, index) => (
+        <div className="train-card__comfort-icon-item" key={index}>
+          <SVGicon name={key} />
         </div>
       ))}
     </div>
@@ -339,8 +337,25 @@ const minPrice = className === 'first'
           <div className="verification-card-btn-holder">
             <button 
               type="button" 
-              className="verification-inline-edit-btn" 
-             onClick={handleClick}
+              className="verification-inline-edit-btn " 
+              onClick={() => {
+                // 🔥 ИСПРАВЛЕНО: Безопасный поиск ID поезда во всех возможных структурах контекста
+                const currentTrainId = 
+                  departure?._id || 
+                  departureData?._id || 
+                  trainData?._id || 
+                  trainData?.departure_id || 
+                  orderState?.savedTrainData?.departure_id ||
+                  appState?.departure_id;
+
+                if (currentTrainId) {
+                  // Перенаправляем на страницу выбора мест конкретного поезда по ТЗ
+                  navigate(`/order/seats?id=${currentTrainId}`);
+                } else {
+                  // Безопасный фолбек, если ID не нашелся
+                  navigate('/order/seats');
+                }
+              }} 
             >
               Изменить
             </button>
