@@ -27,26 +27,9 @@ const handleConfirmOrderSubmit = (e) => {
           <div className="verification-card-header-title">Поезд</div>
          
             {orderState?.savedTrainData ? (
-              <TrainCard 
-                /* 🛠️ ИСПРАВЛЕНО: Собираем структуру departure на лету из плоских ключей консоли,
-                   чтобы намертво защитить строку 179 от падения в undefined! */
-                trainData={{
-                  departure: {
-                    train_name: orderState.savedTrainData.departure_train_name,
-                    duration: orderState.savedTrainData.departure_duration,
-                    from: {
-                      datetime: orderState.savedTrainData.departure_from_datetime,
-                      city: { name: orderState.savedTrainData.departure_from_city_name },
-                      railway_station_name: orderState.savedTrainData.departure_from_railway_station_name
-                    },
-                    to: {
-                      datetime: orderState.savedTrainData.departure_to_datetime,
-                      city: { name: orderState.savedTrainData.departure_to_city_name },
-                      railway_station_name: orderState.savedTrainData.departure_to_railway_station_name
-                    }
-                  }
-                }} 
-                isVerificationMode={true} 
+            <TrainCard 
+              trainData={orderState.savedTrainData} 
+              isVerificationMode={true} 
               />
             ) : (
               <div className="verification-no-train-error">
