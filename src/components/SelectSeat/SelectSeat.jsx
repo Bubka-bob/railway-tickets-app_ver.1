@@ -14,39 +14,34 @@ export default function SelectSeat() {
   const { routeState } = useContext(RouteContext); 
   const trainId = searchParams.get('id');
 
+  // ✅ Достаем глобальный стейт заказа из контекста
+  const { orderState, setOrderState } = useContext(OrderContext) || {};
+
   // ==========================================
   // 🆕 ЛОКАЛЬНЫЙ СТЕЙТ ДЛЯ ПЛАТНЫХ УСЛУГ
-  // Хранит цены выбранных опций (белье, wifi) по направлениям
   // ==========================================
   const [servicesSelection, setServicesSelection] = useState({
-    departure: {}, // Пример: { linens: 250 }
+    departure: {}, 
     arrival: {}    
   });
 
-  // Функция переключения услуги. Вызывается из WagonServices и передается глубже
   const handleToggleService = (serviceKey, serviceId, price) => {
-  setServicesSelection(prev => {
-    // Разбираем ключ обратно на направление и вагон
-    const [direction] = serviceKey.split('_');
+    setServicesSelection(prev => {
+      const [direction] = serviceKey.split('_');
+      const wagonState = prev[serviceKey] ?? {};
 
-    // Находим текущий стейт выбранного вагона или создаем пустой
-    const wagonState = prev[serviceKey] ?? {};
+      if (wagonState[serviceId]) {
+        delete wagonState[serviceId];
+      } else {
+        wagonState[serviceId] = price;
+      }
 
-    if (wagonState[serviceId]) {
-      // Удаляем только из стейта этого вагона
-      delete wagonState[serviceId];
-    } else {
-      // Добавляем только в стейт этого вагона
-      wagonState[serviceId] = price;
-    }
-
-    // Возвращаем обновленный стейт
-    return {
-      ...prev,
-      [serviceKey]: Object.keys(wagonState).length > 0 ? wagonState : undefined, // Убираем пустые объекты
-    };
-  });
-};
+      return {
+        ...prev,
+        [serviceKey]: Object.keys(wagonState).length > 0 ? wagonState : undefined,
+      };
+    });
+  };
 
   const { resultDeparture, resultArrival } = useGetSeats({
     departure_id: trainId,
@@ -60,8 +55,47 @@ export default function SelectSeat() {
     have_express: appState?.have_express ? 'true' : null,
   });
 
-  // Вычисляем сумму только доп. услуг под вагоном (для отображения в реальном времени)
-  const getCurrentServicesTotal = (dir) => Object.values(servicesSelection[dir]).reduce((sum, p) => sum + p, 0);
+  // Вычисляем сумму доп. услуг
+  const getCurrentServicesTotal = (dir) => {
+    if (!servicesSelection[dir]) return 0;
+    return Object.values(servicesSelection[dir]).reduce((sum, p) => sum + (Number(p) || 0), 0);
+  };
+
+  // ==========================================================================
+  // 💰 ЛОГИКА ФИНАЛЬНОГО РАСЧЕТА И ЗАПИСИ СУММЫ ПРИ ПЕРЕХОДЕ
+  // ==========================================================================
+  const handleGoToPassengersPage = () => {
+    if (!setOrderState) return;
+
+    // 1. Вытаскиваем все сиденья, которые пользователь выбрал на интерактивной схеме
+    const departureSeats = orderState?.legs?.departure?.seats?.filter(s => s && s.seatNumber !== null) || [];
+    const arrivalSeats = orderState?.legs?.arrival?.seats?.filter(s => s && s.seatNumber !== null) || [];
+
+    // 2. Считаем чистую стоимость всех выбранных кресел (Туда + Обратно)
+    const baseSeatsPriceTotal = [...departureSeats, ...arrivalSeats].reduce((sum, s) => sum + Number(s.price || 0), 0);
+
+    // 3. Вычисляем доплаты за Wi-Fi и постельное белье, разворачивая наш стейт услуг
+    const currentServicesCost = Object.values(servicesSelection)
+      .filter(Boolean)
+      .flatMap(Object.values) // Собираем плоский массив всех цен выбранных галочек
+      .reduce((sum, p) => sum + Number(p || 0), 0);
+
+    // 4. Складываем базовые места и доп. услуги, умноженные на количество билетов
+    const finalOrderCalculatedPrice = baseSeatsPriceTotal + currentServicesCost;
+
+    // 🔥 ЗАПИСЫВАЕМ ВСЁ В КОНТЕКСТ: Теперь и услуги, и итоговая цена намертво летят по страницам!
+    setOrderState(prev => ({
+      ...prev,
+      totalPrice: finalOrderCalculatedPrice, // Зашиваем готовую сумму, чтобы VerificationPage прочитал её
+      services: servicesSelection,           // Сохраняем объект услуг для вывода в сайдбаре
+      savedTrainData: routeState             // Подстраховка объекта поезда
+    }));
+
+    // Переходим на страницу заполнения ФИО анкет
+    navigate('/order/passengers', { 
+      state: { selectedServices: servicesSelection } 
+    });
+  };
 
   return (
     <div className="select-seats-content-flow">
@@ -95,16 +129,11 @@ export default function SelectSeat() {
             />
           )}
 
-          {/* ОБЩАЯ КНОПКА ДАЛЕЕ с передачей данных о сервисах */}
+          {/* ОБЩАЯ КНОПКА ДАЛЕЕ С ЗАПИСЬЮ ИТОГОВОГО ЧЕКА В КОНТЕКСТ */}
           <div className="bottom-submit-row">
             <button 
               className="main-orange-submit-btn" 
-              onClick={() => {
-                // Здесь можно также обновить глобальный totalPriceSummary, если он нужен другим компонентам до PassengersPage
-                navigate('/order/passengers', { 
-                  state: { selectedServices: servicesSelection } 
-                });
-              }}
+              onClick={handleGoToPassengersPage} /* ➔ Вызываем нашу функцию записи цен */
             >
               ДАЛЕЕ
             </button>

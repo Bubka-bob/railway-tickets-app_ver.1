@@ -18,10 +18,6 @@ export default function DirectionSeatsBlock({
   const { orderState, setOrderState } = useContext(OrderContext);
   const dir = directionType || (isReturn ? 'arrival' : 'departure');
   
-  // ==========================================
-  // 🆕 ДОБАВЛЕНЫ НЕХВАТАЮЩИЕ ХУКИ СОСТОЯНИЯ
-  // Без них компонент выдаст ошибку ReferenceError
-  // ==========================================
   const [activeTab, setActiveTab] = useState('');
   const [activeWagonId, setActiveWagonId] = useState(null); 
   const [activeTicketType, setActiveTicketType] = useState('adult');
