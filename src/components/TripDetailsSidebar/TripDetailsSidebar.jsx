@@ -52,10 +52,10 @@ export default function TripDetailsSidebar() {
   return `${hours}:${formattedMinutes}`;
 };
 
-  const depFromDate = formatServerDate(trainData?.departure_date_start || "30.08.2018");
-  const depToDate = formatServerDate(trainData?.departure_date_start_arrival || "31.08.2018");
-  const arrFromDate = formatServerDate(trainData?.arrival_date_end || "09.09.2018");
-  const arrToDate = formatServerDate(trainData?.arrival_date_end_arrival || "10.09.2018");
+  const depFromDate = formatServerDate(trainData?.departure_date_start);
+  const depToDate = formatServerDate(trainData?.departure_date_start_arrival);
+  const arrFromDate = formatServerDate(trainData?.arrival_date_end);
+  const arrToDate = formatServerDate(trainData?.arrival_date_end_arrival);
 
   return (
     <div className="trip-details-sidebar-card">

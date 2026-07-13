@@ -1,6 +1,5 @@
 .seats-page-grid.container {
   display: grid !important;
-  /* 290px под левый сайдбар, остальное под обзор заказа */
   grid-template-columns: 290px 1fr !important; 
   gap: 40px !important; 
   padding-top: 50px;
@@ -11,13 +10,16 @@
   box-sizing: border-box;
 }
 
+.seats-page-sidebar {
+  width: 290px !important;
+  flex-shrink: 0 !important;
+  box-sizing: border-box;
+}
 
-
-/* ПРАВАЯ КОЛОНКА (КОМПОНЕНТ ПОДТВЕРЖДЕНИЯ) */
 .verification-page-main-zone {
-  grid-column: 2 !important; /* Жестко удерживаем во 2-й колонке */
+  grid-column: 2 !important;
   width: 100% !important;
-  min-width: 0 !important; /* Блокируем распирание карточек вправо */
+  min-width: 0 !important;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -31,18 +33,17 @@
 }
 
 /* ==========================================================================
-   🏠 СТИЛИЗАЦИЯ КАРТОЧЕК С СЕРЫМИ ШАПКАМИ ИЗ МАКЕТА FIGMA
+   🏠 СТИЛИЗАЦИЯ БЕЛЫХ КАРТОЧЕК БЛОКОВ С СЕРЫМИ ШАПКАМИ
    ========================================================================== */
 .verification-section-white-card {
   background-color: #ffffff;
   border: 1px solid #c4c4c4;
   border-radius: 4px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); /* Тень по ТЗ Нетологии */
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Серые шапки блоков "Поезд", "Пассажиры", "Способ оплаты" */
 .verification-card-header-title {
   background-color: #f9f9f9;
   padding: 18px 24px;
@@ -58,18 +59,26 @@
   box-sizing: border-box;
 }
 
-/* Обёртка для встроенной карточки TrainCard, чтобы сохранить внутренние паддинги */
+/* 🛠️ ПЕРЕНЕСЕНО ИЗ JSX: Обёртка встроенной карточки поезда */
 .verification-card-embedded-train-wrapper {
   padding: 24px;
   width: 100%;
   box-sizing: border-box;
 }
 
+/* 🛠️ ПЕРЕНЕСЕНО ИЗ JSX: Текст заглушки отсутствия поезда */
+.verification-no-train-error {
+  color: #928f94;
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+}
+
 /* ==========================================================================
-   👤 СЕКЦИЯ ПАССАЖИРОВ (АВАТАРЫ, СПИСОК И ИТОГОВАЯ ЦЕНА СБОКУ)
+   👤 СЕКЦИЯ ПАССАЖИРОВ
    ========================================================================== */
 .row-layout-passengers {
-  align-items: stretch; /* Растягиваем колонку итога на всю высоту */
+  align-items: stretch;
 }
 
 .verification-passengers-left-list-container {
@@ -78,7 +87,14 @@
   flex-direction: column;
 }
 
-/* Строка одного пассажира внутри списка */
+/* 🛠️ ПЕРЕНЕСЕНО ИЗ JSX: Заглушка, если пассажиров нет */
+.verification-passenger-empty-stub-text {
+  padding: 24px 30px;
+  color: #928f94;
+  font-style: italic;
+  font-size: 14px;
+}
+
 .verification-passenger-row-item-card {
   display: flex;
   gap: 24px;
@@ -88,10 +104,9 @@
   box-sizing: border-box;
 }
 .verification-passengers-left-list-container .verification-passenger-row-item-card:last-child {
-  border-bottom: none; /* Убираем черту у последнего пассажира */
+  border-bottom: none;
 }
 
-/* Круглый оранжевый аватар пассажира */
 .v-passenger-avatar-zone {
   display: flex;
   flex-direction: column;
@@ -100,10 +115,10 @@
   width: 70px;
   flex-shrink: 0;
 }
+
 .v-avatar-circle {
   width: 40px;
   height: 40px;
-  background-color: #ffa800; /* Фирменный оранжевый круг */
   color: #ffffff;
   border-radius: 50%;
   display: flex;
@@ -112,17 +127,18 @@
   font-size: 18px;
   user-select: none;
 }
+
 .v-passenger-type-label-tag {
   font-size: 12px;
   color: #928f94;
 }
 
-/* ФИО и Паспортные данные */
 .v-passenger-info-text-details {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
+
 .v-passenger-full-name {
   font-size: 16px;
   font-weight: bold;
@@ -130,15 +146,16 @@
   margin: 0 0 2px 0;
   letter-spacing: 0.3px;
 }
+
 .v-passenger-meta-line {
   font-size: 14px;
-  color: #928f94; /* Спокойный серый цвет для подписей документов */
+  color: #928f94;
 }
 
-/* Правый блок Итогового чека внутри пассажиров */
+/* Правый блок Итога */
 .width-240-border-left {
   width: 240px;
-  border-left: 1px solid #e5e5e5; /* Вертикальный разделитель */
+  border-left: 1px solid #e5e5e5;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -148,14 +165,28 @@
   flex-shrink: 0;
   background-color: #ffffff;
 }
+
 .v-checkout-total-summary-box-box {
   display: flex;
   align-items: baseline;
   gap: 12px;
 }
-.v-total-summary-label { font-size: 16px; color: #292929; }
-.v-total-summary-digits-value { font-size: 24px; font-weight: bold; color: #292929; }
-.v-currency-rub-gray { font-weight: normal; color: #928f94; }
+
+.v-total-summary-label {
+  font-size: 16px;
+  color: #292929;
+}
+
+.v-total-summary-digits-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #292929;
+}
+
+.v-currency-rub-gray {
+  font-weight: normal;
+  color: #928f94;
+}
 
 /* ==========================================================================
    💳 СЕКЦИЯ СПОСОБА ОПЛАТЫ
@@ -165,6 +196,7 @@
   padding: 24px 30px;
   justify-content: space-between;
 }
+
 .verification-payment-left-value-text {
   font-size: 16px;
   color: #292929;
@@ -172,7 +204,7 @@
 }
 
 /* ==========================================================================
-   🧡 СТИЛИЗАЦИЯ БЕЛЫХ КНОПОК «ИЗМЕНИТЬ» И ОРАНЖЕВОЙ «ПОДТВЕРДИТЬ»
+   🧡 КНОПКИ ДЕЙСТВИЙ И ОТПРАВКИ
    ========================================================================== */
 .verification-right-action-column-btn-zone {
   display: flex;
@@ -181,7 +213,6 @@
   box-sizing: border-box;
 }
 
-/* Белая аккуратная кнопка с темной рамкой по макету */
 .verification-inline-edit-btn {
   background-color: #ffffff;
   border: 1px solid #292929;
@@ -199,9 +230,12 @@
   background-color: #f4f4f4;
   border-color: #000000;
 }
-.margin-top-20 { margin-top: 20px; }
 
-/* Нижний ряд с кнопкой подтверждения */
+/* 🛠️ ПЕРЕНЕСЕНО ИЗ JSX: Отступ между блоком цены и кнопкой Изменить */
+.margin-top-20 {
+  margin-top: 20px;
+}
+
 .verification-page-submit-bottom-row-row {
   display: flex;
   justify-content: flex-end;
@@ -209,7 +243,6 @@
   width: 100%;
 }
 
-/* Большая оранжевая кнопка «Подтвердить» */
 .verification-main-orange-submit-btn-btn {
   background-color: #ffa800;
   color: #ffffff;
