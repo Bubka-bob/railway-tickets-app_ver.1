@@ -322,13 +322,15 @@ const minPrice = className === 'first'
       {/* 3. БЛОК СТОИМОСТИ */}
       <div className="train-card__right">
         <div className="train-card__seats-list">
-          {renderSeatsInfo(departureData || departure)}
+          {renderSeatsInfo()}
         </div>
         <div className="train-card__actions">
           <div className="train-card__comfort-icons">
-      {['have_wifi', 'have_air_conditioning', 'is_express'].filter(key => departure[key]).map((key, index) => (
-        <div className="train-card__comfort-icon-item" key={index}>
-          <SVGicon name={key} />
+       {['have_wifi', 'have_air_conditioning', 'is_express']
+              .filter(key => (departureData?.[key] || departure?.[key]))
+              .map((key, index) => (
+                <div className="train-card__comfort-icon-item" key={index}>
+                  <SVGicon name={key} />
         </div>
       ))}
     </div>
@@ -338,7 +340,7 @@ const minPrice = className === 'first'
             <button 
               type="button" 
               className="verification-inline-edit-btn" 
-              onClick={() => navigate('/order/seats')} 
+             onClick={handleClick}
             >
               Изменить
             </button>
