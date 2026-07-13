@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import TrainCard from '../TrainCard/TrainCard'; // 🔥 Импортируем твой готовый компонент поезда
+import TrainCard from '../TrainCard/TrainCard'; 
 import RouteContext from '../../components/context/RouteContext'; 
 import PassIconCircle from "../../assets/PassIconCircle.svg"
 import "./VerificationFormBlock.css"
@@ -10,25 +10,42 @@ export default function VerificationFormBlock({ orderState }) {
   const { routeState } = useContext(RouteContext);
 
   const departureSeats = orderState?.legs?.departure?.seats?.filter(s => s && s.seatNumber !== null) || [];
-  const totalPrice = orderState?.totalPrice || 0;
   const userPaymentMethod = orderState?.user?.payment_method || 'cash';
-
-  const handleConfirmOrderSubmit = (e) => {
+  
+  // Получаем готовую цену из контекста без ручных пересчетов
+  const finalPriceFromContext = orderState?.totalPrice || 0;
+const handleConfirmOrderSubmit = (e) => {
     e.preventDefault();
     navigate('/order/success'); 
   };
-
   return (
     <section className="verification-page-main-zone">
       <div className="verification-blocks-flow">
         
-        {/* ==================== БЛОК 1: ПОЕЗД ==================== */}
+        {/* ==================== БЛОК 1: ПОЕЗД (ИСПРАВЛЕННЫЙ МОСТ СТРУКТУРЫ) ==================== */}
         <div className="verification-section-white-card">
           <div className="verification-card-header-title">Поезд</div>
           <div className="verification-card-embedded-train-wrapper">
-            {routeState ? (
+            {orderState?.savedTrainData ? (
               <TrainCard 
-                train={routeState} 
+                /* 🛠️ ИСПРАВЛЕНО: Собираем структуру departure на лету из плоских ключей консоли,
+                   чтобы намертво защитить строку 179 от падения в undefined! */
+                trainData={{
+                  departure: {
+                    train_name: orderState.savedTrainData.departure_train_name,
+                    duration: orderState.savedTrainData.departure_duration,
+                    from: {
+                      datetime: orderState.savedTrainData.departure_from_datetime,
+                      city: { name: orderState.savedTrainData.departure_from_city_name },
+                      railway_station_name: orderState.savedTrainData.departure_from_railway_station_name
+                    },
+                    to: {
+                      datetime: orderState.savedTrainData.departure_to_datetime,
+                      city: { name: orderState.savedTrainData.departure_to_city_name },
+                      railway_station_name: orderState.savedTrainData.departure_to_railway_station_name
+                    }
+                  }
+                }} 
                 isVerificationMode={true} 
               />
             ) : (
@@ -44,12 +61,9 @@ export default function VerificationFormBlock({ orderState }) {
           <div className="verification-card-header-title">Пассажиры</div>
           <div className="verification-card-body-content row-layout-passengers">
             
-            {/* Левая часть: Список пассажиров */}
             <div className="verification-passengers-left-list-container">
               {departureSeats.length === 0 ? (
-                <div className="verification-passenger-empty-stub-text">
-                  Список пассажиров пуст. Вернитесь назад для заполнения.
-                </div>
+                <div className="verification-passenger-empty-stub-text">Список пассажиров пуст.</div>
               ) : (
                 departureSeats.map((seat, index) => {
                   const info = seat?.passengerInfo || {};
@@ -65,7 +79,7 @@ export default function VerificationFormBlock({ orderState }) {
                     <div key={index} className="verification-passenger-row-item-card">
                       <div className="v-passenger-avatar-zone">
                         <div className="v-avatar-circle">
-                             <img src={PassIconCircle} alt="Пассажир" className="v-passenger-img-icon" />
+                          <img src={PassIconCircle} alt="Пассажир" className="v-passenger-img-icon" />
                         </div>
                         <span className="v-passenger-type-label-tag">{isChild ? "Детский" : "Взрослый"}</span>
                       </div>
@@ -84,12 +98,11 @@ export default function VerificationFormBlock({ orderState }) {
               )}
             </div>
 
-            {/* Правая часть: Итог в рублях + кнопка Изменить */}
             <div className="verification-right-action-column-btn-zone width-240-border-left">
               <div className="v-checkout-total-summary-box-box">
                 <span className="v-total-summary-label">Всего</span>
                 <span className="v-total-summary-digits-value">
-                  {totalPrice.toLocaleString('ru-RU')} <span className="v-currency-rub-gray">₽</span>
+                  {finalPriceFromContext.toLocaleString('ru-RU')} <span className="v-currency-rub-gray">₽</span>
                 </span>
               </div>
               <button type="button" className="verification-inline-edit-btn margin-top-20" onClick={() => navigate('/order/passengers')}>
@@ -115,7 +128,6 @@ export default function VerificationFormBlock({ orderState }) {
           </div>
         </div>
 
-        {/* БОЛЬШАЯ ОРАНЖЕВАЯ КНОПКА ПОДТВЕРЖДЕНИЯ */}
         <div className="verification-page-submit-bottom-row-row">
           <button type="button" className="verification-main-orange-submit-btn-btn" onClick={handleConfirmOrderSubmit}>
             Подтвердить

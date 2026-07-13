@@ -8,19 +8,37 @@ import OrderContext from "../context/OrderContext";
 import getTime from '../../services/getTime';
 import SVGicon from "../SVGicon/SVGicon"
 
-export default function TrainCard({ trainData }) {
+export default function TrainCard({ trainData, isVerificationMode = false }) {
   const { departure, arrival } = trainData || {};
   const navigate = useNavigate();
   const { appState, setAppState } = useContext(AppContext);
   const { routeState, setRouteState } = useContext(RouteContext);
   const { orderState, setOrderState } = useContext(OrderContext);
+   const departureData = trainData?.departure || trainData; 
+
+  const trainNumber = departure?.train?.name || departure?.departure_train_name || departure?.train_name || "116С";
+  const isExpress = departure?.train?.is_express || false;
+
+  // 2. Станция ОТПРАВЛЕНИЯ (from) — пробиваемся сквозь city.name или плоский city_name
+  const fromCityName = departure?.from?.city?.name || departure?.from?.city_name || departure?.departure_from_city_name || "Москва";
+  const fromStationName = departure?.from?.railway_station_name || departure?.departure_from_railway_station_name || "Курский";
+  const fromDatetime = departure?.from?.datetime || departure?.departure_from_datetime || "";
+
+  // 3. Станция ПРИБЫТИЯ (to)
+  const toCityName = departure?.to?.city?.name || departure?.to?.city_name || departure?.departure_to_city_name || "Санкт-Петербург";
+  const toStationName = departure?.to?.railway_station_name || departure?.departure_to_railway_station_name || "Ладожский";
+  const toDatetime = departure?.to?.datetime || departure?.departure_to_datetime || "";
+
+  // 4. Длительность пути
+  const rawDuration = departure?.duration || departure?.departure_duration || "";
+  
   if (!departure) return null;
   // Локальный перевод секунд в формат "Х ч. Х мин." для стрелочек
   const getDurationString = (seconds) => {
     if (!seconds) return '0 ч. 0 мин.';
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
-    return `${hours} ч. ${minutes} мин.`;
+    return `${hours}:${minutes}`;
   };
 
   // Метод сохранения данных выбранного поезда
@@ -39,8 +57,8 @@ export default function TrainCard({ trainData }) {
       const dd = String(date.getDate()).padStart(2, '0');
       return `${yyyy}-${mm}-${dd}`;
     };
-
     
+        
     for (let key in directions) {
       let currentItem = directions[key];
       
@@ -177,15 +195,15 @@ const minPrice = className === 'first'
         <div className="train-card__train-icon-wrapper">
           <img src={trainIcon} alt="Поезд" className="train-card__train-icon-img" />
         </div>
-        <h3 className="train-card__number">{departure.train.name}</h3>
+        <h3 className="train-card__number">{trainNumber}</h3>
         <div className="train-card__train-route-details">
           <span className="train-card__route-city-text capitalize-text">
-            {departure.from.city.name} ➔
+            {fromCityName} ➔
           </span>
           <span className="train-card__route-city-text capitalize-text">
-            {departure.to.city.name}
+            {toCityName}
           </span>
-          {departure.train.is_express && (
+          {isExpress && (
             <span className="train-card__train-brand-name">«Волга»</span>
           )}
         </div>
@@ -195,20 +213,20 @@ const minPrice = className === 'first'
       <div className="train-card__center">
         <div className="train-card__timeline-row">
           <div className="train-card__time-block">
-            <span className="train-card__time">{getTime(departure.from.datetime)}</span>
-            <span className="train-card__city-name">{departure.from.city.name}</span>
-            <span className="train-card__station-name">{departure.from.railway_station_name} вокзал</span>
+            <span className="train-card__time">{getTime(fromDatetime)}</span>
+            <span className="train-card__city-name">{fromCityName}</span>
+            <span className="train-card__station-name">{fromStationName} вокзал</span>
           </div>
 
           <div className="train-card__arrow-container">
-            <span className="train-card__duration-badge">{getDurationString(departure.duration)}</span>
+            <span className="train-card__duration-badge">{getDurationString(rawDuration)}</span>
             <span className="train-card__arrow-icon">➔</span>
           </div>
 
           <div className="train-card__time-block train-card__time-block--right">
-            <span className="train-card__time">{getTime(departure.to.datetime)}</span>
-            <span className="train-card__city-name">{departure.to.city.name}</span>
-            <span className="train-card__station-name">{departure.to.railway_station_name} вокзал</span>
+            <span className="train-card__time">{getTime(toDatetime)}</span>
+            <span className="train-card__city-name">{toCityName}</span>
+            <span className="train-card__station-name">{toStationName} вокзал</span>
           </div>
         </div>
 
@@ -237,7 +255,7 @@ const minPrice = className === 'first'
       {/* 3. БЛОК СТОИМОСТИ */}
       <div className="train-card__right">
         <div className="train-card__seats-list">
-          {renderSeatsInfo()}
+          {renderSeatsInfo(departureData || departure)}
         </div>
         <div className="train-card__actions">
           <div className="train-card__comfort-icons">
@@ -247,7 +265,7 @@ const minPrice = className === 'first'
         </div>
       ))}
     </div>
-    {/* {isVerificationMode ? (
+    {isVerificationMode ? (
           
           <div className="verification-card-btn-holder" style={{ marginTop: 'auto', width: '100%' }}>
             <button 
@@ -259,12 +277,12 @@ const minPrice = className === 'first'
               Изменить
             </button>
           </div>
-        ) : ( */}
+        ) : (
           <button 
           className="train-card__btn" onClick={handleClick}>
             Выбрать места
           </button>
-           {/* )} */}
+            )}
         </div>
         </div>
     </div>
