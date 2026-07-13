@@ -267,11 +267,10 @@ const minPrice = className === 'first'
     </div>
     {isVerificationMode ? (
           
-          <div className="verification-card-btn-holder" style={{ marginTop: 'auto', width: '100%' }}>
+          <div className="verification-card-btn-holder">
             <button 
               type="button" 
               className="verification-inline-edit-btn" 
-              style={{ width: '100%', boxSizing: 'border-box' }}
               onClick={() => navigate('/order/seats')} 
             >
               Изменить

@@ -25,7 +25,7 @@ const handleConfirmOrderSubmit = (e) => {
         {/* ==================== БЛОК 1: ПОЕЗД (ИСПРАВЛЕННЫЙ МОСТ СТРУКТУРЫ) ==================== */}
         <div className="verification-section-white-card">
           <div className="verification-card-header-title">Поезд</div>
-          <div className="verification-card-embedded-train-wrapper">
+         
             {orderState?.savedTrainData ? (
               <TrainCard 
                 /* 🛠️ ИСПРАВЛЕНО: Собираем структуру departure на лету из плоских ключей консоли,
@@ -53,7 +53,7 @@ const handleConfirmOrderSubmit = (e) => {
                 Данные о выбранном поезде не найдены в контексте.
               </div>
             )}
-          </div>
+        
         </div>
 
         {/* ==================== БЛОК 2: ПАССАЖИРЫ ==================== */}

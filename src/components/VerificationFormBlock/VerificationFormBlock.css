@@ -30,6 +30,7 @@
   flex-direction: column;
   gap: 30px;
   width: 100%;
+  
 }
 
 /* ==========================================================================
@@ -61,9 +62,9 @@
 
 /* 🛠️ ПЕРЕНЕСЕНО ИЗ JSX: Обёртка встроенной карточки поезда */
 .verification-card-embedded-train-wrapper {
-  padding: 24px;
-  width: 100%;
-  box-sizing: border-box;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
 }
 
 /* 🛠️ ПЕРЕНЕСЕНО ИЗ JSX: Текст заглушки отсутствия поезда */
