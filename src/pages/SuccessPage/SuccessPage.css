@@ -1,0 +1,8 @@
+.success-page-global-wrapper {
+  background-color: #f7f8f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+

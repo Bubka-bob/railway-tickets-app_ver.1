@@ -13,20 +13,23 @@ export default function Header({style, variant = "main" }) {
       <Navigation />
       
 
-      {variant === "main" ? (
+      {variant === "main" && (
       <div className="header-widget container">
         <HeaderTitle />
         <SearchWidget variant="vertical"/>
       </div>
-      ) : (
-      /* Страница выбора поездов — виджет с отступом от меню */
+      )}
+      {variant === "select" && (
+        /* Страница выбора поездов — горизонтальный виджет */
         <div className="header-widget-select-page container">
           <SearchWidget variant="horizontal" />
         </div>
       )}
-     
-      
-      {/* <HeaderProgressBar /> */}
+
+      {/* 🔥 Если variant === "success", здесь ничего не рендерится, 
+          остается только чистое меню и фон, как на твоем макете! */}
     </header>
   );
 }
+     
+    
