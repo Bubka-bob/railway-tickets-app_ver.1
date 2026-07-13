@@ -38,24 +38,21 @@ export default function TrainCard({ trainData, isVerificationMode = false, isFla
   if (!departureData) return null;
 
   const hasArrivalTrip = !!(
-    trainData?.arrival?._id || 
-    trainData?.arrival_train_name || 
-    (trainData?.arrival && trainData.arrival !== trainData && trainData.arrival._id)
+    (trainData?.arrival && trainData.arrival !== trainData && trainData.arrival?.train?.name) || 
+    (trainData?.arrival_train_name && trainData.arrival_train_name !== "null" && trainData.arrival_train_name !== "undefined")
   );
 
-  // Если обратного пути нет — записываем null, чтобы разметка ниже даже не пыталась его читать
-  const arrivalData = trainData?.arrival && trainData.arrival !== trainData ? trainData.arrival : null;
 
-  const arrTrainNumber = arrivalData?.train?.name || trainData?.arrival_train_name || arrivalData?.train_name || "";
-  const arrFromCityName = arrivalData?.from?.city?.name || trainData?.arrival_from_city_name || "";
-  const arrFromStationName = arrivalData?.from?.railway_station_name || trainData?.arrival_from_railway_station_name || "";
-  const arrFromDatetime = arrivalData?.from?.datetime || trainData?.arrival_from_datetime || "";
+  const arrTrainNumber = arrivalData?.train?.name || (trainData?.arrival_train_name !== "null" ? trainData?.arrival_train_name : "") || "";
+  const arrFromCityName = arrivalData?.from?.city?.name || (trainData?.arrival_from_city_name !== "null" ? trainData?.arrival_from_city_name : "") || "";
+  const arrFromStationName = arrivalData?.from?.railway_station_name || (trainData?.arrival_from_railway_station_name !== "null" ? trainData?.arrival_from_railway_station_name : "") || "";
+  const arrFromDatetime = arrivalData?.from?.datetime || (trainData?.arrival_from_datetime !== "null" ? trainData?.arrival_from_datetime : "") || "";
 
-  const arrToCityName = arrivalData?.to?.city?.name || trainData?.arrival_to_city_name || "";
-  const arrToStationName = arrivalData?.to?.railway_station_name || trainData?.arrival_to_railway_station_name || "";
-  const arrToDatetime = arrivalData?.to?.datetime || trainData?.arrival_to_datetime || "";
+  const arrToCityName = arrivalData?.to?.city?.name || (trainData?.arrival_to_city_name !== "null" ? trainData?.arrival_to_city_name : "") || "";
+  const arrToStationName = arrivalData?.to?.railway_station_name || (trainData?.arrival_to_railway_station_name !== "null" ? trainData?.arrival_to_railway_station_name : "") || "";
+  const arrToDatetime = arrivalData?.to?.datetime || (trainData?.arrival_to_datetime !== "null" ? trainData?.arrival_to_datetime : "") || "";
 
-  const arrRawDuration = arrivalData?.duration || trainData?.arrival_duration || "";
+  const arrRawDuration = arrivalData?.duration || (trainData?.arrival_duration !== "null" ? trainData?.arrival_duration : "") || "";
   
  const getDurationString = (seconds) => {
     if (!seconds) return '0 ч. 0 мин.';
