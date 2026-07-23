@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import OrderContext from "../../../../components/context/OrderContext";
-// ➔ 1. Импортируем наш универсальный изолированный хелпер
 import { handleSeatSelection } from "../../../../utils/seatSelectionHelper"; 
 import "./LuxuryCoach.css";
 
@@ -9,17 +8,17 @@ export default function LuxuryCoach({ seatsData = [], coachId, directionType, ac
 const currentCoachObject = coachData?.coach || coachData;
   const dir = directionType || 'departure';
   
-  // Извлекаем массив выбранных мест направления из глобальной памяти
+
   const currentLegSeats = orderState?.legs?.[dir]?.seats || [];
   const selectedSeatsList = currentLegSeats.filter(s => s && s.seatNumber !== null && s.seatNumber !== undefined);
 
-  // Индексируем доступные на сервере места
+  
   const availableSeatsMap = seatsData.reduce((acc, seat) => {
     acc[seat.index] = seat.available;
     return acc;
   }, {});
 
-  // Вызываем изолированную функцию клика по месту в одну строчку
+  
   const handleSeatClick = (number) => {
     setOrderState(prev => 
       handleSeatSelection(prev, dir, number, coachId, activeTicketType, maxLimits, currentCoachObject)
@@ -29,7 +28,7 @@ const currentCoachObject = coachData?.coach || coachData;
   const renderSeatButton = (number) => {
     const isAvailable = availableSeatsMap[number] ?? false;
     
-    // Ищем, выбрано ли сиденье в текущем orderState вагона по его coachId и номеру
+  
     const seatObject = selectedSeatsList.find(
       s => String(s.coachId) === String(coachId) && Number(s.seatNumber) === Number(number)
     );
@@ -57,7 +56,7 @@ const currentCoachObject = coachData?.coach || coachData;
     );
   };
 
-  // Цикл генерации 8 купе Люкса по макету Figma
+  
   const compartments = [];
   for (let i = 0; i < 8; i++) {
     const leftSeat = i * 2 + 1;

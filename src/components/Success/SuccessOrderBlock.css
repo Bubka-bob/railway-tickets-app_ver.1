@@ -1,5 +1,12 @@
 
 /* Главный макетный контейнер, выровненный по сетке верхнего меню */
+.header--success {
+  height: 500px !important; /* Узкая компактная полоса строго по Figma */
+  min-height: 170px !important;
+  background-size: cover;
+  background-position: center;
+}
+
 .success-page-main-container.container {
   max-width: 1200px;
   width: 100%;
@@ -8,7 +15,10 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Центрируем бланк заказа строго по середине экрана */
+  align-items: center; 
+  margin-top: -120px; 
+  position: relative;
+  z-index: 20;/* Центрируем бланк заказа строго по середине экрана */
 }
 
 /* Крупный белый заголовок, который заходит на фоновую картинку хедера */
@@ -17,11 +27,11 @@
   font-weight: bold;
   color: #ffffff;
   margin-top: -90px; /* Выталкиваем заголовок вверх на темную область рельс */
-  margin-bottom: 40px;
+  margin-bottom: 35px;
   text-align: center;
   font-family: 'Roboto', sans-serif;
   z-index: 10;
-  letter-spacing: 0.5px;
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* ==========================================================================
@@ -38,6 +48,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  margin-top: 5px; 
 }
 
 /* Верхняя строка бланка с номером и суммой */
@@ -46,19 +57,20 @@
   justify-content: space-between;
   align-items: center;
   padding: 28px 40px;
-  border-bottom: 1px dashed #c4c4c4; /* Пунктирная разделительная линия */
+  border-bottom: 1px solid #c4c4c4; /* Пунктирная разделительная линия */
   box-sizing: border-box;
   background-color: #ffffff;
 }
 
 .success-order-number-badge {
-  font-size: 18px;
+  font-size: 20px;
   color: #292929;
   font-family: 'Roboto', sans-serif;
+   font-weight: bold;
 }
 .v-order-id-digits {
   font-size: 20px;
-  color: #ffa800; /* Номер заказа выделен фирменным оранжевым цветом */
+   /* Номер заказа выделен фирменным оранжевым цветом */
   font-weight: bold;
 }
 
@@ -103,8 +115,6 @@
 .success-icon-circle-badge {
   width: 65px;
   height: 65px;
-  background-color: #ffecc7; /* Нежно-оранжевый фон круга */
-  border: 2px solid #ffa800; /* Яркий оранжевый контур */
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -182,8 +192,7 @@
 
 .success-rating-label-text {
   font-size: 14px;
-  color: #ffffff; /* Белый текст "Оценить сервис" капсом */
-  font-weight: bold;
+  color: black; /* Белый текст "Оценить сервис" капсом */
   font-family: 'Roboto', sans-serif;
 }
 
@@ -215,12 +224,12 @@
 /* Кнопка возврата на главную страницу */
 .success-btn-back-to-home-page {
   background-color: transparent;
-  border: 1px solid #ffffff; /* Белый макетный контур */
+  border: 1px solid black; /* Белый макетный контур */
   border-radius: 4px;
   padding: 12px 32px;
   font-size: 14px;
   font-weight: bold;
-  color: #ffffff; /* Строго белый текст капсом */
+  color: black; /* Строго белый текст капсом */
   text-transform: uppercase;
   letter-spacing: 0.5px;
   cursor: pointer;

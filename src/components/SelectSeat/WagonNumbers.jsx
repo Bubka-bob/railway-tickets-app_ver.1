@@ -9,7 +9,7 @@ export default function WagonNumbers({ wagonsList = [], activeWagonId, setActive
 
   const coach = currentWagon?.coach;
   const seats = currentWagon?.seats || [];
-  const classType = coach?.class_type; // Получаем тип вагона ('first', 'second', 'third', 'fourth')
+  const classType = coach?.class_type; 
 
   // Считаем общее количество доступных мест
   const availableSeats = seats.filter(s => s?.available);

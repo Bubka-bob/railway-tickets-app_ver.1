@@ -4,8 +4,10 @@ import wagonHeaderIcon from '../../../assets/wagon-header.png';
 import wagonFooterIcon from '../../../assets/wagon-footer.png';
 
 // Импорт дочерних схем вагонов
-import SecondClass from "../WagonScheme/SecondClass/SecondClass";
-import LuxuryCoach from "../WagonScheme/LuxuryCoach/LuxuryCoach"; // ➔ ДОБАВЛЕНО: Импортируем наш Люкс
+import SecondCoach from "./SecondCoach/SecondCoach";
+import LuxuryCoach from "./LuxuryCoach/LuxuryCoach";
+import ThirdCoach from "./ThirdCoach/ThirdCoach";
+import FourthCoach from "./FourthCoach/FourthCoach";
 
 import "./WagonScheme.css";
 
@@ -36,10 +38,31 @@ export default function WagonScheme({ wagon, classType, directionType, activeTic
 
         {/* Центральная часть вагона — Сетка интерактивных мест кресел */}
         <div className="wagon-map-part wagon-map-part--grid-center">
+         
+          {classType === 'first' && (
+            <LuxuryCoach 
+              seatsData={seatsList} 
+              coachId={coachId} 
+              directionType={directionType}
+              activeTicketType={activeTicketType}
+              maxLimits={maxLimits}
+              coachData={currentCoach}
+            />
+          )}
           
-          {/* ✅ Купе (SecondClass) — спускаем пропсы ниже */}
           {classType === 'second' && (
-            <SecondClass 
+            <SecondCoach 
+              seatsData={seatsList} 
+              coachId={coachId} 
+              directionType={directionType}
+              activeTicketType={activeTicketType}
+              maxLimits={maxLimits}
+              coachData={currentCoach}
+            />
+          )}
+           
+          {classType === 'third' && (
+            <ThirdCoach 
               seatsData={seatsList} 
               coachId={coachId} 
               directionType={directionType}
@@ -49,9 +72,8 @@ export default function WagonScheme({ wagon, classType, directionType, activeTic
             />
           )}
 
-          {/* ✅ Люкс (LuxuryCoach) — спускаем пропсы ниже */}
-          {classType === 'first' && (
-            <LuxuryCoach 
+          {classType === 'fourth' && (
+            <FourthCoach 
               seatsData={seatsList} 
               coachId={coachId} 
               directionType={directionType}

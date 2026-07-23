@@ -1,0 +1,117 @@
+/* Внешний каркас вагона */
+.netology-wagon-outer-frame {
+  position: relative;
+  width: 100%;
+  padding: 12px 0 40px 0; /* Отступ снизу под проход коридора */
+  background-color: #ffffff;
+  box-sizing: border-box;
+  border-left: 3px solid #928f94; /* Торцевые стены вагона */
+  border-right: 3px solid #928f94;
+}
+
+/* Верхняя сплошная стена вагона */
+.netology-wagon-outer-frame::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #928f94;
+}
+
+/* Самая нижняя сплошная линия вагона (под засечками) */
+.netology-wagon-outer-frame::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #928f94;
+}
+
+/* Сетка-контейнер для 8 купе */
+.netology-coupes-only-mesh-container {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr); 
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Одна купейная комната */
+.netology-coupe-room-block {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  border-right: 1px solid #928f94; /* Перегородки между купе */
+  padding: 0 10px 10px 10px; /* Отступ снизу до линии купе */
+}
+
+/* У последнего купе убираем правую стенку, так как там край вагона */
+.netology-coupe-room-block:last-child {
+  border-right: none;
+}
+
+/* Зона размещения элементов внутри купе */
+.netology-coupe-seats-zone {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Вертикальный ряд из двух кнопок */
+.netology-vertical-seats-pair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 8px; /* Зазор перед стеной */
+  width: 35px;
+  /* 🔥 Рисуем нижнюю стену купе строго под сиденьями */
+  border-bottom: 3px solid #928f94; 
+}
+
+/* 🔥 Дверь посередине купе (просто пустой блок, разрывающий линию) */
+.netology-coupe-middle-door {
+  width: 20px;
+  height: 10px;
+}
+
+/* Засечки коридора в самом низу вагона, идущие по перегородкам комнат */
+.netology-corridor-notch {
+  position: absolute;
+  bottom: -40px; /* Спускаем в зону коридора */
+  right: -1px;
+  width: 1px;
+  height: 12px; /* Длина засечки */
+  background-color: #928f94;
+}
+
+/* У последнего купе засечку в углу вагона не рисуем */
+.netology-coupe-room-block:last-child .netology-corridor-notch {
+  display: none;
+}
+
+.compartment-seat-node:hover {
+  background-color: #ffa800 ;
+  color: #ffffff ;
+  border-color: #ffa800;
+}
+
+.compartment-seat-node.is-disabled {
+  background-color: #e5e5e5;
+  border-color: #e5e5e5;
+  color: #928f94; 
+  cursor: not-allowed;
+}
+
+.compartment-seat-node.is-selected {
+  background-color: #ffffff ;
+  color: #ffa800 ;
+  border: 2px solid #ffa800 ;
+}

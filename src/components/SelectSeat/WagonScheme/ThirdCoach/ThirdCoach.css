@@ -1,0 +1,140 @@
+/* Внешний каркас плацкартного вагона */
+.netology-placard-outer-frame {
+  position: relative;
+  width: 100%;
+  padding: 12px 0;
+  background-color: #ffffff;
+  box-sizing: border-box;
+  border-left: 3px solid #928f94; /* Торцевые стены вагона */
+  border-right: 3px solid #928f94;
+}
+
+/* Верхняя сплошная стена вагона */
+.netology-placard-outer-frame::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #928f94;
+}
+
+/* Самая нижняя сплошная стена вагона (под боковыми местами) */
+.netology-placard-outer-frame::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #928f94;
+}
+
+/* Главный контейнер сетки */
+.netology-placard-mesh-only-wrapper {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr); /* 8 синхронных вертикальных секторов */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Одиночный вертикальный сектор (купе + коридор + боковушка) */
+.placard-wagon-step-sector {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  /* Рисуем сквозную вертикальную стену сектора */
+  border-right: 1px solid #928f94; 
+}
+
+/* У последнего сектора убираем правую границу */
+.placard-wagon-step-sector:last-child {
+  border-right: none;
+}
+
+/* --- ВЕРХНЯЯ ЧАСТЬ: КУПЕ --- */
+.placard-coupe-block-segment {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+  padding: 0 8px;
+  box-sizing: border-box;
+}
+
+.placard-coupe-pair-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 6px;
+
+}
+
+/* Проем двери в купе */
+.placard-coupe-door-gap {
+  width: 15px;
+  height: 5px;
+}
+
+/* --- СРЕДНЯЯ ЧАСТЬ: КОРИДОР --- */
+.placard-inner-corridor-path {
+  height: 15px; /* Свободная зона прохода продольного коридора */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* --- НИЖНЯЯ ЧАСТЬ: БОКОВЫЕ МЕСТА --- */
+.placard-side-block-segment {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 6px 4px 0 4px;
+  box-sizing: border-box;
+ 
+}
+
+/* --- КНОПКИ МЕСТ (Ваша базовая стилизация) --- */
+.placard-coupe-seat-node,
+.placard-side-seat-node {
+   width: 30px;
+  height: 26px;
+  border: 1px solid #928f94;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  transition: all 0.1s ease;
+}
+
+
+/* Состояния интерактивности */
+.placard-coupe-seat-node:hover:not(:disabled),
+.placard-side-seat-node:hover:not(:disabled) {
+  background-color: #ffa800;
+  color: #ffffff;
+  border-color: #ffa800;
+}
+
+.placard-coupe-seat-node.is-disabled,
+.placard-side-seat-node.is-disabled {
+  background-color: #e5e5e5 !important;
+  border-color: #e5e5e5 !important;
+  color: #928f94 !important;
+  cursor: not-allowed !important;
+  opacity: 1; /* Отменяем стандартную браузерную прозрачность disabled кнопок */
+}
+
+/* 3. Выбранное пользователем место — фирменный оранжевый фон, белая цифра */
+.placard-coupe-seat-node.is-selected,
+.placard-side-seat-node.is-selected {
+  background-color: #ffffff;
+  border-color: #ffa800;
+  border: 2px solid #ffa800;
+}

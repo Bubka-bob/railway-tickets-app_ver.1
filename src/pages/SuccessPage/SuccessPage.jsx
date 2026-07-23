@@ -13,9 +13,9 @@ export default function SuccessPage() {
   const { orderState, setOrderState } = useContext(OrderContext) || {};
   const { setAppState } = useContext(AppContext) || {};
 
-  const buyerFirstName = orderState?.user?.first_name || "Ирина";
-  const buyerPatronymic = orderState?.user?.patronymic || "Эдуардовна";
-  const finalPrice = orderState?.totalPrice || 7760;
+  const buyerFirstName = orderState?.user?.first_name;
+  const buyerPatronymic = orderState?.user?.patronymic;
+  const finalPrice = orderState?.totalPrice;
 
   const handleReturnToMainAction = () => {
     if (setOrderState) setOrderState({});

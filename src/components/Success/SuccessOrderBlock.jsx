@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import emailIcon from "../../assets/Success1.svg";
+import printIcon from "../../assets/Success2.svg";
+import agentIcon from "../../assets/Success3.svg";
+import "./SuccessOrderBlock.css";
 
 export default function SuccessOrderBlock({ buyerName, buyerPatronymic, finalPrice, onReturnToMain }) {
   // Локальный стейт для оранжевых звезд рейтинга сервиса
@@ -13,24 +17,30 @@ export default function SuccessOrderBlock({ buyerName, buyerPatronymic, finalPri
           № Заказа <strong className="v-order-id-digits">285АА</strong>
         </span>
         <span className="success-order-price-summary-text">
-          сумма <strong className="v-order-price-digits">{finalPrice.toLocaleString('ru-RU')}</strong> <span className="v-rub-gray">₽</span>
+          сумма <strong className="v-order-price-digits">{(finalPrice || 7760).toLocaleString('ru-RU')}</strong> <span className="v-rub-gray">₽</span>
         </span>
       </div>
 
       {/* Средний ряд с тремя круглыми иконками-инструкциями */}
       <div className="success-card-instructions-layer">
         <div className="success-instruction-item-node">
-          <div className="success-icon-circle-badge orange-theme-svg-icon">💻</div>
-          <p className="success-instruction-text-desc">билеты высланы <br />на электронную <br />почту</p>
+          <div className="success-icon-circle-badge orange-theme-svg-icon">
+            <img src={emailIcon} alt="E-mail" className="success-vector-icon-pic-img" />
+          </div>
+          <p className="success-instruction-text-desc">билеты будут <br />отправлены <br />на ваш e-mail</p>
         </div>
         
         <div className="success-instruction-item-node">
-          <div className="success-icon-circle-badge orange-theme-svg-icon">🖨️</div>
+          <div className="success-icon-circle-badge orange-theme-svg-icon">
+             <img src={printIcon} alt="Распечатать" className="success-vector-icon-pic-img" />
+          </div>
           <p className="success-instruction-text-desc">распечатайте <br />и сохраняйте билеты <br />до даты поездки</p>
         </div>
 
         <div className="success-instruction-item-node">
-          <div className="success-icon-circle-badge orange-theme-svg-icon">👮</div>
+          <div className="success-icon-circle-badge orange-theme-svg-icon">
+             <img src={agentIcon} alt="Посадка" className="success-vector-icon-pic-img" />
+          </div>
           <p className="success-instruction-text-desc">предъявите <br />распечатанные <br />билеты при посадке</p>
         </div>
       </div>

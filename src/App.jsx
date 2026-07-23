@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// Исправлено: добавлен импорт Routes для правильной работы маршрутизации
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 import StartPage from './pages/StartPage/StartPage';
@@ -23,35 +22,19 @@ export default function App() {
   const [appState, setAppState] = useState(initialAppState);
   const [routeState, setRouteState] = useState(initialRouteState);
   const [orderState, setOrderState] = useState(initialOrderState);
-// const basename = import.meta.env.BASE_URL || '/';
   return (
     <Router >
       <AppContext.Provider value={{ appState, setAppState }}>
         <RouteContext.Provider value={{ routeState, setRouteState }}>
           <OrderContext.Provider value={{ orderState, setOrderState }}>
-          {/* Исправлено: Все теги <Route> обязательно оборачиваем в <Routes> */}
-          <Routes>
-            {/* Основной роут главной страницы */}
+            <Routes>
             <Route path="/" element={<StartPage />} />
-            
-            {/* Страница выбора поездов */}
             <Route path="/order/trains" element={<SelectTrainPage />} />
-            
-             {/* 3. Выбор мест в вагоне */}
             <Route path="/order/seats" element={<SelectSeatsPage />} />
-            {/* 4. Ввод данных пассажиров */}
             <Route path="/order/passengers" element={<PassengersPage />} />
-            
-            {/* 5. Проверка данных перед оплатой */}
             <Route path="/order/verification" element={<VerificationPage />} />
-            
-            {/* 6. Страница оплаты */}
             <Route path="/order/payment" element={<PaymentPage />} />
-            
-            {/* 7. Экран успешного заказа */}
             <Route path="/order/success" element={<SuccessPage />} />
-            
-            {/* Перенаправление на главную при вводе несуществующего адреса */}
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
           </OrderContext.Provider>
